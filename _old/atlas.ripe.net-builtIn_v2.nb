@@ -1,0 +1,801 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     34177,        792]
+NotebookOptionsPosition[     33050,        749]
+NotebookOutlinePosition[     33402,        765]
+CellTagsIndexPosition[     33359,        762]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["BuiltIn measurements for 1st and 2nd hop", "Section",
+ CellChangeTimes->{{3.609411393208486*^9, 3.609411426807868*^9}, {
+  3.609411492422267*^9, 3.609411499756665*^9}, {3.609414065506597*^9, 
+  3.60941407614053*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Conversion of Unix Machine Timestamp to ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " Time"
+}], "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+  3.609416925560754*^9, 3.609416926713764*^9}, {3.6095876986480637`*^9, 
+  3.6095877279163437`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", "unixTimeToDate", "]"}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Hawaiian", " ", "Timezone", " ", "is"}], " ", "-", 
+    RowBox[{"10", " ", "from", " ", "GMT"}]}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"unixTimeToDate", "[", "x_Integer", "]"}], ":=", 
+   RowBox[{"DateList", "[", 
+    RowBox[{
+     RowBox[{"AbsoluteTime", "[", 
+      RowBox[{"{", 
+       RowBox[{"1970", ",", "1", ",", "1", ",", "2", ",", "0", ",", "0"}], 
+       "}"}], "]"}], "+", "x"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"unixTimeToDate", "[", 
+     RowBox[{"\"\<timestamp\>\"", "\[Rule]", "x_Integer"}], "]"}], ":=", 
+    RowBox[{"\"\<timestamp\>\"", "->", 
+     RowBox[{"unixTimeToDate", "[", "x", "]"}]}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"unixTimeToDate", "[", "1330434000", "]"}], ",", 
+    RowBox[{"unixTimeToDate", "[", 
+     RowBox[{"\"\<timestamp\>\"", "->", "1330434000"}], "]"}]}], "}"}], "//", 
+  "MatrixForm"}]}], "Input",
+ CellChangeTimes->{{3.609324729321457*^9, 3.6093248451536922`*^9}, {
+   3.609324932223752*^9, 3.6093249328778543`*^9}, 3.609416894065385*^9, {
+   3.6094169340026207`*^9, 3.609416936474205*^9}, 3.6098255831175947`*^9, 
+   3.609828203941568*^9, {3.609828427737917*^9, 3.609828472823297*^9}, 
+   3.6114340767861767`*^9, {3.6236947140491323`*^9, 3.623694853708791*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Sources", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"urlForPingJSONData", " ", "-", " ", 
+    RowBox[{
+    "answer", " ", "with", " ", "the", " ", "JSON", " ", "URL", " ", "for", 
+     " ", "fetching", " ", "data"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ClearAll", "[", "urlForPingJSONData", "]"}], ";", 
+    RowBox[{
+     RowBox[{"urlForPingJSONData", "::", "usage"}], " ", "=", " ", 
+     "\"\<URL to get atlas.ripe.net ping data\>\""}], ";", 
+    RowBox[{
+     RowBox[{"urlForPingJSONData", "::", "unexpectedArg"}], "=", 
+     "\"\<`1`\>\""}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "IMPLEMENTATION", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"urlForPingJSONData", "[", 
+      RowBox[{"probeID_Integer", ",", "\[IndentingNewLine]", 
+       RowBox[{"resolution_String", " ", "/;", 
+        RowBox[{"StringMatchQ", "[", 
+         RowBox[{"resolution", ",", " ", 
+          RowBox[{
+          "\"\<1h\>\"", " ", "|", " ", "\"\<1d\>\"", " ", "|", " ", 
+           "\"\<1w\>\""}]}], "]"}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{"hopNumber_Integer", " ", "/;", " ", 
+        RowBox[{"MatchQ", "[", 
+         RowBox[{"hopNumber", " ", ",", " ", 
+          RowBox[{"1", "|", "2"}]}], "]"}]}], " ", ",", " ", 
+       "\[IndentingNewLine]", "startDate_String", ",", " ", 
+       "\[IndentingNewLine]", "endDate_String"}], "]"}], ":=", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Block", "[", 
+      RowBox[{
+       RowBox[{"{", "base", "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"URLBuild", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<https://stat.ripe.net\>\"", ",", "\"\<data\>\"", ",", 
+           "\"\<atlas-ping-measurements\>\"", ",", "\"\<data.json\>\""}], 
+          "}"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\"\<probe_id\>\"", "\[Rule]", 
+            RowBox[{"ToString", "[", "probeID", "]"}]}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"\"\<measurement_id\>\"", "->", " ", 
+            RowBox[{"ToString", "[", "hopNumber", "]"}]}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"\"\<starttime\>\"", "->", "startDate"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"\"\<endtime\>\"", "->", "endDate"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"\"\<resolution\>\"", "->", "resolution"}]}], "}"}]}], 
+        "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"UNEXPECTED", " ", "ARGUMENT"}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"urlForPingJSONData", "[", 
+      RowBox[{
+      "probeID_", ",", "resolution_", ",", "hopNumber_", ",", " ", 
+       "startDate_", ",", " ", "endDate_"}], "]"}], ":=", " ", 
+     RowBox[{"Message", "[", 
+      RowBox[{
+       RowBox[{"urlForPingJSONData", "::", "unexpectedArg"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "probeID", ",", " ", "resolution", ",", " ", "hopNumber", ",", " ", 
+         "startDate", ",", "endDate"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "TEST", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"Hyperlink", "[", 
+    RowBox[{"\"\<Click Me to Test\>\"", ",", 
+     RowBox[{"urlForPingJSONData", "[", 
+      RowBox[{
+      "1178", ",", "\"\<1w\>\"", ",", "1", ",", "\"\<2012-02-24T08:19:23\>\"",
+        ",", "\"\<2014-05-09T16:50:21\>\""}], "]"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.6094115097715073`*^9, 3.609411523388515*^9}, {
+   3.609411626352461*^9, 3.6094116464869747`*^9}, {3.609411726460371*^9, 
+   3.609412077776128*^9}, {3.609412109758697*^9, 3.609412428841082*^9}, {
+   3.609412481249681*^9, 3.609412600281231*^9}, {3.609412730977357*^9, 
+   3.60941288452738*^9}, {3.609412920911716*^9, 3.609412957462569*^9}, {
+   3.609413024429534*^9, 3.609413109936285*^9}, {3.609413207085894*^9, 
+   3.609413236794325*^9}, 3.609414001178795*^9, 3.609825584233529*^9, 
+   3.61468938746327*^9, {3.614999953182996*^9, 3.614999971748878*^9}, {
+   3.615000106549765*^9, 3.6150003130338707`*^9}, {3.6150004692948008`*^9, 
+   3.61500050895817*^9}, {3.6150005896372223`*^9, 3.615000612653864*^9}, {
+   3.615000949650557*^9, 3.615000964666222*^9}, {3.615001139478086*^9, 
+   3.615001157804245*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"fileForPingJSONData", " ", "-", " ", 
+    RowBox[{
+    "answer", " ", "with", " ", "the", " ", "JSON", " ", "URL", " ", "for", 
+     " ", "fetching", " ", "data"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ClearAll", "[", "fileForPingJSONData", "]"}], ";", 
+    RowBox[{
+     RowBox[{"fileForPingJSONData", "::", "usage"}], " ", "=", " ", 
+     "\"\<URL to get atlas.ripe.net ping data\>\""}], ";", 
+    RowBox[{
+     RowBox[{"fileForPingJSONData", "::", "unexpectedArg"}], "=", 
+     "\"\<`1`\>\""}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "IMPLEMENTATION", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"fileForPingJSONData", "[", 
+      RowBox[{"probeID_Integer", ",", "\[IndentingNewLine]", 
+       RowBox[{"resolution_String", " ", "/;", 
+        RowBox[{"StringMatchQ", "[", 
+         RowBox[{"resolution", ",", " ", 
+          RowBox[{"\"\<1h\>\"", " ", "|", " ", "\"\<1d\>\""}]}], "]"}]}], ",",
+        "\[IndentingNewLine]", 
+       RowBox[{"hopNumber_Integer", " ", "/;", " ", 
+        RowBox[{"MatchQ", "[", 
+         RowBox[{"hopNumber", " ", ",", " ", 
+          RowBox[{"1", "|", "2"}]}], "]"}]}], " ", ",", " ", 
+       "\[IndentingNewLine]", "startDate_String", ",", " ", 
+       "\[IndentingNewLine]", "endDate_String"}], "]"}], ":=", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"NotebookDirectory", "[", "]"}], ",", "\"\<data\>\"", ",", 
+        RowBox[{"\"\<atlas.ripe.net-builtIn-p\>\"", "<>", 
+         RowBox[{"ToString", "[", "probeID", "]"}], "<>", 
+         "\"\<-resolution_\>\"", "<>", "resolution", "<>", "\"\<-hop_\>\"", "<>",
+          " ", 
+         RowBox[{"ToString", "[", "hopNumber", "]"}], "<>", 
+         "\"\<.json\>\""}]}], "}"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"UNEXPECTED", " ", "ARGUMENT"}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"fileForPingJSONData", "[", 
+      RowBox[{
+      "probeID_", ",", "resolution_", ",", "hopNumber_", ",", " ", 
+       "startDate_", ",", " ", "endDate_"}], "]"}], ":=", " ", 
+     RowBox[{"Message", "[", 
+      RowBox[{
+       RowBox[{"fileForPingJSONData", "::", "unexpectedArg"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "probeID", ",", " ", "resolution", ",", " ", "hopNumber", ",", " ", 
+         "startDate", ",", "endDate"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "TEST", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"fileForPingJSONData", "[", 
+    RowBox[{
+    "1178", ",", "\"\<1h\>\"", ",", "1", ",", "\"\<2012-02-24T08:19:23\>\"", 
+     ",", "\"\<2014-09-09T16:50:21\>\""}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.609413257634655*^9, 3.6094132794975967`*^9}, {
+   3.609413331341248*^9, 3.609413541069919*^9}, {3.6094135968376503`*^9, 
+   3.609413611203681*^9}, 3.6094140023853493`*^9, {3.609414826898438*^9, 
+   3.6094148302563477`*^9}, 3.609415020448928*^9, {3.609428561023934*^9, 
+   3.609428576030781*^9}, 3.609825585016479*^9, 3.614689398023179*^9, {
+   3.61970713712967*^9, 3.6197071440074177`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"pullAndCache", "[", 
+    RowBox[{
+    "probeID_Integer", ",", "resolution_String", ",", "hopNumber_Integer"}], 
+    "]"}], ":=", " ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "urlHopData", ",", " ", "cachingFile", ",", " ", "hardCodedStart", ",", 
+       " ", "hardCodedEnd"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"hardCodedStart", "=", "\"\<2012-02-24T08:19:23\>\""}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"FIX", " ", "ME", " ", "HERE"}], " ", "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"hardCodedEnd", "=", 
+       RowBox[{"DateString", "[", 
+        RowBox[{
+         RowBox[{"DateList", "[", "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<Year\>\"", ",", " ", "\"\<-\>\"", ",", "\"\<Month\>\"", ",", 
+           "\"\<-\>\"", ",", "\"\<Day\>\"", ",", "\"\<T\>\"", ",", 
+           "\"\<Hour24\>\"", ",", "\"\<:\>\"", ",", "\"\<Minute\>\"", ",", 
+           "\"\<:00\>\""}], "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"urlHopData", "=", 
+       RowBox[{"Import", "[", 
+        RowBox[{
+         RowBox[{"urlForPingJSONData", "[", 
+          RowBox[{
+          "probeID", ",", "resolution", ",", "hopNumber", ",", 
+           "hardCodedStart", ",", "hardCodedEnd"}], "]"}], ",", 
+         "\"\<JSON\>\""}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"cachingFile", "=", 
+       RowBox[{"fileForPingJSONData", "[", 
+        RowBox[{
+        "probeID", ",", "resolution", ",", "hopNumber", ",", "hardCodedStart",
+          ",", "hardCodedEnd"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Export", "[", 
+       RowBox[{"cachingFile", ",", "urlHopData", ",", "\"\<JSON\>\""}], "]"}],
+       ";", "\[IndentingNewLine]", "urlHopData"}]}], "]"}]}], ";"}]], "Input",\
+
+ CellChangeTimes->{{3.6094274899182577`*^9, 3.6094277274875803`*^9}, {
+   3.60942777090177*^9, 3.609427882890033*^9}, 3.6094285061860657`*^9, 
+   3.609830123934642*^9, {3.611446815585553*^9, 3.611446817697578*^9}, {
+   3.611446872640287*^9, 3.611446876888816*^9}, 3.611447282378269*^9}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["JSON data file", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+  3.609414117187767*^9, 3.60941412349046*^9}, {3.609414995791791*^9, 
+  3.6094149962385674`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "jsonData", " ", "returns", " ", "data", " ", "portion", " ", "of", " ", 
+     "the", " ", "data", " ", "set", " ", "from", " ", "the", " ", "local", 
+     " ", "cached", " ", "file"}], ",", " ", 
+    RowBox[{
+    "or", " ", "a", " ", "new", " ", "data", " ", "set", " ", "is", " ", 
+     "pulled", " ", "from", " ", 
+     RowBox[{"atlas", ".", "ripe", ".", "net"}]}], ",", " ", "cached", ",", 
+    " ", 
+    RowBox[{"and", " ", "referenced"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ClearAll", "[", "jsonData", "]"}], ";"}], "\[IndentingNewLine]", 
+   
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonData", "::", "usage"}], "=", 
+     "\"\<fetch cached json data or pull from atlas\>\""}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonData", "::", "unexpectedArg"}], "=", "\"\<`1`\>\""}], ";"}],
+    "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonData", "::", "datasetMismatch"}], " ", "=", 
+     "\"\<Args `1` do not match data property in file `2`\>\""}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "IMPLEMENTATION", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonData", "[", 
+      RowBox[{
+      "probeID_Integer", ",", "resolution_String", ",", "hopNumber_Integer"}],
+       "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"startDate", "=", "\"\<2012-02-24T08:19:23\>\""}], ",", " ", 
+         
+         RowBox[{"endDate", "=", "\"\<2014-05-09T16:50:21\>\""}], ",", 
+         "jsonFile", ",", " ", "url", ",", "jsonImport", ",", "jsonData"}], 
+        "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"jsonFile", "=", 
+         RowBox[{"fileForPingJSONData", "[", 
+          RowBox[{
+          "probeID", ",", "resolution", ",", "hopNumber", ",", "startDate", 
+           ",", "endDate"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"url", "=", 
+         RowBox[{"urlForPingJSONData", "[", 
+          RowBox[{
+          "probeID", ",", "resolution", ",", "hopNumber", ",", "startDate", 
+           ",", "endDate"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"TODO", " ", "check", " ", "local"}], ";", " ", 
+           RowBox[{"if", " ", "nothing"}]}], ",", " ", 
+          RowBox[{"pull", " ", "from", " ", "atlas", " ", "and", " ", 
+           RowBox[{"store", ".", " ", "With"}], " ", "result"}], ",", " ", 
+          "verify"}], "  ", "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"jsonImport", "=", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"FileExistsQ", "[", "jsonFile", "]"}], ",", 
+           RowBox[{"Import", "[", 
+            RowBox[{"jsonFile", ",", "\"\<JSON\>\""}], "]"}], ",", 
+           RowBox[{"pullAndCache", "[", 
+            RowBox[{
+            "probeID", ",", " ", "resolution", ",", " ", "hopNumber"}], 
+            "]"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+          RowBox[{"Walk", " ", "JSON", " ", "data", " ", "structure"}], ",", 
+          " ", 
+          RowBox[{
+          "asserting", " ", "with", " ", "each", " ", "traversal", " ", "it", 
+           " ", "is", " ", "not", " ", "null"}]}], " ", "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{"Module", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+           "jsonDataProbeID", ",", " ", "jsonDataMeasurementID", ",", 
+            "jsonDataResolution"}], "}"}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"jsonData", "=", 
+            RowBox[{"\"\<data\>\"", "/.", " ", "jsonImport"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Assert", "[", 
+            RowBox[{"jsonData", "!=", 
+             RowBox[{"{", "}"}]}], "]"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"(*", " ", 
+            RowBox[{"Assert", " ", "-", " ", 
+             RowBox[{
+             "file", " ", "matches", " ", "the", " ", "requested", " ", 
+              "probe", " ", "data"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+           RowBox[{"jsonDataProbeID", "=", " ", 
+            RowBox[{"\"\<probe_id\>\"", "/.", "jsonData"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"jsonDataMeasurementID", "=", 
+            RowBox[{"\"\<measurement_id\>\"", " ", "/.", " ", "jsonData"}]}], 
+           ";", "\[IndentingNewLine]", 
+           RowBox[{"jsonDataResolution", " ", "=", 
+            RowBox[{"\"\<resolution\>\"", "/.", " ", "jsonData"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Assert", "[", 
+            RowBox[{
+             RowBox[{"ToString", "[", "probeID", "]"}], "==", 
+             "jsonDataProbeID"}], "]"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"Assert", "[", 
+            RowBox[{
+             RowBox[{"ToString", "[", "hopNumber", "]"}], "==", 
+             "jsonDataMeasurementID"}], "]"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"Assert", "[", 
+            RowBox[{"resolution", "==", "jsonDataResolution"}], "]"}], 
+           ";"}]}], "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+        
+        RowBox[{"(*", " ", 
+         RowBox[{
+         "CONFIRM", " ", "data", " ", "set", " ", "referened", " ", "matches",
+           " ", "argements"}], "  ", "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"(*", " ", 
+         RowBox[{"--", 
+          RowBox[{"\[Rule]", " ", "returning"}]}], " ", "*)"}], 
+        "\[IndentingNewLine]", "jsonData"}]}], "\[IndentingNewLine]", "]"}]}],
+     ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"UNEXPECTED", " ", "ARGUMENT"}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonData", "[", 
+      RowBox[{"probeID_", ",", " ", "resolution_"}], "]"}], ":=", 
+     RowBox[{"Message", "[", 
+      RowBox[{
+       RowBox[{"jsonData", "::", "unexpectedArg"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"probeID", ",", " ", "resolution"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "TEST", " ", "*)"}], "\[IndentingNewLine]"}]}]], "Input",\
+
+ CellChangeTimes->{{3.609414141978176*^9, 3.609414788250862*^9}, {
+   3.6094150323441668`*^9, 3.6094150825281982`*^9}, {3.609415134384252*^9, 
+   3.609415225065727*^9}, {3.6094152641526213`*^9, 3.60941531344515*^9}, {
+   3.609415363399082*^9, 3.609415412811928*^9}, {3.6094163247106133`*^9, 
+   3.609416329500194*^9}, {3.609417740659006*^9, 3.609417773018794*^9}, {
+   3.609417843013302*^9, 3.609417871297265*^9}, {3.609417940499412*^9, 
+   3.609418069542598*^9}, {3.6094181579160213`*^9, 3.609418185721694*^9}, {
+   3.6094182186988583`*^9, 3.609418315154312*^9}, {3.609418359546919*^9, 
+   3.6094186962203913`*^9}, {3.609418728174018*^9, 3.609418798577785*^9}, {
+   3.609418871695875*^9, 3.609418939580531*^9}, {3.60941900644816*^9, 
+   3.60941903720739*^9}, {3.609419070016646*^9, 3.609419120964375*^9}, {
+   3.609419187083349*^9, 3.6094191989292583`*^9}, {3.6094192401812143`*^9, 
+   3.609419320710651*^9}, {3.609419544699547*^9, 3.609419873127756*^9}, {
+   3.6094203463578043`*^9, 3.609420372003216*^9}, {3.609427074687092*^9, 
+   3.609427129859466*^9}, 3.609427161220461*^9, {3.609427197778067*^9, 
+   3.609427200290032*^9}, {3.609427249599897*^9, 3.609427282268978*^9}, {
+   3.6094282047517138`*^9, 3.609428223142867*^9}, 3.609428592048677*^9, 
+   3.60982558575107*^9, {3.609830124903973*^9, 3.6098301256038017`*^9}, {
+   3.615004295403264*^9, 3.615004579337677*^9}, 3.615004650793927*^9}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["jsonToAssociation", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+   3.609414117187767*^9, 3.60941412349046*^9}, {3.609414995791791*^9, 
+   3.6094149962385674`*^9}, {3.609416116291595*^9, 3.6094161173459463`*^9}, 
+   3.609417876876779*^9, {3.60941810508298*^9, 3.609418112520381*^9}, 
+   3.623696760510919*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "jsonToAssociation", " ", "returns", " ", "CDF", " ", "version", " ", "of",
+     " ", "measurementData"}], " ", "*)"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ClearAll", "[", "jsonToAssociation", "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonToAssociation", "::", "usage"}], "=", 
+     "\"\<convert JSON data to CDF\>\""}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonToAssociation", "::", "unexpectedArg"}], "=", 
+     "\"\<`1`\>\""}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "IMPLEMENTATION", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"jsonToAssociation", "[", 
+     RowBox[{
+     "probeID_Integer", ",", "resolution_String", ",", "hopNumber_Integer"}], 
+     "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"measurements", ",", " ", "converted"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "Traverse", " ", "JSON", " ", "graph", " ", "to", " ", "get", " ", 
+        "to", " ", "measurements"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"measurements", "=", 
+        RowBox[{"\"\<measurements\>\"", "/.", " ", 
+         RowBox[{"jsonData", "[", 
+          RowBox[{"probeID", ",", "resolution", ",", "hopNumber"}], "]"}]}]}],
+        ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "flatten", " ", "and", " ", "convert", " ", "values", " ", "where", 
+         " ", "necessary"}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"ASSERT", " ", ":", " ", 
+         RowBox[{
+         "format", " ", "is", " ", "rules", " ", "as", " ", "the", " ", 
+          "following", " ", "example", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"\"\<received\>\"", "\[Rule]", " ", "6"}], ",", " ", 
+            "\[IndentingNewLine]", 
+            RowBox[{"\"\<rtt_5pct\>\"", "\[Rule]", "10.088"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"\"\<rtt_95pct\>\"", "\[Rule]", "21.066"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"\"\<rtt_med\>\"", "\[Rule]", "14.8675"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"\"\<sent\>\"", "\[Rule]", "6"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"\"\<timestamp\>\"", "\[Rule]", "1330434000"}]}], 
+           "}"}]}]}], "\[IndentingNewLine]", " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"--", 
+         RowBox[{"\[Rule]", " ", "returning"}]}], " ", "*)"}], 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"<|", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"\"\<probeID\>\"", "->", "probeID"}], ",", " ", 
+             RowBox[{"\"\<resolution\>\"", "->", "resolution"}], ",", " ", 
+             RowBox[{"\"\<hop\>\"", "->", "hopNumber"}]}], "}"}], "~", "Join",
+            "~", 
+           RowBox[{"MapAt", "[", 
+            RowBox[{"unixTimeToDate", ",", " ", "#", ",", "3"}], "]"}]}], 
+          "|>"}], "&"}], "/@", " ", "measurements"}]}]}], " ", 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", "]"}]}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"UNEXPECTED", " ", "ARGUMENT"}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonToAssociation", "[", 
+      RowBox[{"probeID_", ",", " ", "resolution_"}], "]"}], ":=", 
+     RowBox[{"Message", "[", 
+      RowBox[{
+       RowBox[{"jsonToAssociation", "::", "unexpectedArg"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"probeID", ",", " ", "resolution"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "TEST", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"Block", "[", 
+    RowBox[{
+     RowBox[{"{", "testSet", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"testSet", "=", 
+       RowBox[{"jsonToAssociation", "[", 
+        RowBox[{"1178", ",", "\"\<1h\>\"", ",", "1"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "Confirm", " ", "Assocation", " ", "is", " ", "well", " ", "formed", 
+        " ", "by", " ", "extracting", " ", "the", " ", "Keys", " ", "from", 
+        " ", "the", " ", "first", " ", "element"}], " ", "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"Keys", "[", 
+       RowBox[{"testSet", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "]"}]}]}], "\[IndentingNewLine]", 
+    "]"}], "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.609417271843588*^9, 3.6094173086675797`*^9}, {
+   3.609417577492588*^9, 3.609417647149866*^9}, {3.6094176869501953`*^9, 
+   3.609417736552124*^9}, {3.609417781368532*^9, 3.60941779740714*^9}, {
+   3.6094178848761463`*^9, 3.609417900354762*^9}, {3.609418129807993*^9, 
+   3.609418147905808*^9}, {3.609420757102153*^9, 3.609420824208371*^9}, {
+   3.609420907398369*^9, 3.609420919124446*^9}, {3.609421111920231*^9, 
+   3.609421503231862*^9}, {3.609421537797614*^9, 3.609421568864986*^9}, {
+   3.60942162523737*^9, 3.6094218678363123`*^9}, {3.6094219028761683`*^9, 
+   3.609421917963307*^9}, 3.609825586733892*^9, 3.609830126370943*^9, {
+   3.615004717333795*^9, 3.6150047220204477`*^9}, {3.615004774573146*^9, 
+   3.615004928999069*^9}, {3.6150049754215527`*^9, 3.615004981114107*^9}, 
+   3.6150051154163513`*^9, {3.615005365737913*^9, 3.61500537455177*^9}, {
+   3.6150058655748577`*^9, 3.615005925931554*^9}, {3.6150059825256233`*^9, 
+   3.615005984182015*^9}, {3.619708585081949*^9, 3.619708592018241*^9}, {
+   3.619708805238111*^9, 3.619708808441059*^9}, {3.623693936964889*^9, 
+   3.6236939754970913`*^9}, 3.623694138955925*^9, {3.623694228903574*^9, 
+   3.623694237902812*^9}, {3.623694347547254*^9, 3.6236943492574387`*^9}, {
+   3.623694464010882*^9, 3.623694503529667*^9}, {3.623694668951146*^9, 
+   3.6236946925775948`*^9}, {3.623694866428388*^9, 3.6236948948827677`*^9}, {
+   3.623694966391554*^9, 3.623695018061709*^9}, {3.623695161942383*^9, 
+   3.6236952138578243`*^9}, {3.623695245700391*^9, 3.6236953013667583`*^9}, {
+   3.623695331981729*^9, 3.623695360861246*^9}, {3.6236956697741003`*^9, 
+   3.623695680820513*^9}, {3.6236957132569237`*^9, 3.623695720844144*^9}, {
+   3.623695761797413*^9, 3.6236958293149643`*^9}, {3.62369593806793*^9, 
+   3.623696021143117*^9}, {3.623696067262158*^9, 3.6236960882716827`*^9}, {
+   3.623696123346871*^9, 3.623696144781706*^9}, {3.6236961870524683`*^9, 
+   3.623696211053351*^9}, 3.62369627619596*^9, {3.623696337106575*^9, 
+   3.623696376142564*^9}, {3.623696415257524*^9, 3.623696446789546*^9}, {
+   3.623696760521299*^9, 3.623696760557602*^9}, {3.623697613921019*^9, 
+   3.6236976841978083`*^9}, {3.623697717558044*^9, 3.6236978224060717`*^9}, {
+   3.623697873613583*^9, 3.623697892064538*^9}, {3.6236979280033712`*^9, 
+   3.623697977240158*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Combine Measurements to tMeasurements", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+   3.609414117187767*^9, 3.60941412349046*^9}, {3.609414995791791*^9, 
+   3.6094149962385674`*^9}, {3.609416116291595*^9, 3.6094161173459463`*^9}, 
+   3.609417876876779*^9, {3.60941810508298*^9, 3.609418112520381*^9}, {
+   3.60942211451232*^9, 3.609422154085846*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "tMeasurements", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"tMeasurements", "=", 
+    RowBox[{"Dataset", "[", "\[IndentingNewLine]", 
+     RowBox[{"Join", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"jsonToAssociation", "[", 
+        RowBox[{"1165", ",", "\"\<1h\>\"", ",", "1"}], "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"jsonToAssociation", "[", 
+        RowBox[{"1165", ",", "\"\<1h\>\"", ",", "2"}], "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"jsonToAssociation", "[", 
+        RowBox[{"1178", ",", "\"\<1h\>\"", ",", "1"}], "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"jsonToAssociation", "[", 
+        RowBox[{"1178", ",", "\"\<1h\>\"", ",", "2"}], "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"jsonToAssociation", "[", 
+        RowBox[{"2289", ",", "\"\<1h\>\"", ",", "1"}], "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"jsonToAssociation", "[", 
+        RowBox[{"2289", ",", "\"\<1h\>\"", ",", "2"}], "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"jsonToAssociation", "[", 
+        RowBox[{"10546", ",", "\"\<1h\>\"", ",", "1"}], "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"jsonToAssociation", "[", 
+        RowBox[{"10546", ",", "\"\<1h\>\"", ",", "2"}], "]"}]}], 
+      "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"If", "[", 
+  RowBox[{"True", ",", 
+   RowBox[{"tMeasurements", "[", "100", "]"}], ",", "Null"}], "]"}]}], "Input",\
+
+ CellChangeTimes->{{3.609428328190473*^9, 3.609428407786689*^9}, {
+   3.609429196682753*^9, 3.6094292168304358`*^9}, {3.6094306532156773`*^9, 
+   3.609430659909844*^9}, {3.609829697817556*^9, 3.609829709216075*^9}, 
+   3.6099497415670156`*^9, {3.61144789695249*^9, 3.611447902823265*^9}, {
+   3.611447938944854*^9, 3.61144794844617*^9}, 3.611449191404737*^9, 
+   3.6114492482758627`*^9, {3.61144929614207*^9, 3.6114493022848473`*^9}, {
+   3.61144954140893*^9, 3.6114495455907803`*^9}, {3.611624208594171*^9, 
+   3.6116242799868526`*^9}, {3.615005134506406*^9, 3.615005153604014*^9}, {
+   3.615005460162964*^9, 3.615005461080879*^9}, {3.6150055522769423`*^9, 
+   3.61500556127909*^9}, {3.615005636272732*^9, 3.6150056396444283`*^9}, {
+   3.615005669947117*^9, 3.61500567469921*^9}, 3.615005711444787*^9, {
+   3.615006127261744*^9, 3.615006129128635*^9}, {3.619708674926799*^9, 
+   3.619708691404434*^9}, {3.6197087550310297`*^9, 3.619708761771048*^9}, {
+   3.61971574258351*^9, 3.619715746279215*^9}, {3.623692944409893*^9, 
+   3.6236929584655733`*^9}, {3.6236967605637627`*^9, 3.623696760595372*^9}, {
+   3.623696892911982*^9, 3.623696917422364*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.6236955569818583`*^9, 3.6236955622822742`*^9}, {
+   3.623696788481593*^9, 3.6236967943831587`*^9}, 3.62369689024726*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Visualization", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+   3.609414117187767*^9, 3.60941412349046*^9}, {3.609414995791791*^9, 
+   3.6094149962385674`*^9}, {3.609416116291595*^9, 3.6094161173459463`*^9}, 
+   3.609417876876779*^9, {3.60941810508298*^9, 3.609418112520381*^9}, {
+   3.60942211451232*^9, 3.609422154085846*^9}, {3.623696957636519*^9, 
+   3.623696959219121*^9}}],
+
+Cell[BoxData[
+ RowBox[{"DateListPlot", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"\"\<timestamp\>\"", ",", "\"\<rtt_95pct\>\""}], "}"}], "/.", 
+   RowBox[{"Normal", "[", 
+    RowBox[{"tMeasurements", "[", 
+     RowBox[{
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#timestamp", "[", 
+          RowBox[{"[", "4", "]"}], "]"}], "\[Equal]", " ", "2"}], "&"}], 
+       "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<probeID\>\"", ",", "\"\<rtt_95pct\>\"", ",", " ", 
+        "\"\<timestamp\>\""}], "}"}]}], "]"}], "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.623697061702361*^9, 3.623697075298575*^9}, {
+  3.623697112629162*^9, 3.623697148357326*^9}, {3.623697180540956*^9, 
+  3.623697210559997*^9}, {3.6236972579062366`*^9, 3.62369725985607*^9}, {
+  3.6236973150524673`*^9, 3.623697439965776*^9}, {3.6236974735576468`*^9, 
+  3.623697474724296*^9}, {3.623698134740673*^9, 3.623698145600287*^9}, {
+  3.623698247423423*^9, 3.623698294788012*^9}, {3.623698328641902*^9, 
+  3.6236983353171463`*^9}, {3.62369837626626*^9, 3.623698402185217*^9}, {
+  3.623698506328219*^9, 3.623698575341652*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{720, 830},
+WindowMargins->{{Automatic, 0}, {Automatic, -1}},
+FrontEndVersion->"10.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 6, \
+2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 222, 3, 64, "Section"],
+Cell[CellGroupData[{
+Cell[827, 29, 307, 8, 35, "Subsubsection"],
+Cell[1137, 39, 1586, 39, 148, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2760, 83, 98, 1, 35, "Subsubsection"],
+Cell[2861, 86, 4349, 93, 586, "Input"],
+Cell[7213, 181, 3208, 69, 481, "Input"],
+Cell[10424, 252, 2169, 49, 242, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[12630, 306, 204, 3, 29, "Subsubsection"],
+Cell[12837, 311, 7691, 167, 898, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[20565, 483, 354, 5, 29, "Subsubsection"],
+Cell[20922, 490, 7061, 146, 641, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28020, 641, 397, 5, 35, "Subsubsection"],
+Cell[28420, 648, 2825, 55, 267, "Input"],
+Cell[31248, 705, 169, 2, 28, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31454, 712, 423, 6, 35, "Subsubsection"],
+Cell[31880, 720, 1142, 25, 63, "Input"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

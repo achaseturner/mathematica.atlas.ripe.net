@@ -1,0 +1,2666 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[    105688,       2657]
+NotebookOptionsPosition[     99782,       2460]
+NotebookOutlinePosition[    100254,       2478]
+CellTagsIndexPosition[    100211,       2475]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Broadband Network Congestion Measurement - ICMP ping measurements\
+\>", "Title",
+ CellChangeTimes->{{3.609411288161269*^9, 3.609411289406501*^9}, {
+  3.6094113487181273`*^9, 3.609411385982676*^9}, {3.609587554423913*^9, 
+  3.60958758412189*^9}, {3.6102249330773077`*^9, 3.610224951655011*^9}}],
+
+Cell["\<\
+How long as TWC been aware of network congestion in High Speed Internet \
+service to Hana, HI?\
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.6095876017618523`*^9, 3.609587606665586*^9}}],
+
+Cell["by Chase.Turner@TFarms.com", "Author",
+ CellChangeTimes->{{3.6102252718411007`*^9, 3.6102252763993597`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+For discussion purposes only.  Use of this report requires specific \
+permission of the author.\
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.609411393208486*^9, 3.609411477269533*^9}, {
+  3.6094115301714067`*^9, 3.609411620103806*^9}, {3.609587624801108*^9, 
+  3.609587635344081*^9}, {3.609587748965797*^9, 3.609587755459175*^9}, {
+  3.610225270225769*^9, 3.6102252805023317`*^9}, {3.6107374105556183`*^9, 
+  3.610737410780848*^9}}],
+
+Cell[BoxData[
+ RowBox[{"ClearSystemCache", "[", "]"}]], "Input",
+ CellChangeTimes->{{3.6114452690799723`*^9, 3.6114452947143583`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["TODO", "Section",
+ CellChangeTimes->{{3.609587675230597*^9, 3.609587689603732*^9}, {
+  3.611411977567284*^9, 3.6114119786205893`*^9}, {3.611435658352049*^9, 
+  3.611435658997142*^9}}],
+
+Cell["\<\
+# Chunk data downloads
+Improve response time downloading new measurement data from atlas.ripe.net by \
+annotating file names with indications as to the range of data values \
+included in the data set.  For example : \
+\[OpenCurlyDoubleQuote]atlas.ripe.net-measurement-RESULT#-YYYY-MM-DD-T-HH:MM:\
+SSZ - description.json\[CloseCurlyDoubleQuote]\
+\>", "Text",
+ CellChangeTimes->{{3.611435668271509*^9, 3.6114358912450733`*^9}}],
+
+Cell["\<\
+# Optional timeline overlay of probe events
+When p1178 is displayed, overlay commentary on timeline to draw attention to \
+changes in the data resulting\
+\>", "Text",
+ CellChangeTimes->{{3.611435668271509*^9, 3.6114359922046623`*^9}}],
+
+Cell["\<\
+# Select by IP, result set, etc 
+Choice to select all events from a result set, or by IP address cutting \
+across multiple result sets.  Open question what to do about different targets\
+\>", "Text",
+ CellChangeTimes->{{3.611436006789132*^9, 3.6114360234449387`*^9}, {
+  3.611436056148737*^9, 3.611436103421216*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ipToUser", "=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<24.94.68.157\>\"", ",", "\"\<dukewalls@gmail.com\>\"", ",", 
+       "\"\<BillW\>\"", ",", "\"\<265 Alalele Pl., Hana, HI 96713\>\""}], 
+      "}"}], ",", " ", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<24.94.68.158\>\"", ",", "\"\<razzle@maui.net\>\"", ",", 
+       "\"\<Gaylord\>\"", ",", "\"\<290 Kalo Rd, Hana HI 96713\>\""}], "}"}], 
+     ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<24.94.68.213\>\"", ",", "\"\<neilhasegawa@me.com\>\"", ",", " ", 
+       "\"\<Neil\>\"", ",", "\"\<5165 Hana Highway, Hana HI 96713\>\""}], 
+      "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<24.94.69.115\>\"", ",", " ", "\"\<mardfin@gmail.com\>\"", ",", 
+       "\"\<Ward\>\"", ",", "\"\<\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<24.94.68.169\>\"", ",", "\"\<Beth5four@aol.com\>\"", ",", " ", 
+       "\"\<Beth\>\"", ",", " ", "\"\<\>\""}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<24.94.69.12\>\"", ",", "\"\<HanaFarms@gmail.com\>\"", ",", " ", 
+       "\"\<MartyV Office\>\"", ",", "\"\<\>\""}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<24.94.69.???\>\"", ",", "\"\<Andrew@hanahawaii.net\>\"", ",", 
+       "\"\<Andrew\>\"", ",", "\"\<\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<24.94.69.188\>\"", ",", "\"\<robin@hanahawaii.net\>\"", ",", 
+       "\"\<Robin Rayner\>\"", ",", "\"\<130 Kalo Road,Hana HI 96713\>\""}], 
+      "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<24.94.69.215\>\"", ",", "\"\<wrsides@hotmail.com\>\"", ",", 
+       "\"\<Bill Sides\>\"", ",", "\"\<\>\""}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<24.94.69.247\>\"", ",", "\"\<Portofino3@aol.com\>\"", ",", 
+       "\"\<Kiran S\>\"", ",", " ", "\"\<\>\""}], "}"}], ",", 
+     "\[NonBreakingSpace]", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<24.94.69.209\>\"", ",", "\"\<\>\"", ",", "\"\<Bill Church\>\"", 
+       ",", "\"\<265 Alalele Pl., Hana, HI 96713\>\""}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<24.94.69.65\>\"", ",", "\"\<\>\"", ",", " ", "\"\<RichD\>\"", ",", 
+       "\"\<\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<29.94.69.???\>\"", ",", "\"\<\>\"", ",", "\"\<RchardP\>\"", ",", 
+       "\"\<\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<66.27.209.27\>\"", ",", "\"\<\>\"", ",", "\"\<Sky\>\"", ",", 
+       "\"\<\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<66.27.209.114\>\"", ",", "\"\<mtimbal1945@yahoo.com\>\"", ",", 
+       "\"\<Moses\>\"", ",", "\"\<\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+     
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<205.172.17.95\>\"", ",", "\"\<chase.turner@tfarms.com\>\"", ",", 
+       " ", "\"\<2014-06-06 to 2014-06-10\>\"", ",", "\"\<\>\""}], "}"}], ",",
+      "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<24.94.68.214\>\"", ",", "\"\<chase.turner@tfarms.com\>\"", ",", 
+       "\"\<2014-06-10\>\"", ",", "\"\<\>\""}], "}"}]}], 
+    "\[IndentingNewLine]", "}"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.611436472584724*^9, 3.6114368129099894`*^9}, {
+  3.611436844081304*^9, 3.611436950152268*^9}, {3.611436993820593*^9, 
+  3.61143706611276*^9}, {3.611437110891768*^9, 3.611437221047419*^9}, {
+  3.611437940809278*^9, 3.6114380828072567`*^9}, {3.611768199587391*^9, 
+  3.61176822694468*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.611768193773143*^9, 3.6117682092943*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.611438094676324*^9, 3.611438105853341*^9}}],
+
+Cell["\<\
+Jun 11 2014 02:01:35 TLV - 11 - unrecognized OID; CM - MAC = dc : 45 : 17 : \
+a1 : 25 : ea; CMTS - MAC = 00 : 01 : 5 c : 3 e : 08 : 44; CM - QOS = 1.1; CM \
+- VER = 3.0; 
+
+\"'TLV-11 - unrecognized OID' is a harmless error.  It's a conflict with \
+Motorola devices having unsupported SNMP QoS components in our service.  This \
+doesn't mean that anything is necessarily wrong with the service, it just \
+means that the modem cannot fully utilize SNMP services for some reason on \
+that end.  I'm not showing the modem going through any total disconnects, and \
+signals do look good.  If this continues to be an issue, let us know!  We may \
+need to have a technician look into this.\"\
+\>", "Text",
+ CellChangeTimes->{{3.611443853268523*^9, 3.6114438779362383`*^9}, {
+  3.611444194279457*^9, 3.611444195953495*^9}}]
+}, Closed]],
+
+Cell["Terminology", "Section",
+ CellChangeTimes->{{3.609587675230597*^9, 3.609587689603732*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Events", "Section",
+ CellChangeTimes->{{3.609587675230597*^9, 3.609587689603732*^9}, {
+  3.611411977567284*^9, 3.6114119786205893`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", " ", "probeEvents", " ", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"probeEvents", "::", "usage"}], " ", "=", " ", 
+   "\"\<Time indexed listing of events pertaining to probes\>\""}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"probeEvents", " ", "=", " ", 
+    RowBox[{"{", " ", "\n", "   ", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\"\<probe\>\"", " ", "->", " ", "p1178"}], ",", " ", 
+        RowBox[{"\"\<ts\>\"", " ", "->", " ", 
+         RowBox[{"DateList", "[", "\"\<2013-02-01T13:00:00Z\>\"", "]"}]}], 
+        ",", " ", 
+        RowBox[{"\"\<event\>\"", " ", "->", " ", "\"\<24.94.68.214\>\""}]}], 
+       "}"}], ",", "\n", "   ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\"\<probe\>\"", " ", "->", " ", "p1178"}], ",", " ", 
+        RowBox[{"\"\<ts\>\"", " ", "->", " ", 
+         RowBox[{"DateList", "[", "\"\<2014-06-06T02:41:00Z\>\"", "]"}]}], 
+        ",", " ", 
+        RowBox[{"\"\<event\>\"", " ", "->", " ", "\"\<205.172.17.95\>\""}]}], 
+       "}"}], ",", "\n", "   ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\"\<probe\>\"", " ", "->", " ", "p1178"}], ",", " ", 
+        RowBox[{"\"\<ts\>\"", " ", "->", " ", 
+         RowBox[{"DateList", "[", "\"\<2014-06-10T02:41:00Z\>\"", "]"}]}], 
+        ",", " ", 
+        RowBox[{
+        "\"\<event\>\"", " ", "->", " ", "\"\<one bonded channel\>\""}]}], 
+       "}"}], ",", "\n", "   ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\"\<probe\>\"", " ", "->", " ", "p1178"}], ",", " ", 
+        RowBox[{"\"\<ts\>\"", " ", "->", " ", 
+         RowBox[{"DateList", "[", "\"\<2014-06-10T10:41:00Z\>\"", "]"}]}], 
+        ",", " ", 
+        RowBox[{
+        "\"\<event\>\"", " ", "->", " ", 
+         "\"\<Factory Reset; 6 bonded channels\>\""}]}], "}"}], ",", "\n", 
+      "   ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\"\<probe\>\"", " ", "->", " ", "p1178"}], ",", " ", 
+        RowBox[{"\"\<ts\>\"", " ", "->", " ", 
+         RowBox[{"DateList", "[", "\"\<2014-06-10T18:00:00Z\>\"", "]"}]}], 
+        ",", " ", 
+        RowBox[{"\"\<event\>\"", " ", "->", " ", "\"\<24.94.68.214\>\""}]}], 
+       "}"}], ",", " ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\"\<probe\>\"", " ", "->", " ", "p1178"}], ",", " ", 
+        RowBox[{"\"\<ts\>\"", " ", "->", " ", 
+         RowBox[{"DateList", "[", "\"\<2014-06-12T10:00:00Z\>\"", "]"}]}], 
+        ",", " ", 
+        RowBox[{
+        "\"\<event\>\"", " ", "->", " ", "\"\<capacity->15Mbps \>\""}]}], 
+       "}"}]}], "\n", "   ", "}"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{"probeEvents", " ", "//", " ", "TableForm"}]}], "Input",
+ CellChangeTimes->{{3.611435421506661*^9, 3.611435450617818*^9}, {
+   3.611435484305372*^9, 3.61143559498533*^9}, 3.6114356267237043`*^9, {
+   3.6116086289326363`*^9, 3.611608797306738*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Sources", "Section",
+ CellChangeTimes->{{3.609411393208486*^9, 3.609411426807868*^9}, {
+  3.609411492422267*^9, 3.609411499756665*^9}, {3.609414065506597*^9, 
+  3.60941407614053*^9}, {3.609587857466351*^9, 3.609587868878224*^9}, {
+  3.610225385053149*^9, 3.6102253859846067`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Display and Legends ", "Subsection",
+ CellChangeTimes->{{3.610224752948854*^9, 3.610224794867385*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["City where probe is located", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+  3.609416925560754*^9, 3.609416926713764*^9}, {3.6095876986480637`*^9, 
+  3.6095877279163437`*^9}, {3.609587877711246*^9, 3.6095878929893847`*^9}, {
+  3.610027486825843*^9, 3.610027504392045*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "cityOfProbe", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Block", "[", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "1165", "]"}], "=", "\"\<Hana\>\""}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "1178", "]"}], "=", "\"\<Hana\>\""}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "16065", "]"}], "=", "\"\<Hana\>\""}], ";",
+       "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "15111", "]"}], "=", "\"\<Kahului\>\""}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "2289", "]"}], "=", "\"\<BI:Hawi\>\""}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "12735", "]"}], "=", 
+       "\"\<BI:Kailua-Kona\>\""}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "10546", "]"}], "=", "\"\<BI:Hilo\>\""}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "14720", "]"}], "=", 
+       "\"\<Ohau:Kaneohe\>\""}], ";"}]}], "\[IndentingNewLine]", "]"}], ";"}],
+   "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"cityOfProbe", "/@", " ", "allProbes"}]}], "Input",
+ CellChangeTimes->{{3.6095878960450706`*^9, 3.609588023506249*^9}, {
+  3.609588054521934*^9, 3.6095880559259977`*^9}, {3.609589625879352*^9, 
+  3.609589645459016*^9}, {3.60958977148836*^9, 3.609589797678733*^9}, {
+  3.609589832478539*^9, 3.609589922410554*^9}, {3.609590011520235*^9, 
+  3.609590022917968*^9}, {3.609590181521654*^9, 3.6095902006545067`*^9}, {
+  3.609593033305694*^9, 3.60959317236436*^9}, {3.609825579534728*^9, 
+  3.609825595453724*^9}, {3.610027510131353*^9, 3.610027584268012*^9}, {
+  3.610192098581924*^9, 3.610192300306332*^9}, {3.610192384988669*^9, 
+  3.610192386566482*^9}, {3.610702878710774*^9, 3.610702892376225*^9}, {
+  3.610704172687916*^9, 3.610704174258247*^9}, {3.611592417186915*^9, 
+  3.611592423080729*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Color Scheme for probes", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+  3.609416925560754*^9, 3.609416926713764*^9}, {3.6095876986480637`*^9, 
+  3.6095877279163437`*^9}, {3.609587877711246*^9, 3.6095878929893847`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"allProbes", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "1178", ",", "1165", ",", "15111", ",", "2289", ",", "12735", ",", 
+     "10546", ",", "14720", ",", " ", "16065"}], "}"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.610192311346505*^9, 3.6101923496607847`*^9}, {
+  3.611504517864532*^9, 3.6115045208249702`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "colorCodeForProbe", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Block", "[", 
+   RowBox[{
+    RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "1165", "]"}], "=", "Blue"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "1178", "]"}], "=", "Red"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "16065", "]"}], "=", "Yellow"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "15111", "]"}], "=", "Purple"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "2289", "]"}], "=", "Gray"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "12735", "]"}], "=", "Orange"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "10546", "]"}], "=", "Pink"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "14720", "]"}], "=", "Black"}], 
+     ";"}]}], "\[IndentingNewLine]", "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.6095878960450706`*^9, 3.609588023506249*^9}, {
+   3.609588054521934*^9, 3.6095880559259977`*^9}, {3.609589625879352*^9, 
+   3.609589645459016*^9}, {3.60958977148836*^9, 3.609589797678733*^9}, {
+   3.609589832478539*^9, 3.609589922410554*^9}, {3.609590011520235*^9, 
+   3.609590022917968*^9}, {3.609590181521654*^9, 3.6095902006545067`*^9}, {
+   3.609593033305694*^9, 3.60959317236436*^9}, {3.609825579534728*^9, 
+   3.609825595453724*^9}, {3.610191997138557*^9, 3.610192082067629*^9}, {
+   3.610192357783834*^9, 3.610192360910739*^9}, {3.6101923991482563`*^9, 
+   3.610192400509234*^9}, {3.6101924392977743`*^9, 3.610192453902237*^9}, {
+   3.6101924885990047`*^9, 3.6101924891619873`*^9}, {3.610192545689827*^9, 
+   3.610192579232706*^9}, {3.610194538450824*^9, 3.610194538872404*^9}, 
+   3.610702812574707*^9, {3.611504501384203*^9, 3.6115045099926662`*^9}, {
+   3.6115910862079277`*^9, 3.6115911042898397`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["PlotStyle for probe ", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+  3.609416925560754*^9, 3.609416926713764*^9}, {3.6095876986480637`*^9, 
+  3.6095877279163437`*^9}, {3.609587877711246*^9, 3.6095878929893847`*^9}, {
+  3.609593184466234*^9, 3.6095931996395903`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "plotStyleForProbe", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"plotStyleForProbe", "[", 
+     RowBox[{"aProbe_Integer", ",", " ", "pSize_", ",", " ", "pOpacity_"}], 
+     "]"}], ":=", 
+    RowBox[{"colorCodeForProbe", "[", "aProbe", "]"}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"plotStyleForProbe", "[", 
+    RowBox[{"#", ",", ".001", ",", "0.5"}], "]"}], "&"}], "/@", " ", 
+  "allProbes"}]}], "Input",
+ CellChangeTimes->{{3.609593204803199*^9, 3.609593230631404*^9}, {
+   3.609593288176484*^9, 3.609593289542234*^9}, 3.609596671834626*^9, {
+   3.609596786715539*^9, 3.609596804848908*^9}, 3.609825581414867*^9, {
+   3.610014355057551*^9, 3.6100143796182833`*^9}, {3.6100148459027157`*^9, 
+   3.610014892922126*^9}, {3.6100150290412607`*^9, 3.610015033440484*^9}, {
+   3.610192419061798*^9, 3.610192428291113*^9}, 3.610192496072343*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Pretty Print for Probe", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+  3.609416925560754*^9, 3.609416926713764*^9}, {3.6095876986480637`*^9, 
+  3.6095877279163437`*^9}, {3.609587877711246*^9, 3.6095878929893847`*^9}, {
+  3.6095880746392593`*^9, 3.6095880793982*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "pprintProbe", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"pprintProbe", "[", "probe_Integer", "]"}], ":=", " ", 
+    RowBox[{"Style", "[", 
+     RowBox[{
+      RowBox[{"\"\< p\>\"", "<>", 
+       RowBox[{"ToString", "[", "probe", "]"}], " ", "<>", " ", "\"\<_\>\"", "<>", 
+       RowBox[{"cityOfProbe", "[", "probe", "]"}], "<>", "\"\< \>\""}], ",", 
+      RowBox[{"FontColor", "->", 
+       RowBox[{"colorCodeForProbe", "[", "probe", "]"}]}], ",", " ", "Plain", 
+      ",", "\"\<Text\>\""}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"pprintProbe", "[", "probes_List", "]"}], ":=", " ", 
+    RowBox[{"Row", "[", 
+     RowBox[{"pprintProbe", "/@", " ", "probes"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"pprintProbe", "/@", " ", "allProbes"}]}], "Input",
+ CellChangeTimes->{{3.6095878960450706`*^9, 3.609588023506249*^9}, {
+   3.609588054521934*^9, 3.609588203673903*^9}, {3.609588271226183*^9, 
+   3.609588356708252*^9}, {3.609588391971819*^9, 3.609588474552327*^9}, {
+   3.609588513009912*^9, 3.60958858335668*^9}, {3.609589065833316*^9, 
+   3.609589126991445*^9}, {3.609589161726678*^9, 3.609589219958922*^9}, 
+   3.609589285227072*^9, {3.60958931899531*^9, 3.609589605600635*^9}, {
+   3.60958994817761*^9, 3.609589990112047*^9}, {3.609590228545149*^9, 
+   3.609590230590086*^9}, {3.609594246568884*^9, 3.609594247134818*^9}, 
+   3.609825582333221*^9, {3.610016951142501*^9, 3.6100169518778067`*^9}, {
+   3.6100276019829683`*^9, 3.610027638315998*^9}, {3.6101925113114157`*^9, 
+   3.610192512826955*^9}, {3.610699709933305*^9, 3.610699785738306*^9}, {
+   3.610699826545787*^9, 3.610700020553586*^9}, 3.610702752725111*^9}],
+
+Cell[BoxData[
+ RowBox[{"pprintProbe", "[", " ", "allProbes", "]"}]], "Input",
+ CellChangeTimes->{{3.61069979456246*^9, 3.6106997982733097`*^9}}]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Sources", "Subsection",
+ CellChangeTimes->{{3.610225026334687*^9, 3.6102250574501667`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Clear", "[", "pingMeasurements", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"pingMeasurements", "::", "usage"}], "=", 
+    "\"\<What measurements to be loaded\>\""}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"pingMeasurements", "=", 
+  RowBox[{"If", "[", 
+   RowBox[{"True", ",", "\[IndentingNewLine]", 
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{"Egress", " ", "Path"}], " ", "*)"}], "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1665886", ",", "\"\<ping-24.94.68.1 - egress hop1\>\""}], 
+       "}"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"transpacific", " ", "entry", " ", "point"}], " ", "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1664935", ",", 
+        "\"\<ping-72.129.45.3 - egressToMainland - entry - 7 probes\>\""}], 
+       "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"Ingress", " ", "Path"}], " ", "*)"}], "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", "DNS", " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{"1665597", ",", "\"\<ping-24.25.227.55 - DNS - TWC\>\""}], 
+       "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1674540", ",", "\"\<STOPPED-ping-24.25.227.55 - DNS - Oceanic\>\""}], 
+       "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{"1684627", ",", "\"\<ping-205.172.19.79 - DNS - TWC\>\""}], 
+       "}"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"transpacific", " ", "crossing"}], " ", "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1673158", ",", 
+        "\"\<ping-104.34.2.250 - egressToMainland - TWC in CA p17329 - 7 \
+probes\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1673161", ",", 
+        "\"\<ping-205.172.17.95 - ingressFromMainland - p17329 to p1178 - 1 \
+probe\>\""}], "}"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1456602", ",", 
+        "\"\<STOPPED-ping-184.106.209.131 - egressToMainland - DCCA SpeedTest \
+- 5 probes\>\""}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+       "1603527", ",", 
+        "\"\<STOPPED-ping-184.106.209.131 - egressToMainland - DCCA SpeedTest \
+- 6 probes\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1604484", ",", 
+        "\"\<STOPPED-ping-184.106.209.131 - egressToMainland - DCCA SpeedTest \
+- 7 probes\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1684629", ",", 
+        "\"\<ping-184.106.209.131 - egressToMainland - DCCA SpeedTest - 8 \
+probes\>\""}], "}"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1464752", ",", 
+        "\"\<STOPPED-ping-198.45.56.12 - egressToMainland - Netflix - 5 \
+probes\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1604419", ",", 
+        "\"\<ping-198.45.56.12 - egressToMainland - Netflix - 7 probes\>\""}],
+        "}"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"interisland", " ", "ping", " ", "to", " ", "Chase"}], " ", 
+       "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1604357", ",", 
+        "\"\<ping-24.94.68.214 - ingressInterislandTo p1178 HanaHouse - 6 \
+probes\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1672504", ",", 
+        "\"\<STOPPED-ping-p1178 - ingressInterislandTo p1178 HanaHouse - 6 \
+probes\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1679785", ",", 
+        "\"\<STOPPED-ping-p1178 - ingressInterislandTo p1178 HanaHouse - 1 \
+probes\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1684626", ",", 
+        "\"\<ping-p1178 - ingressInterislandTo p1178 HanaHouse - 7 \
+probes\>\""}], "}"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "interisland", " ", "ping", " ", "to", " ", "Bill", " ", "and", " ", 
+        "Marty"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1672636", ",", 
+        "\"\<ping-24.94.69.215 - ingressInterislandTo Bill Sides - 7 probes\>\
+\""}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1672635", ",", 
+        "\"\<ping-24.94.69.12 - ingressInterislandTo MartyV Office - 6 probes\
+\>\""}], "}"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"To", " ", "Oahu"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1604580", ",", "\"\<STOPPED-ping-DigiFortress - 7 probes\>\""}], 
+       "}"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"To", " ", "SamKnows", " ", "Sites"}], " ", "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1696007", ",", "\"\<ping-SamKnows1.lax9.level3.net - 8 probes\>\""}], 
+       "}"}], " ", 
+      RowBox[{"(*", " ", 
+       RowBox[{"4.53", ".230", ".190"}], " ", "*)"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1696008", ",", 
+        "\"\<ping-ispmon.samknows.mlab1v4.lax01.measurement.net - 8 \
+probes\>\""}], "}"}], " ", 
+      RowBox[{"(*", " ", 
+       RowBox[{"72.52", ".4", ".91"}], " ", "*)"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1696009", ",", "\"\<ping-f1.st.lax00.tbone.rr.com - 8 probes\>\""}], 
+       "}"}]}], " ", 
+     RowBox[{"(*", " ", 
+      RowBox[{"209.18", ".33", ".170"}], " ", "*)"}], "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{"Egress", " ", "Path"}], " ", "*)"}], "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1665888", ",", "\"\<ping-24.25.230.137 - egress hop2\>\""}], 
+       "}"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"transpacific", " ", "entry", " ", "point"}], " ", "*)"}], 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"Ingress", " ", "Path"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{"1607723", ",", "\"\<ping-24.25.230.138 - ingress-hop1\>\""}], 
+       "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{"1664937", ",", "\"\<ping-72.129.45.79 - ingress-hop2\>\""}], 
+       "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1664936", ",", "\"\<STOPPED-ping-72.129.45.55 - ingress-hop3\>\""}], 
+       "}"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", "DNS", " ", "*)"}], "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"transpacific", " ", "crossing"}], " ", "*)"}], 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"interisland", " ", "ping", " ", "in"}], " ", "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1603529", ",", "\"\<STOPPED-ping-70.95.95.96 - Oahu - 6 probes\>\""}],
+        "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "1604357", ",", 
+        "\"\<STOPPED-ping-24.94.68.214 - ingressInterislandTo HanaHouse - \
+ending 20140606\>\""}], "}"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]",
+      "}"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.6107126010306787`*^9, 3.610712663240527*^9}, {
+   3.6111276857873297`*^9, 3.6111277138622637`*^9}, {3.611127753781879*^9, 
+   3.611127883437552*^9}, {3.6111279271694717`*^9, 3.611128003731031*^9}, {
+   3.611128041840562*^9, 3.6111280970047827`*^9}, {3.611128139077731*^9, 
+   3.6111281711681223`*^9}, {3.61112842210963*^9, 3.611128645844136*^9}, {
+   3.611128796155829*^9, 3.611128847530311*^9}, 3.6111289276309137`*^9, {
+   3.611128987662236*^9, 3.611129053109091*^9}, {3.6111291800171747`*^9, 
+   3.611129189418964*^9}, {3.611129230674037*^9, 3.61112930509867*^9}, {
+   3.611129351738659*^9, 3.6111293712052593`*^9}, {3.611129401753944*^9, 
+   3.611129487930883*^9}, {3.611129522416058*^9, 3.611129542897768*^9}, {
+   3.6111295791205606`*^9, 3.611129647922948*^9}, {3.611129679534556*^9, 
+   3.611129820290475*^9}, {3.611130283851762*^9, 3.611130329074377*^9}, {
+   3.6111306811107883`*^9, 3.611130687204318*^9}, {3.611338926503498*^9, 
+   3.611338926871497*^9}, {3.611339171461594*^9, 3.611339185226426*^9}, {
+   3.61144173540335*^9, 3.611441787234725*^9}, {3.611442029728877*^9, 
+   3.611442030294519*^9}, {3.611442064527673*^9, 3.611442065278276*^9}, {
+   3.611504644047368*^9, 3.611504666298019*^9}, {3.611504723107634*^9, 
+   3.6115047602228518`*^9}, {3.611504863807513*^9, 3.611504875736486*^9}, {
+   3.6115907562833643`*^9, 3.611590797384848*^9}, {3.61159123120708*^9, 
+   3.61159130520782*^9}, {3.61159134833293*^9, 3.611591411406481*^9}, {
+   3.611591472743967*^9, 3.611591473991087*^9}, {3.6115915062208757`*^9, 
+   3.611591571044589*^9}, {3.611591658138349*^9, 3.611591669763191*^9}, {
+   3.611591720073759*^9, 3.611591808238758*^9}, {3.611591957316141*^9, 
+   3.6115919582655773`*^9}, {3.611592060523386*^9, 3.611592083078678*^9}, {
+   3.611592240773144*^9, 3.6115922508946133`*^9}, {3.611592331000373*^9, 
+   3.611592346411613*^9}, {3.611622322718378*^9, 3.61162234482419*^9}, 
+   3.61162241480516*^9, 3.611622940774364*^9, {3.614014168232727*^9, 
+   3.6140142873281918`*^9}, {3.614014343399811*^9, 3.614014395954452*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["fetchJSONMeasurement", "Subsubsection",
+ CellChangeTimes->{{3.610225219896431*^9, 3.610225239694517*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "fetchJSONMeasurement", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Needs", "[", "\"\<JLink`\>\"", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"fetchJSONMeasurement", "[", 
+     RowBox[{"resultNumber_Integer", ",", " ", "friendlyName_String"}], "]"}],
+     ":=", 
+    RowBox[{"Module", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "defaultCacheDir", ",", " ", "fullPathToCache", ",", "uri", ",", " ", 
+        "jsonData"}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"defaultCacheDir", "=", 
+        RowBox[{"FileNameJoin", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"NotebookDirectory", "[", "]"}], ",", " ", 
+           "\"\<data\>\""}], "}"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"fullPathToCache", "=", 
+        RowBox[{"FileNameJoin", "[", 
+         RowBox[{"{", 
+          RowBox[{"defaultCacheDir", ",", 
+           RowBox[{"\"\<RIPE-Atlas-measurement-\>\"", "<>", 
+            RowBox[{"ToString", "[", "resultNumber", "]"}], "<>", "\"\<-\>\"",
+             "<>", "friendlyName", "<>", "\"\<.json\>\""}]}], "}"}], "]"}]}], 
+       ";", "\[IndentingNewLine]", 
+       RowBox[{"uri", "=", 
+        RowBox[{"\"\<https://atlas.ripe.net/api/v1/measurement/\>\"", "<>", 
+         RowBox[{"ToString", "[", "resultNumber", "]"}], "<>", 
+         "\"\</result\>\""}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "PREPARE", " ", "JSON", " ", "PARSER", " ", "FOR", " ", "LARGE", " ", 
+         "FILES"}], "  ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"InstallJava", "[", "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"LoadJavaClass", "[", "\"\<java.lang.System\>\"", "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"ReinstallJava", "[", 
+        RowBox[{
+         RowBox[{"CommandLine", "\[Rule]", "\"\<java\>\""}], ",", 
+         RowBox[{"JVMArguments", "\[Rule]", "\"\<-Xmx2024m\>\""}]}], "]"}], 
+       ";", "\[IndentingNewLine]", 
+       RowBox[{"LoadJavaClass", "[", "\"\<java.lang.System\>\"", "]"}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"FileExistsQ", "[", "fullPathToCache", "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"jsonData", "=", 
+          RowBox[{"Import", "[", 
+           RowBox[{"fullPathToCache", ",", "\"\<JSON\>\""}], "]"}]}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Module", "[", 
+           RowBox[{
+            RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"jsonData", "=", 
+              RowBox[{"Import", "[", 
+               RowBox[{"uri", ",", "\"\<JSON\>\""}], "]"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"Export", "[", 
+              RowBox[{
+              "fullPathToCache", ",", "jsonData", ",", "\"\<JSON\>\""}], 
+              "]"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(*", " ", 
+           RowBox[{"CLEAN", " ", "UP", " ", "JSON", " ", "PARSER"}], " ", 
+           "*)"}], "\[IndentingNewLine]", 
+          RowBox[{"UninstallJava", "[", "]"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(*", " ", 
+           RowBox[{"--", 
+            RowBox[{"\[Rule]", "RETURNING"}]}], " ", "*)"}], 
+          "\[IndentingNewLine]", "jsonData"}]}], "\[IndentingNewLine]", 
+        "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"If", "[", 
+   RowBox[{"False", ",", 
+    RowBox[{"fetchJSONMeasurement", "/@", " ", "pingMeasurements"}], ",", 
+    RowBox[{
+    "Message", "[", "\"\<Test skipped; did not load JSON files\>\"", "]"}]}], 
+   "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.61021513517784*^9, 3.610215141645459*^9}, {
+  3.610215196103022*^9, 3.610215368300859*^9}, {3.610215398382629*^9, 
+  3.610215684177384*^9}, {3.610215831237792*^9, 3.610215832634831*^9}, {
+  3.6102159113489323`*^9, 3.6102159328638153`*^9}, {3.610225408722117*^9, 
+  3.6102254948146*^9}, {3.614689486421895*^9, 3.61468949313373*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Selected Data", "Subsection",
+ CellChangeTimes->{{3.610225634718109*^9, 3.610225649412981*^9}, {
+  3.610226306975247*^9, 3.610226309325487*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", "tPingData", " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ClearAll", "[", "tPingData", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"tPingData", "::", "usage"}], "=", 
+     "\"\<Organize entires here to reflect traceroute path\>\""}], 
+    ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.610225731817306*^9, 3.610225736395132*^9}, {
+  3.610225791193286*^9, 3.6102258699306602`*^9}, {3.6106166997067003`*^9, 
+  3.610616721485463*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"tPingData", "=", 
+    RowBox[{"Flatten", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"fetchJSONMeasurement", "[", 
+         RowBox[{
+          RowBox[{"#", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], ",", 
+          RowBox[{"#", "[", 
+           RowBox[{"[", "2", "]"}], "]"}]}], "]"}], "&"}], "/@", " ", 
+       "pingMeasurements"}], ",", "1"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Dimensions", "[", 
+      RowBox[{"#", ",", 
+       RowBox[{"Depth", "[", "#", "]"}]}], "]"}], ",", " ", 
+     RowBox[{"Depth", "[", "#", "]"}], ",", 
+     RowBox[{"LeafCount", "[", "#", "]"}]}], "}"}], "&"}], "/@", " ", 
+  RowBox[{"{", "tPingData", "}"}]}]}], "Input",
+ CellChangeTimes->{{3.6102256904466677`*^9, 3.610225747243144*^9}, {
+   3.610225778715768*^9, 3.6102257823853283`*^9}, 3.610225827710452*^9, {
+   3.61022587984548*^9, 3.6102259007529573`*^9}, 3.61022596730479*^9, {
+   3.610226034225115*^9, 3.610226087365058*^9}, {3.6102261511951437`*^9, 
+   3.6102261558006372`*^9}, {3.610226881404107*^9, 3.6102268888110456`*^9}, {
+   3.6102269326485853`*^9, 3.610226950021776*^9}, {3.6105552654470863`*^9, 
+   3.6105552697030773`*^9}, {3.610555312444599*^9, 3.610555476441889*^9}, 
+   3.610695318727453*^9, 3.610696094959573*^9, 3.610698806194887*^9, {
+   3.6107048313904047`*^9, 3.610704836097912*^9}, {3.611127708480427*^9, 
+   3.611127721125923*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Transcode", "Subsection",
+ CellChangeTimes->{{3.610225634718109*^9, 3.610225649412981*^9}, {
+  3.610226306975247*^9, 3.610226324444332*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Conversion of Unix Machine Timestamp to MathematicaTime", \
+"Subsubsection",
+ CellChangeTimes->{3.610226540233872*^9, 3.610260712096154*^9}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "unixTimeToHST", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"unixTimeToHST", "::", "usage"}], "=", 
+    "\"\<Given a atlas.ripe.net timestamp, convert to Unix time and adjuat to \
+HST\>\""}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "MESSAGES", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"unixTimeToHST", "::", "unexpectedArgument"}], "[", "\"\<`1`\>\"",
+     "]"}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "IMPLEMETATION", " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Hawaiian", " ", "Timezone", " ", "is"}], " ", "-", 
+    RowBox[{"10", " ", "from", " ", "GMT"}]}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"unixTimeToHST", "[", "x_Integer", "]"}], ":=", 
+    RowBox[{"DateList", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"AbsoluteTime", "[", 
+        RowBox[{"{", 
+         RowBox[{"1970", ",", "1", ",", "1", ",", "2", ",", "0", ",", "0"}], 
+         "}"}], "]"}], "+", "x"}], ",", 
+      RowBox[{"TimeZone", "\[Rule]", 
+       RowBox[{"-", "10.0"}]}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"UNEXPECTED", " ", "ARGUMENTS"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"unixTimeToHST", "[", "x_", "]"}], ":=", 
+    RowBox[{"Message", "[", 
+     RowBox[{
+      RowBox[{"unixTimeToHST", "::", "unexpectedArgument"}], ",", "x"}], 
+     "]"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"unixTimeToHST", "[", "1330434000", "]"}], "\n", 
+ RowBox[{"{", 
+  RowBox[{"2012", ",", "2", ",", "28", ",", "10", ",", "0", ",", "0.`"}], 
+  "}"}]}], "Input",
+ CellChangeTimes->{{3.610226514760137*^9, 3.6102265505508537`*^9}, {
+  3.6102266200860567`*^9, 3.6102267756411943`*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Verify : result types are known", "Subsubsection",
+ CellChangeTimes->{{3.610226540233872*^9, 3.61022659113935*^9}, {
+  3.610259379641667*^9, 3.610259431715487*^9}, {3.610259495009248*^9, 
+  3.610259500033244*^9}}],
+
+Cell["\<\
+Purpose of this section is to verify result types and values are known -- by \
+a process of elimination.
+
+Strategy: Collect results, and then specify patterns and delete.  The result \
+should be an empty set.\
+\>", "Text",
+ CellChangeTimes->{{3.610259460777877*^9, 3.610259563166295*^9}, {
+  3.610260698774762*^9, 3.610260699317514*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "results", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"results", "::", "usage"}], "=", "\"\<Holds timing results\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"results", "::", "unknownPattern"}], "=", 
+   "\"\<An unknown pattern was detected\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"results", "::", "patternsVerified"}], "=", 
+   "\"\<All results matched known patterns\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"results", "=", 
+   RowBox[{"\"\<result\>\"", "/.", " ", "tPingData"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.6102595840029*^9, 3.610259589825789*^9}, {
+  3.61026036827295*^9, 3.6102604533546753`*^9}, {3.610260661990438*^9, 
+  3.61026068162932*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", 
+   RowBox[{
+   "pNormal", ",", "pDup1", ",", "pDup2", ",", "pUnreachable", ",", 
+    "pUnreachable2", ",", "pAllPatterns"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pNormal", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"\"\<rtt\>\"", "\[Rule]", "rtt_"}], "}"}], "|", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\"\<rtt\>\"", "\[Rule]", "rtt_"}], ",", 
+      RowBox[{"\"\<ttl\>\"", "\[Rule]", "_Integer"}]}], "}"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pDup1", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\"\<dup\>\"", "\[Rule]", "_Integer"}], ",", 
+     RowBox[{"\"\<rtt\>\"", "\[Rule]", "rtt_"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pDup2", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\"\<dup\>\"", "\[Rule]", "_Integer"}], ",", 
+     RowBox[{"\"\<rtt\>\"", "\[Rule]", "rtt_"}], ",", 
+     RowBox[{"\"\<ttl\>\"", "\[Rule]", "_Integer"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pUnreachable", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\"\<srcaddr\>\"", "\[Rule]", "ipAddr_String"}], ",", " ", 
+     RowBox[{"\"\<x\>\"", "\[Rule]", "\"\<*\>\""}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pUnreachable2", "=", 
+   RowBox[{"{", 
+    RowBox[{"\"\<x\>\"", "\[Rule]", "\"\<*\>\""}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"pAllPatterns", "=", 
+    RowBox[{"{", 
+     RowBox[{
+     "pNormal", ",", "pDup1", ",", "pDup2", ",", "pUnreachable", ",", 
+      "pUnreachable2"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "VERIFY", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Block", "[", 
+  RowBox[{
+   RowBox[{"{", "resultsWithUnknownValues", "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"resultsWithUnknownValues", "=", 
+     RowBox[{"DeleteCases", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"DeleteCases", "[", 
+          RowBox[{"#", ",", 
+           RowBox[{"Alternatives", "@@", "pAllPatterns"}]}], "]"}], "&"}], "/@",
+         "results"}], ",", 
+       RowBox[{"{", "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Length", "[", "resultsWithUnknownValues", "]"}], ">", "0"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"Message", "[", 
+       RowBox[{"results", "::", "unknownPattern"}], "]"}], ",", " ", 
+      "\[IndentingNewLine]", 
+      RowBox[{"results", "::", "patternsVerified"}]}], "]"}]}]}], 
+  "]"}]}], "Input",
+ CellChangeTimes->{{3.6102595940041513`*^9, 3.610259619678485*^9}, {
+  3.6102598305360203`*^9, 3.610259869442219*^9}, {3.6102599723211527`*^9, 
+  3.610259999076665*^9}, {3.610260093852304*^9, 3.610260326837373*^9}, {
+  3.61026046531277*^9, 3.61026055139681*^9}, {3.610449769613144*^9, 
+  3.610449769891869*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Transcode JSON data to CDF", "Subsubsection",
+ CellChangeTimes->{{3.610226540233872*^9, 3.61022659113935*^9}, {
+  3.610260831921956*^9, 3.610260845328677*^9}, {3.610260900031396*^9, 
+  3.6102609313755083`*^9}, {3.610450121947287*^9, 3.610450124673335*^9}, {
+  3.610547534905026*^9, 3.6105475415039167`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", "resultsToCDF", "]"}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "MESSAGES", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"resultsToCDF", "::", "usage"}], "=", 
+   "\"\<Convert the JSON data into CDF Array\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"resultsToCDF", "::", "unexpectedArg"}], "=", "\"\<`1`\>\""}], 
+   ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "IMPLEMENTATION", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"resultsToCDF", "[", "aJSONResults_List", "]"}], ":=", " ", 
+    RowBox[{"Block", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"rtts", ",", " ", "dropped"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"rtts", "=", 
+        RowBox[{"\"\<rtt\>\"", "/.", " ", 
+         RowBox[{"Cases", "[", 
+          RowBox[{"aJSONResults", ",", "pNormal"}], "]"}]}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+         RowBox[{"FIXME", " ", "-", " ", 
+          RowBox[{
+          "what", " ", "should", " ", "be", " ", "done", " ", "with", " ", 
+           "the", " ", "DUP", " ", 
+           RowBox[{"matches", "?", "  ", "At"}], " ", "present"}]}], ",", " ", 
+         RowBox[{"they", " ", "are", " ", "ignored"}]}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"dropped", "=", 
+        RowBox[{"Cases", "[", 
+         RowBox[{"aJSONResults", ",", 
+          RowBox[{"pUnreachable", "|", "pUnreachable2"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"--", 
+         RowBox[{"\[Rule]", " ", "RETURNING"}]}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{"rtts", ",", "dropped"}], "}"}]}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"UNEXPECTED", " ", "ARGUMENT"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"resultsToCDF", "[", "x_", "]"}], ":=", 
+    RowBox[{"Message", "[", 
+     RowBox[{
+      RowBox[{"resultsToCDF", "::", "unexpectedArg"}], ",", "x"}], "]"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", "jsonToCDF", "]"}], ";"}], "\[IndentingNewLine]", 
+  
+  RowBox[{"(*", " ", "MESSAGES", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"jsonToCDF", "::", "usage"}], "=", 
+   "\"\<Convert the JSON data into CDF Array\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"jsonToCDF", "::", "unexpectedArg"}], "=", "\"\<`1`\>\""}], ";"}],
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "IMPLEMENTATION", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"jsonToCDF", "[", "aJSON_List", "]"}], ":=", " ", 
+    RowBox[{"Block", "[", 
+     RowBox[{
+      RowBox[{"{", "convertedData", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"convertedData", "=", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+            "\"\<prb_id\>\"", ",", "\"\<dst_addr\>\"", ",", "\"\<sent\>\"", 
+             ",", "\"\<timestamp\>\"", ",", "\"\<result\>\""}], "}"}], "/.", 
+           "#"}], "&"}], "/@", "aJSON"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Join", "[", 
+          RowBox[{
+           RowBox[{"#", "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ";;", "3"}], "]"}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"unixTimeToHST", "[", 
+             RowBox[{"#", "[", 
+              RowBox[{"[", "4", "]"}], "]"}], "]"}], "}"}], ",", 
+           RowBox[{"resultsToCDF", "[", 
+            RowBox[{"#", "[", 
+             RowBox[{"[", "5", "]"}], "]"}], "]"}]}], "]"}], "&"}], "/@", " ",
+         "convertedData"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"jsonToCDF", "[", "aResult_String", "]"}], "=", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", "}"}], ",", "0"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"UNEXPECTED", " ", "ARGUMENT"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"jsonToCDF", "[", "x_", "]"}], ":=", 
+    RowBox[{"Message", "[", 
+     RowBox[{
+      RowBox[{"jsonToCDF", "::", "unexpectedArg"}], ",", "x"}], "]"}]}], 
+   ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Length", "[", 
+  RowBox[{"tPingDataCDF", "=", 
+   RowBox[{"jsonToCDF", "[", "tPingData", "]"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.610226378780342*^9, 3.610226461363656*^9}, {
+   3.610226602829543*^9, 3.61022660919578*^9}, 3.610226790657968*^9, {
+   3.610226845597456*^9, 3.610226850630691*^9}, {3.610227021075243*^9, 
+   3.610227024144661*^9}, {3.610227128026976*^9, 3.610227132354763*^9}, {
+   3.610227170879415*^9, 3.6102271729346933`*^9}, {3.610227292009387*^9, 
+   3.610227403112917*^9}, 3.610227462349861*^9, {3.610227495931616*^9, 
+   3.610227510523116*^9}, {3.610260851874856*^9, 3.610260878878028*^9}, {
+   3.6102609198472633`*^9, 3.610261065390089*^9}, {3.610261110569742*^9, 
+   3.6102613126249247`*^9}, {3.610261347491941*^9, 3.6102616193593073`*^9}, 
+   3.610261907868496*^9, {3.6102623583856897`*^9, 3.610262361179203*^9}, 
+   3.6104486327783937`*^9, {3.610450956062992*^9, 3.610450974162698*^9}, {
+   3.61045157032909*^9, 3.610451666830155*^9}, {3.6104517176030903`*^9, 
+   3.6104517227302303`*^9}, {3.610451820168511*^9, 3.610451925034281*^9}, {
+   3.610451962037141*^9, 3.6104520780231237`*^9}, {3.610452116271956*^9, 
+   3.61045215451972*^9}, {3.6104522724601183`*^9, 3.6104523072442627`*^9}, {
+   3.61045235450881*^9, 3.6104523749476147`*^9}, {3.610452421954131*^9, 
+   3.6104524258947372`*^9}, {3.6104524646060677`*^9, 3.610452695562314*^9}, {
+   3.610454218517634*^9, 3.6104542320759077`*^9}, {3.610454267279532*^9, 
+   3.6104543279056463`*^9}, {3.610454375390657*^9, 3.6104543822659473`*^9}, {
+   3.610454432919611*^9, 3.6104545940849867`*^9}, {3.610454647485997*^9, 
+   3.610454648913125*^9}, {3.61045469969331*^9, 3.610454735926455*^9}, {
+   3.610454914487204*^9, 3.610454943958418*^9}, {3.610454988194933*^9, 
+   3.610455148637295*^9}, {3.610548867592827*^9, 3.6105488865320463`*^9}, {
+   3.61055517443887*^9, 3.610555224436005*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Result Summary Types ", "Subsubsection",
+ CellChangeTimes->{{3.610226540233872*^9, 3.61022659113935*^9}, {
+  3.610260831921956*^9, 3.610260845328677*^9}, {3.610260900031396*^9, 
+  3.6102609313755083`*^9}, {3.610450121947287*^9, 3.610450124673335*^9}, {
+  3.610547534905026*^9, 3.610547572765394*^9}, {3.6105479417533083`*^9, 
+  3.610547947885887*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"rttMean", "::", "usage"}], "=", "\"\<Mean value\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"rttMean5pct", "::", "usage"}], "=", 
+   "\"\<Mean of RTTs after dropping 5% of smallest and largest \
+elements\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"rttMean95pct", "::", "usage"}], "=", 
+   "\"\<Mean of RTTs after dropping 95% of smallest and largest \
+elements\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"rttMax", "::", "usage"}], "=", 
+   "\"\<Maximum RTT value from the set\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"rttMin", "::", "usage"}], "=", 
+   "\"\<Minimum RTT value from the set\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"rttMean", "[", "rtt_List", "]"}], ":=", 
+   RowBox[{"Mean", "[", "rtt", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"rttMean95pct", "[", "rtt_List", "]"}], ":=", 
+   RowBox[{"TrimmedMean", "[", 
+    RowBox[{"rtt", ",", "0.05"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"rttMean5pct", "[", "rtt_List", "]"}], ":=", 
+   RowBox[{"TrimmedMean", "[", 
+    RowBox[{"rtt", ",", "0.45"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"rttMax", "[", "rtt_List", "]"}], ":=", 
+   RowBox[{"Max", "[", "rtt", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"rttMin", "[", "rtt_List", "]"}], ":=", 
+   RowBox[{"Min", "[", "rtt", "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.610547580794097*^9, 3.6105475934772367`*^9}, {
+  3.610547630219912*^9, 3.610547779715568*^9}, {3.6105478110474052`*^9, 
+  3.610547834614676*^9}, {3.6105517143889303`*^9, 3.610551826428564*^9}, {
+  3.610554831090104*^9, 3.610554842816326*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Accessor Functions", "Subsubsection",
+ CellChangeTimes->{{3.610226540233872*^9, 3.61022659113935*^9}, {
+  3.610260831921956*^9, 3.610260845328677*^9}, {3.610260900031396*^9, 
+  3.6102609313755083`*^9}, {3.610450121947287*^9, 3.610450124673335*^9}, {
+  3.610547534905026*^9, 3.610547572765394*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", "targetsIn", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"targetsIn", "[", "tData_List", "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{"DeleteDuplicates", "[", 
+     RowBox[{"Cases", "[", 
+      RowBox[{"tData", ",", 
+       RowBox[{
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+         "prbID_Integer", ",", "\[IndentingNewLine]", "target_String", ",", 
+          "\[IndentingNewLine]", "sent_Integer", ",", "\[IndentingNewLine]", 
+          "timestamp_", ",", "\[IndentingNewLine]", "rttList_List", ",", 
+          "\[IndentingNewLine]", "dropped_List"}], "\[IndentingNewLine]", 
+         "}"}], "\[RuleDelayed]", "target"}]}], "]"}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}], " "}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"targetsIn", "[", "tPingDataCDF", "]"}], " "}]}], "Input",
+ CellChangeTimes->{{3.610547961516992*^9, 3.610548414162633*^9}, {
+  3.610548683523102*^9, 3.610548766276609*^9}, {3.61054903335807*^9, 
+  3.610549062163909*^9}, {3.610549190802847*^9, 3.610549191394558*^9}, {
+  3.6105492622563257`*^9, 3.610549357807522*^9}, {3.610549426069891*^9, 
+  3.610549458388578*^9}, {3.610549496409535*^9, 3.6105495624941072`*^9}, {
+  3.610549593802499*^9, 3.610549759031282*^9}, {3.610549862082841*^9, 
+  3.610549864937516*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"probesIn", "[", "tData_List", "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"DeleteDuplicates", "[", 
+     RowBox[{"Cases", "[", 
+      RowBox[{"tData", ",", 
+       RowBox[{
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+         "prbID_Integer", ",", "\[IndentingNewLine]", "target_String", ",", 
+          "\[IndentingNewLine]", "sent_Integer", ",", "\[IndentingNewLine]", 
+          "timestamp_", ",", "\[IndentingNewLine]", "rttList_List", ",", 
+          "\[IndentingNewLine]", "dropped_List"}], "\[IndentingNewLine]", 
+         "}"}], "\[RuleDelayed]", "prbID"}]}], "]"}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}], " "}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"probesIn", "[", "tPingDataCDF", "]"}], " "}]}], "Input",
+ CellChangeTimes->{{3.610549883007753*^9, 3.610549909061707*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", "selectByHours", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"selectBy", "[", 
+     RowBox[{"tData_List", ",", "probes_List", ",", "targetIP_String"}], 
+     "]"}], ":=", 
+    RowBox[{"Cases", "[", 
+     RowBox[{"tData", ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", "\[IndentingNewLine]", 
+        RowBox[{
+        "prbID_Integer", ",", "\[IndentingNewLine]", "target_String", ",", 
+         "\[IndentingNewLine]", "sent_Integer", ",", "\[IndentingNewLine]", 
+         "timestamp_", ",", "\[IndentingNewLine]", "rttList_List", ",", 
+         "\[IndentingNewLine]", "dropped_List"}], "\[IndentingNewLine]", 
+        "}"}], "/;", " ", 
+       RowBox[{"And", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"MemberQ", "[", 
+          RowBox[{"probes", ",", "prbID"}], "]"}], " ", ",", " ", 
+         "\[IndentingNewLine]", 
+         RowBox[{"StringMatchQ", "[", 
+          RowBox[{"target", ",", "targetIP"}], "]"}]}], "]"}]}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Length", "[", 
+  RowBox[{"selectBy", "[", 
+   RowBox[{"tPingDataCDF", ",", 
+    RowBox[{"{", "1165", "}"}], ",", "\"\<24.94.68.1\>\""}], "]"}], 
+  "]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.610552561152492*^9, 3.610552600451372*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"selectBy", "[", 
+     RowBox[{"tData_List", ",", "probes_List", ",", "targetIPs_List"}], "]"}],
+     ":=", 
+    RowBox[{"Cases", "[", 
+     RowBox[{"tData", ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", "\[IndentingNewLine]", 
+        RowBox[{
+        "prbID_Integer", ",", "\[IndentingNewLine]", "target_String", ",", 
+         "\[IndentingNewLine]", "sent_Integer", ",", "\[IndentingNewLine]", 
+         "timestamp_", ",", "\[IndentingNewLine]", "rttList_List", ",", 
+         "\[IndentingNewLine]", "dropped_List"}], "\[IndentingNewLine]", 
+        "}"}], "/;", " ", 
+       RowBox[{"And", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"MemberQ", "[", 
+          RowBox[{"probes", ",", "prbID"}], "]"}], " ", ",", " ", 
+         "\[IndentingNewLine]", 
+         RowBox[{"StringMatchQ", "[", 
+          RowBox[{"target", ",", 
+           RowBox[{"Alternatives", "@@", "targetIPs"}]}], "]"}]}], "]"}]}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Length", "[", 
+  RowBox[{"selectBy", "[", 
+   RowBox[{"tPingDataCDF", ",", 
+    RowBox[{"{", "1165", "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\"\<24.94.68.214\>\"", ",", "\"\<205.172.17.95\>\""}], "}"}]}], 
+   "]"}], "]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.611437881093564*^9, 3.611437913525716*^9}, 
+   3.611438123206848*^9}],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ClearAll", "[", "selectByHours", "]"}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"selectByHours", "[", 
+      RowBox[{
+      "tData_List", ",", "probes_List", ",", "targetIP_String", ",", 
+       "hours_List"}], "]"}], ":=", 
+     RowBox[{"Cases", "[", 
+      RowBox[{"tData", ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+         "prbID_Integer", ",", "\[IndentingNewLine]", "target_String", ",", 
+          "\[IndentingNewLine]", "sent_Integer", ",", "\[IndentingNewLine]", 
+          "timestamp_", ",", "\[IndentingNewLine]", "rttList_List", ",", 
+          "\[IndentingNewLine]", "dropped_List"}], "\[IndentingNewLine]", 
+         "}"}], "/;", " ", 
+        RowBox[{"And", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"MemberQ", "[", 
+           RowBox[{"probes", ",", "prbID"}], "]"}], " ", ",", " ", 
+          "\[IndentingNewLine]", 
+          RowBox[{"StringMatchQ", "[", 
+           RowBox[{"target", ",", "targetIP"}], "]"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"MemberQ", "[", 
+           RowBox[{"hours", ",", 
+            RowBox[{"timestamp", "[", 
+             RowBox[{"[", "4", "]"}], "]"}]}], "]"}]}], "]"}]}]}], 
+      "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "TEST", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"Length", "[", 
+    RowBox[{"selectByHours", "[", 
+     RowBox[{"tPingDataCDF", ",", 
+      RowBox[{"{", "1165", "}"}], ",", "\"\<24.94.68.1\>\"", ",", 
+      RowBox[{"{", "1", "}"}]}], "]"}], "]"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.610547961516992*^9, 3.610548414162633*^9}, {
+  3.610548683523102*^9, 3.610548766276609*^9}, {3.61054903335807*^9, 
+  3.610549062163909*^9}, {3.610549190802847*^9, 3.610549191394558*^9}, {
+  3.6105492622563257`*^9, 3.610549357807522*^9}, {3.610549426069891*^9, 
+  3.610549458388578*^9}, {3.610549496409535*^9, 3.6105495624941072`*^9}, {
+  3.610549593802499*^9, 3.6105497413584967`*^9}, {3.610550413533902*^9, 
+  3.610550555359017*^9}, {3.6105505911647987`*^9, 3.610550610593429*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Clear", "[", "selectByTimeSlice", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"selectByTimeSlice", "[", 
+     RowBox[{
+     "tData_List", ",", "probes_List", ",", "targetIP_String", ",", 
+      "timeSlice_List"}], "]"}], ":=", 
+    RowBox[{"Cases", "[", 
+     RowBox[{"tData", ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", "\[IndentingNewLine]", 
+        RowBox[{
+        "prbID_Integer", ",", "\[IndentingNewLine]", "target_String", ",", 
+         "\[IndentingNewLine]", "sent_Integer", ",", "\[IndentingNewLine]", 
+         "timestamp_", ",", "\[IndentingNewLine]", "rttList_List", ",", 
+         "\[IndentingNewLine]", "dropped_List"}], "\[IndentingNewLine]", 
+        "}"}], "/;", " ", 
+       RowBox[{"And", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"MemberQ", "[", 
+          RowBox[{"probes", ",", "prbID"}], "]"}], " ", ",", " ", 
+         "\[IndentingNewLine]", 
+         RowBox[{"StringMatchQ", "[", 
+          RowBox[{"target", ",", "targetIP"}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"AbsoluteTime", "[", 
+           RowBox[{"timeSlice", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "]"}], "\[LessEqual]", " ", 
+          RowBox[{"AbsoluteTime", "[", "timestamp", "]"}], " ", 
+          "\[LessEqual]", 
+          RowBox[{"AbsoluteTime", "[", 
+           RowBox[{"timeSlice", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], "]"}]}]}], "\[IndentingNewLine]", 
+        "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Length", "[", 
+  RowBox[{"selectByTimeSlice", "[", 
+   RowBox[{"tPingDataCDF", ",", 
+    RowBox[{"{", "1165", "}"}], ",", "\"\<24.94.68.1\>\"", ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"2014", ",", "5", ",", "19", ",", "11"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"2014", ",", "5", ",", "19", ",", "12"}], "}"}]}], "}"}]}], 
+   "]"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.610550722716278*^9, 3.610550748612966*^9}, {
+   3.610550980372219*^9, 3.610551100317321*^9}, {3.610551131322936*^9, 
+   3.610551197589992*^9}, {3.6105512464362*^9, 3.61055125817028*^9}, {
+   3.6105512983593616`*^9, 3.610551368508738*^9}, {3.610551416129469*^9, 
+   3.610551417154591*^9}, 3.610551459981608*^9, 3.6105515337059307`*^9, {
+   3.610551663010889*^9, 3.610551686125842*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", "rttDateListPlot", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"rttDateListPlot", "[", 
+     RowBox[{"tData_List", ",", "probes_List", ",", "targetIP_String"}], 
+     "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"Block", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"matches", ",", "timeAndRtt", ",", "timeAndDropCount"}], "}"}],
+       ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"matches", "=", 
+        RowBox[{"selectBy", "[", 
+         RowBox[{"tData", ",", "probes", ",", "targetIP"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"timeAndRtt", "=", "\[IndentingNewLine]", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"#", "[", 
+               RowBox[{"[", "4", "]"}], "]"}], ",", 
+              RowBox[{"rttMin", "[", 
+               RowBox[{"#", "[", 
+                RowBox[{"[", "5", "]"}], "]"}], "]"}]}], "}"}], "&"}], "/@", 
+           "matches"}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"#", "[", 
+               RowBox[{"[", "4", "]"}], "]"}], ",", 
+              RowBox[{"rttMean5pct", "[", 
+               RowBox[{"#", "[", 
+                RowBox[{"[", "5", "]"}], "]"}], "]"}]}], "}"}], "&"}], "/@", 
+           "matches"}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"#", "[", 
+               RowBox[{"[", "4", "]"}], "]"}], ",", 
+              RowBox[{"rttMax", "[", 
+               RowBox[{"#", "[", 
+                RowBox[{"[", "5", "]"}], "]"}], "]"}]}], "}"}], "&"}], "/@", 
+           "matches"}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"#", "[", 
+               RowBox[{"[", "4", "]"}], "]"}], ",", 
+              RowBox[{"-", 
+               RowBox[{"Length", "[", 
+                RowBox[{"#", "[", 
+                 RowBox[{"[", "5", "]"}], "]"}], "]"}]}]}], "}"}], "&"}], "/@",
+            "matches"}]}], "\[IndentingNewLine]", "}"}]}], 
+       "\[IndentingNewLine]", ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"DateListPlot", "[", "\[IndentingNewLine]", 
+        RowBox[{"timeAndRtt", ",", "\[IndentingNewLine]", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{"Automatic", ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "17"}], ",", " ", "150"}], "}"}]}], "}"}]}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Joined", "\[Rule]", "True"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"ImageSize", "\[Rule]", "Medium"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"PlotLabel", "\[Rule]", 
+          RowBox[{"StringForm", "[", 
+           RowBox[{"\"\<`1` RTT to `2`\>\"", ",", 
+            RowBox[{"pprintProbe", "[", "probes", "]"}], ",", "targetIP", ",", 
+            RowBox[{"FontColor", "\[Rule]", "Black"}], ",", " ", "Plain", 
+            ",", "\"\<Text\>\""}], " ", "]"}]}]}], "\[IndentingNewLine]", 
+        "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"rttDateListPlot", "[", 
+     RowBox[{"tData_List", ",", "probes_List", ",", "targetIPs_List"}], "]"}],
+     ":=", "\[IndentingNewLine]", 
+    RowBox[{"Block", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"matches", ",", "timeAndRtt", ",", "timeAndDropCount"}], "}"}],
+       ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"matches", "=", 
+        RowBox[{"selectBy", "[", 
+         RowBox[{"tData", ",", "probes", ",", "targetIPs"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"timeAndRtt", "=", "\[IndentingNewLine]", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"#", "[", 
+               RowBox[{"[", "4", "]"}], "]"}], ",", 
+              RowBox[{"rttMin", "[", 
+               RowBox[{"#", "[", 
+                RowBox[{"[", "5", "]"}], "]"}], "]"}]}], "}"}], "&"}], "/@", 
+           "matches"}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"#", "[", 
+               RowBox[{"[", "4", "]"}], "]"}], ",", 
+              RowBox[{"rttMean5pct", "[", 
+               RowBox[{"#", "[", 
+                RowBox[{"[", "5", "]"}], "]"}], "]"}]}], "}"}], "&"}], "/@", 
+           "matches"}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"#", "[", 
+               RowBox[{"[", "4", "]"}], "]"}], ",", 
+              RowBox[{"rttMax", "[", 
+               RowBox[{"#", "[", 
+                RowBox[{"[", "5", "]"}], "]"}], "]"}]}], "}"}], "&"}], "/@", 
+           "matches"}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"#", "[", 
+               RowBox[{"[", "4", "]"}], "]"}], ",", 
+              RowBox[{"-", 
+               RowBox[{"Length", "[", 
+                RowBox[{"#", "[", 
+                 RowBox[{"[", "5", "]"}], "]"}], "]"}]}]}], "}"}], "&"}], "/@",
+            "matches"}]}], "\[IndentingNewLine]", "}"}]}], 
+       "\[IndentingNewLine]", ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"DateListPlot", "[", "\[IndentingNewLine]", 
+        RowBox[{"timeAndRtt", ",", "\[IndentingNewLine]", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{"Automatic", ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "17"}], ",", " ", "150"}], "}"}]}], "}"}]}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Joined", "\[Rule]", "True"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"ImageSize", "\[Rule]", "Medium"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"PlotLabel", "\[Rule]", 
+          RowBox[{"StringForm", "[", 
+           RowBox[{"\"\<`1` RTT to `2`\>\"", ",", 
+            RowBox[{"pprintProbe", "[", "probes", "]"}], ",", "targetIPs", 
+            ",", 
+            RowBox[{"FontColor", "\[Rule]", "Black"}], ",", " ", "Plain", 
+            ",", "\"\<Text\>\""}], " ", "]"}]}]}], "\[IndentingNewLine]", 
+        "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.610551854490129*^9, 3.610552108416559*^9}, {
+   3.610552148600603*^9, 3.610552182206778*^9}, {3.6105526094540987`*^9, 
+   3.610552731820182*^9}, {3.610552798775949*^9, 3.610552867299778*^9}, {
+   3.6105529025366983`*^9, 3.6105529756848516`*^9}, {3.610553027762941*^9, 
+   3.610553070814639*^9}, {3.6105531017661047`*^9, 3.610553160593925*^9}, {
+   3.610553263955894*^9, 3.61055332062547*^9}, 3.610553357111038*^9, {
+   3.610553422627125*^9, 3.610553448601583*^9}, {3.610553539220476*^9, 
+   3.6105536352533417`*^9}, {3.610553668477404*^9, 3.6105537162399883`*^9}, {
+   3.6105537582775717`*^9, 3.610553819361827*^9}, {3.610553880400114*^9, 
+   3.610553928346929*^9}, {3.6105540153271217`*^9, 3.61055401597328*^9}, 
+   3.610554048771926*^9, {3.610554085777362*^9, 3.610554087209196*^9}, {
+   3.61055412089533*^9, 3.610554124591384*^9}, {3.610554167972454*^9, 
+   3.6105542311805763`*^9}, {3.610554287958612*^9, 3.610554387984289*^9}, {
+   3.6105544374681187`*^9, 3.610554437634674*^9}, {3.610554489832143*^9, 
+   3.610554539443995*^9}, {3.6105546167292557`*^9, 3.610554618680538*^9}, {
+   3.610555772473228*^9, 3.6105557907824717`*^9}, {3.610555963341147*^9, 
+   3.610556002001431*^9}, {3.610556107794807*^9, 3.610556138976573*^9}, {
+   3.610556236332266*^9, 3.610556259065016*^9}, {3.610556294488819*^9, 
+   3.610556352733396*^9}, {3.61055639804762*^9, 3.610556398794786*^9}, {
+   3.610556463292911*^9, 3.610556495259058*^9}, {3.610556704903157*^9, 
+   3.610556705252945*^9}, {3.610558495556406*^9, 3.6105584971814423`*^9}, {
+   3.61056165224195*^9, 3.610561687816201*^9}, {3.610561757266317*^9, 
+   3.6105618117076406`*^9}, {3.610562451568256*^9, 3.610562469451627*^9}, {
+   3.610694158662813*^9, 3.610694175941369*^9}, {3.610694276405514*^9, 
+   3.6106942770983677`*^9}, {3.610696857972129*^9, 3.6106969156933737`*^9}, {
+   3.6106996817728863`*^9, 3.6106996967745934`*^9}, {3.610702849293618*^9, 
+   3.61070285366989*^9}, {3.610702947235491*^9, 3.610703024933504*^9}, {
+   3.610703152031396*^9, 3.6107031900681133`*^9}, {3.610703279315942*^9, 
+   3.610703280296444*^9}, 3.611437281902334*^9, {3.611438830271305*^9, 
+   3.611438844759153*^9}, {3.611635015749082*^9, 3.611635023237404*^9}, {
+   3.6116355635524673`*^9, 3.6116355640633287`*^9}}]
+}, Closed]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Egress", "Section",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.610694725040214*^9, 3.6106947302490387`*^9}, {
+  3.610694780927642*^9, 3.610694783447839*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["24.94.68.1 - 1st Hop out for Hana on RoadRunner Routes", "Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.610694601789866*^9}, {
+  3.610694636675947*^9, 3.610694667718821*^9}, {3.610694710149489*^9, 
+  3.610694711197377*^9}, {3.610694797025423*^9, 3.610694814868248*^9}, {
+  3.611132475935378*^9, 3.61113248121205*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"rttDateListPlot", "[", 
+    RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<24.94.68.1\>\""}], "]"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{"probe", ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1165", "}"}], ",", 
+       RowBox[{"{", "1178", "}"}]}], "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6106944705939837`*^9, 3.610694473804504*^9}, 
+   3.6106945752854347`*^9, {3.610696161447175*^9, 3.610696212771346*^9}, {
+   3.610698525322916*^9, 3.610698538504643*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["24.94.68.1 - 1st Hop out for Hana on Oceanic Routes", "Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.610694601789866*^9}, {
+  3.610694636675947*^9, 3.610694667718821*^9}, {3.610694710149489*^9, 
+  3.610694711197377*^9}, {3.610694797025423*^9, 3.610694814868248*^9}, {
+  3.611132475935378*^9, 3.611132496974428*^9}}],
+
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{"False", ",", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"rttDateListPlot", "[", 
+      RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<24.94.68.1\>\""}], 
+      "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"probe", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", "1165", "}"}], ",", 
+         RowBox[{"{", "1178", "}"}]}], "}"}]}], "}"}]}], "]"}], ",", 
+   RowBox[{"{", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6106944705939837`*^9, 3.610694473804504*^9}, 
+   3.6106945752854347`*^9, {3.610696161447175*^9, 3.610696212771346*^9}, {
+   3.610698525322916*^9, 3.610698538504643*^9}, {3.6111325053452682`*^9, 
+   3.611132514525085*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["24.25.230.137 - 2nd Hop out for Hana RoadRunner Routes", "Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.610694656565711*^9}, {
+  3.610694800026289*^9, 3.610694812371779*^9}, {3.611132522020669*^9, 
+  3.611132527442617*^9}}],
+
+Cell[BoxData[
+ RowBox[{"If", " ", "[", 
+  RowBox[{"False", ",", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"rttDateListPlot", "[", 
+      RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<24.25.230.137\>\""}], 
+      "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"probe", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", "1165", "}"}], ",", 
+         RowBox[{"{", "1178", "}"}]}], "}"}]}], "}"}]}], "]"}], ",", 
+   RowBox[{"{", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.610696244498644*^9, 3.6106985574770117`*^9, {3.611130886053088*^9, 
+   3.6111309079113283`*^9}, {3.611130971696485*^9, 3.611130971888464*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["72.129.45.3 - Transpacific Entry Point", "Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.610694656565711*^9}, {
+  3.610694800026289*^9, 3.610694812371779*^9}, {3.610695441417667*^9, 
+  3.610695450350493*^9}, {3.610696287429907*^9, 3.610696292133547*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"rttDateListPlot", "[", 
+    RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<72.129.45.3\>\""}], "]"}],
+    ",", 
+   RowBox[{"{", 
+    RowBox[{"probe", ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1165", "}"}], ",", 
+       RowBox[{"{", "1178", "}"}]}], "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.61108018108503*^9, 3.61108019009232*^9}}],
+
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{"False", ",", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"rttDateListPlot", "[", 
+      RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<72.129.45.3\>\""}], 
+      "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"probe", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1165", ",", "1178"}], "}"}], ",", 
+         RowBox[{"{", "15111", "}"}], ",", 
+         RowBox[{"{", "2289", "}"}], ",", 
+         RowBox[{"{", "10546", "}"}], ",", 
+         RowBox[{"{", "12735", "}"}], ",", 
+         RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}], ",", " ", 
+   RowBox[{"{", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6106962951369963`*^9, 3.610696303051559*^9}, {
+  3.6111309267070227`*^9, 3.611130965824462*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["198.45.56.12 - Netflix - San Jose", "Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.610694656565711*^9}, {
+  3.610694800026289*^9, 3.610694812371779*^9}, {3.610695441417667*^9, 
+  3.610695450350493*^9}, {3.6106962696705637`*^9, 3.610696273082479*^9}, {
+  3.611068866298305*^9, 3.611068871319418*^9}}],
+
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{"True", ",", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"rttDateListPlot", "[", 
+      RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<198.45.56.12\>\""}], 
+      "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"probe", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", "1165", "}"}], ",", 
+         RowBox[{"{", "16065", "}"}], ",", 
+         RowBox[{"{", "1178", "}"}], ",", 
+         RowBox[{"{", "15111", "}"}], ",", 
+         RowBox[{"{", "2289", "}"}], ",", 
+         RowBox[{"{", "10546", "}"}], ",", 
+         RowBox[{"{", "12735", "}"}], ",", 
+         RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}], ",", 
+   RowBox[{"{", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.6106963395279217`*^9, 3.610698750234515*^9, {3.611130985804194*^9, 
+   3.61113099187535*^9}, {3.6115924923467484`*^9, 3.61159252042266*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["184.106.209.131 - DCCA SpeedTest - Texas", "Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.610694656565711*^9}, {
+  3.610694800026289*^9, 3.610694812371779*^9}, {3.610695441417667*^9, 
+  3.610695450350493*^9}, {3.6106962696705637`*^9, 3.610696273082479*^9}, {
+  3.611068866298305*^9, 3.611068871319418*^9}, {3.611592537121709*^9, 
+  3.6115925461365232`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{"True", ",", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"rttDateListPlot", "[", 
+      RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<184.106.209.131\>\""}], 
+      "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"probe", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", "1165", "}"}], ",", 
+         RowBox[{"{", "16065", "}"}], ",", 
+         RowBox[{"{", "1178", "}"}], ",", 
+         RowBox[{"{", "15111", "}"}], ",", 
+         RowBox[{"{", "2289", "}"}], ",", 
+         RowBox[{"{", "10546", "}"}], ",", 
+         RowBox[{"{", "12735", "}"}], ",", 
+         RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}], ",", 
+   RowBox[{"{", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.6106963395279217`*^9, 3.610698750234515*^9, {3.611130985804194*^9, 
+   3.61113099187535*^9}, {3.6115924923467484`*^9, 3.61159252042266*^9}, 
+   3.611592554438444*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["104.34.2.250 - TWC CA p17329", "Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.610694656565711*^9}, {
+  3.610694800026289*^9, 3.610694812371779*^9}, {3.610695441417667*^9, 
+  3.610695450350493*^9}, {3.6106962696705637`*^9, 3.610696273082479*^9}, {
+  3.611068866298305*^9, 3.611068871319418*^9}, {3.611131021551655*^9, 
+  3.6111310398492193`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{"True", ",", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"rttDateListPlot", "[", 
+      RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<104.34.2.250\>\""}], 
+      "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"probe", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", "1165", "}"}], ",", 
+         RowBox[{"{", "1178", "}"}], ",", 
+         RowBox[{"{", "15111", "}"}], ",", 
+         RowBox[{"{", "2289", "}"}], ",", 
+         RowBox[{"{", "10546", "}"}], ",", 
+         RowBox[{"{", "12735", "}"}], ",", 
+         RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}], ",", 
+   RowBox[{"{", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.6106963395279217`*^9, 3.610698750234515*^9, {3.611130985804194*^9, 
+   3.61113099187535*^9}, {3.6111310548993597`*^9, 3.611131080125897*^9}}]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Ingress", "Section",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.610694725040214*^9, 3.6106947302490387`*^9}, {
+  3.610694780927642*^9, 3.610694793336966*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["24.25.230.138 - Last hop before landing at Hana", "Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.6106947015640087`*^9}, {
+  3.610694821596693*^9, 3.610694855049967*^9}, {3.61069636241792*^9, 
+  3.610696365730502*^9}, {3.610696544531047*^9, 3.610696552682184*^9}}],
+
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{"False", ",", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"rttDateListPlot", "[", 
+      RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<24.25.230.138\>\""}], 
+      "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"probe", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1165", ",", "1178"}], "}"}], ",", 
+         RowBox[{"{", "15111", "}"}], ",", 
+         RowBox[{"{", "2289", "}"}], ",", 
+         RowBox[{"{", "10546", "}"}], ",", 
+         RowBox[{"{", "12735", "}"}], ",", 
+         RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}], ",", 
+   RowBox[{"{", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.610696367619452*^9, 3.6106963749735813`*^9}, {
+  3.611131087299593*^9, 3.611131094554866*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["72.129.45.79 - 2nd to Last Hop before landing at Hana", "Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.6106947015640087`*^9}, {
+  3.610694770871982*^9, 3.6106947759185753`*^9}, {3.6106948426720324`*^9, 
+  3.610694866723721*^9}, {3.610694906002431*^9, 3.6106949205869617`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{"False", ",", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"rttDateListPlot", "[", 
+      RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<72.129.45.79\>\""}], 
+      "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"probe", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1165", ",", "1178"}], "}"}], ",", 
+         RowBox[{"{", "15111", "}"}], ",", 
+         RowBox[{"{", "2289", "}"}], ",", 
+         RowBox[{"{", "10546", "}"}], ",", 
+         RowBox[{"{", "12735", "}"}], ",", 
+         RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}], ",", 
+   RowBox[{"{", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.610696395688182*^9, {3.611131101277659*^9, 3.611131108211748*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["72.129.45.55 - Hop delivering to Hana and Kehei", "Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.6106947015640087`*^9}, {
+  3.610694770871982*^9, 3.6106947759185753`*^9}, {3.6106948426720324`*^9, 
+  3.610694866723721*^9}}],
+
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{"False", ",", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"rttDateListPlot", "[", 
+      RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<72.129.45.55\>\""}], 
+      "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"probe", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1165", ",", "1178"}], "}"}], ",", 
+         RowBox[{"{", "15111", "}"}], ",", 
+         RowBox[{"{", "2289", "}"}], ",", 
+         RowBox[{"{", "10546", "}"}], ",", 
+         RowBox[{"{", "12735", "}"}], ",", 
+         RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}], ",", 
+   RowBox[{"{", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.6106964486803293`*^9, {3.61113112580058*^9, 3.611131133912304*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Ping Chase\[CloseCurlyQuote]s house ( 24.94.68.214 , 205.172.17.95 )", \
+"Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.6106947015640087`*^9}, {
+  3.610694770871982*^9, 3.6106947759185753`*^9}, {3.6106948426720324`*^9, 
+  3.610694866723721*^9}, {3.6106967965908947`*^9, 3.610696804845359*^9}, {
+  3.611131207370193*^9, 3.61113124346243*^9}}],
+
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{"True", ",", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"rttDateListPlot", "[", 
+      RowBox[{"tPingDataCDF", ",", "probe", ",", 
+       RowBox[{"{", 
+        RowBox[{"\"\<24.94.68.214\>\"", ",", "\"\<205.172.17.95\>\""}], 
+        "}"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"probe", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", "1165", "}"}], ",", 
+         RowBox[{"{", "15111", "}"}], ",", 
+         RowBox[{"{", "2289", "}"}], ",", 
+         RowBox[{"{", "10546", "}"}], ",", 
+         RowBox[{"{", "12735", "}"}], ",", 
+         RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}], ",", 
+   RowBox[{"{", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.6106964486803293`*^9, {3.610696813178225*^9, 3.610696824545504*^9}, {
+   3.610704665001667*^9, 3.610704665425044*^9}, {3.61113116733305*^9, 
+   3.611131235782699*^9}, {3.611437387029664*^9, 3.611437392391547*^9}, 
+   3.611438155342993*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Ping Marty\[CloseCurlyQuote]s office ( 24.94.69.12 )", "Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.6106947015640087`*^9}, {
+  3.610694770871982*^9, 3.6106947759185753`*^9}, {3.6106948426720324`*^9, 
+  3.610694866723721*^9}, {3.6106967965908947`*^9, 3.610696804845359*^9}, {
+  3.611131207370193*^9, 3.61113124346243*^9}, {3.611131295190082*^9, 
+  3.611131309382926*^9}, {3.611131376480707*^9, 3.611131389834421*^9}}],
+
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{"False", ",", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"rttDateListPlot", "[", 
+      RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<24.94.69.12\>\""}], 
+      "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"probe", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", "1165", "}"}], ",", 
+         RowBox[{"{", "15111", "}"}], ",", 
+         RowBox[{"{", "2289", "}"}], ",", 
+         RowBox[{"{", "10546", "}"}], ",", 
+         RowBox[{"{", "12735", "}"}], ",", 
+         RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}], ",", 
+   RowBox[{"{", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.6106964486803293`*^9, {3.610696813178225*^9, 3.610696824545504*^9}, {
+   3.610704665001667*^9, 3.610704665425044*^9}, {3.61113116733305*^9, 
+   3.611131174133135*^9}, {3.611131317661751*^9, 3.611131409897444*^9}, {
+   3.6114374070534782`*^9, 3.6114374079017687`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Ping Bill\[CloseCurlyQuote]s house ( 24.94.69.225 )", "Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.6106947015640087`*^9}, {
+  3.610694770871982*^9, 3.6106947759185753`*^9}, {3.6106948426720324`*^9, 
+  3.610694866723721*^9}, {3.6106967965908947`*^9, 3.610696804845359*^9}, {
+  3.611131207370193*^9, 3.61113124346243*^9}, {3.611131295190082*^9, 
+  3.611131309382926*^9}}],
+
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{"True", ",", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"rttDateListPlot", "[", 
+      RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<24.94.69.215\>\""}], 
+      "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"probe", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", "1165", "}"}], ",", 
+         RowBox[{"{", "1178", "}"}], ",", 
+         RowBox[{"{", "15111", "}"}], ",", 
+         RowBox[{"{", "2289", "}"}], ",", 
+         RowBox[{"{", "10546", "}"}], ",", 
+         RowBox[{"{", "12735", "}"}], ",", 
+         RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}], ",", 
+   RowBox[{"{", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.6106964486803293`*^9, {3.610696813178225*^9, 3.610696824545504*^9}, {
+   3.610704665001667*^9, 3.610704665425044*^9}, {3.61113116733305*^9, 
+   3.611131174133135*^9}, {3.611131317661751*^9, 3.611131326430298*^9}, 
+   3.6111314121619062`*^9, {3.611339633143024*^9, 3.611339633510989*^9}}]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["DNS", "Section",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.610694725040214*^9, 3.6106947302490387`*^9}, {
+  3.610694780927642*^9, 3.610694793336966*^9}, {3.610695386904451*^9, 
+  3.610695387469699*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["24.25.227.55 - DNS", "Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.6106947015640087`*^9}, {
+  3.610694770871982*^9, 3.6106947759185753`*^9}, {3.6106948426720324`*^9, 
+  3.610694866723721*^9}, {3.6106954052463512`*^9, 3.610695408064197*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"rttDateListPlot", "[", 
+    RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<24.25.227.55\>\""}], 
+    "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"probe", ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1165", "}"}], ",", 
+       RowBox[{"{", "1178", "}"}], ",", 
+       RowBox[{"{", "16065", "}"}], ",", 
+       RowBox[{"{", "15111", "}"}], ",", 
+       RowBox[{"{", "2289", "}"}], ",", 
+       RowBox[{"{", "10546", "}"}], ",", 
+       RowBox[{"{", "12735", "}"}], ",", 
+       RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6110801031867867`*^9, 3.611080111344591*^9}, 
+   3.611339250555911*^9, {3.611607308656708*^9, 3.6116073136481457`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{"False", ",", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"rttDateListPlot", "[", 
+      RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<24.25.227.55\>\""}], 
+      "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"probe", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1165", ",", "1178"}], "}"}], ",", 
+         RowBox[{"{", "15111", "}"}], ",", 
+         RowBox[{"{", "2289", "}"}], ",", 
+         RowBox[{"{", "10546", "}"}], ",", 
+         RowBox[{"{", "12735", "}"}], ",", 
+         RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}], ",", 
+   RowBox[{"{", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6105566729124107`*^9, 3.610556682699638*^9}, {
+  3.610556763336197*^9, 3.6105567772696466`*^9}, {3.610696462706993*^9, 
+  3.6106964694418907`*^9}, {3.611131257666375*^9, 3.611131265450759*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"rttDateListPlot", "[", 
+    RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<205.172.19.79\>\""}], 
+    "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"probe", ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1165", "}"}], ",", 
+       RowBox[{"{", "1178", "}"}], ",", 
+       RowBox[{"{", "15111", "}"}], ",", 
+       RowBox[{"{", "2289", "}"}], ",", 
+       RowBox[{"{", "10546", "}"}], ",", 
+       RowBox[{"{", "12735", "}"}], ",", 
+       RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.611339265588797*^9, 3.6113393002886763`*^9}}]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["SamKnows", "Section",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.610694725040214*^9, 3.6106947302490387`*^9}, {
+  3.610694780927642*^9, 3.610694793336966*^9}, {3.610695386904451*^9, 
+  3.610695387469699*^9}, {3.614014549832582*^9, 3.614014551399612*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["4.53.230.190 - SamKnows1.lax9.level3.net", "Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.6106947015640087`*^9}, {
+  3.610694770871982*^9, 3.6106947759185753`*^9}, {3.6106948426720324`*^9, 
+  3.610694866723721*^9}, {3.6106954052463512`*^9, 3.610695408064197*^9}, {
+  3.61401459751192*^9, 3.614014606243575*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"rttDateListPlot", "[", 
+    RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<4.53.230.190\>\""}], 
+    "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"probe", ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1165", "}"}], ",", 
+       RowBox[{"{", "1178", "}"}], ",", 
+       RowBox[{"{", "16065", "}"}], ",", 
+       RowBox[{"{", "15111", "}"}], ",", 
+       RowBox[{"{", "2289", "}"}], ",", 
+       RowBox[{"{", "10546", "}"}], ",", 
+       RowBox[{"{", "12735", "}"}], ",", 
+       RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6110801031867867`*^9, 3.611080111344591*^9}, 
+   3.611339250555911*^9, {3.611607308656708*^9, 3.6116073136481457`*^9}, 
+   3.61401461540693*^9}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{3.611339276523481*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["72.52.4.91 - ispmon.samknows.mlab1v4.lax01.measurement.net", \
+"Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.6106947015640087`*^9}, {
+  3.610694770871982*^9, 3.6106947759185753`*^9}, {3.6106948426720324`*^9, 
+  3.610694866723721*^9}, {3.6106954052463512`*^9, 3.610695408064197*^9}, {
+  3.61401459751192*^9, 3.614014606243575*^9}, {3.614014664446659*^9, 
+  3.6140146738187113`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"rttDateListPlot", "[", 
+    RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<72.52.4.91\>\""}], "]"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{"probe", ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1165", "}"}], ",", 
+       RowBox[{"{", "1178", "}"}], ",", 
+       RowBox[{"{", "16065", "}"}], ",", 
+       RowBox[{"{", "15111", "}"}], ",", 
+       RowBox[{"{", "2289", "}"}], ",", 
+       RowBox[{"{", "10546", "}"}], ",", 
+       RowBox[{"{", "12735", "}"}], ",", 
+       RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6110801031867867`*^9, 3.611080111344591*^9}, 
+   3.611339250555911*^9, {3.611607308656708*^9, 3.6116073136481457`*^9}, 
+   3.61401461540693*^9, 3.614014682316621*^9}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{3.611339276523481*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["209.18.33.170 - ping-f1.st.lax00.tbone.rr.com", "Subsection",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}, {3.610694425311914*^9, 
+  3.610694441583185*^9}, {3.6106945933977127`*^9, 3.6106947015640087`*^9}, {
+  3.610694770871982*^9, 3.6106947759185753`*^9}, {3.6106948426720324`*^9, 
+  3.610694866723721*^9}, {3.6106954052463512`*^9, 3.610695408064197*^9}, {
+  3.61401459751192*^9, 3.614014606243575*^9}, {3.614014664446659*^9, 
+  3.614014712291539*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"rttDateListPlot", "[", 
+    RowBox[{"tPingDataCDF", ",", "probe", ",", "\"\<209.18.33.170\>\""}], 
+    "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"probe", ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1165", "}"}], ",", 
+       RowBox[{"{", "1178", "}"}], ",", 
+       RowBox[{"{", "16065", "}"}], ",", 
+       RowBox[{"{", "15111", "}"}], ",", 
+       RowBox[{"{", "2289", "}"}], ",", 
+       RowBox[{"{", "10546", "}"}], ",", 
+       RowBox[{"{", "12735", "}"}], ",", 
+       RowBox[{"{", "14720", "}"}]}], "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6110801031867867`*^9, 3.611080111344591*^9}, 
+   3.611339250555911*^9, {3.611607308656708*^9, 3.6116073136481457`*^9}, 
+   3.61401461540693*^9, 3.614014682316621*^9, {3.614014720756783*^9, 
+   3.614014721035534*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{3.611339276523481*^9}]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["SCRATCH", "Section",
+ CellChangeTimes->{{3.61054874952916*^9, 3.610548762411413*^9}, {
+  3.610558976494677*^9, 3.610558978549912*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{3.6140145625684*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowToolbars->{"RulerBar", "EditBar"},
+WindowSize->{1467, 1109},
+WindowMargins->{{Automatic, 430}, {Automatic, 29}},
+FrontEndVersion->"10.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 6, \
+2015)",
+StyleDefinitions->FrontEnd`FileName[{"Report"}, "ConfidentialReport.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 303, 5, 82, "Title"],
+Cell[885, 29, 193, 4, 29, "Subsubtitle"],
+Cell[1081, 35, 114, 1, 40, "Author"],
+Cell[CellGroupData[{
+Cell[1220, 40, 440, 8, 29, "Subsubtitle"],
+Cell[1663, 50, 134, 2, 20, "Input"],
+Cell[CellGroupData[{
+Cell[1822, 56, 189, 3, 64, "Section"],
+Cell[2014, 61, 435, 8, 68, "Text"],
+Cell[2452, 71, 244, 5, 49, "Text"],
+Cell[2699, 78, 326, 6, 49, "Text"],
+Cell[3028, 86, 3850, 89, 327, "Input"],
+Cell[6881, 177, 90, 1, 20, "Input"],
+Cell[6974, 180, 92, 1, 20, "Input"],
+Cell[7069, 183, 824, 14, 106, "Text"]
+}, Closed]],
+Cell[7908, 200, 96, 1, 50, "Section"],
+Cell[CellGroupData[{
+Cell[8029, 205, 142, 2, 50, "Section"],
+Cell[8174, 209, 2879, 68, 208, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[11090, 282, 286, 4, 50, "Section"],
+Cell[CellGroupData[{
+Cell[11401, 290, 108, 1, 44, "Subsection"],
+Cell[CellGroupData[{
+Cell[11534, 295, 317, 4, 35, "Subsubsection"],
+Cell[11854, 301, 2175, 46, 225, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[14066, 352, 264, 3, 29, "Subsubsection"],
+Cell[14333, 357, 348, 8, 20, "Input"],
+Cell[14684, 367, 2153, 45, 191, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16874, 417, 312, 4, 35, "Subsubsection"],
+Cell[17189, 423, 1031, 23, 72, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18257, 451, 312, 4, 35, "Subsubsection"],
+Cell[18572, 457, 1871, 36, 106, "Input"],
+Cell[20446, 495, 144, 2, 20, "Input"]
+}, Closed]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[20639, 503, 97, 1, 36, "Subsection"],
+Cell[20739, 506, 10019, 222, 1194, "Input"],
+Cell[CellGroupData[{
+Cell[30783, 732, 111, 1, 35, "Subsubsection"],
+Cell[30897, 735, 4322, 95, 480, "Input"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[35268, 836, 150, 2, 44, "Subsection"],
+Cell[35421, 840, 532, 13, 55, "Input"],
+Cell[35956, 855, 1557, 36, 55, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[37550, 896, 146, 2, 44, "Subsection"],
+Cell[CellGroupData[{
+Cell[37721, 902, 146, 2, 35, "Subsubsection"],
+Cell[37870, 906, 1968, 52, 208, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[39875, 963, 219, 3, 29, "Subsubsection"],
+Cell[40097, 968, 347, 8, 68, "Text"],
+Cell[40447, 978, 826, 22, 89, "Input"],
+Cell[41276, 1002, 2913, 80, 226, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[44226, 1087, 313, 4, 29, "Subsubsection"],
+Cell[44542, 1093, 6676, 159, 583, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[51255, 1257, 357, 5, 29, "Subsubsection"],
+Cell[51615, 1264, 1843, 48, 174, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[53495, 1317, 303, 4, 29, "Subsubsection"],
+Cell[53801, 1323, 1470, 31, 242, "Input"],
+Cell[55274, 1356, 945, 20, 208, "Input"],
+Cell[56222, 1378, 1492, 35, 293, "Input"],
+Cell[57717, 1415, 1503, 35, 259, "Input"],
+Cell[59223, 1452, 2265, 48, 327, "Input"],
+Cell[61491, 1502, 2541, 58, 310, "Input"],
+Cell[64035, 1562, 9097, 200, 769, "Input"]
+}, Closed]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[73193, 1769, 285, 4, 64, "Section"],
+Cell[CellGroupData[{
+Cell[73503, 1777, 479, 6, 44, "Subsection"],
+Cell[73985, 1785, 560, 14, 20, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[74582, 1804, 477, 6, 44, "Subsection"],
+Cell[75062, 1812, 719, 18, 20, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[75818, 1835, 385, 5, 44, "Subsection"],
+Cell[76206, 1842, 650, 17, 20, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[76893, 1864, 415, 5, 44, "Subsection"],
+Cell[77311, 1871, 433, 12, 20, "Input"],
+Cell[77747, 1885, 810, 21, 20, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[78594, 1911, 461, 6, 44, "Subsection"],
+Cell[79058, 1919, 904, 23, 38, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[79999, 1947, 519, 7, 44, "Subsection"],
+Cell[80521, 1956, 933, 24, 38, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[81491, 1985, 507, 7, 44, "Subsection"],
+Cell[82001, 1994, 861, 22, 20, "Input"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[82911, 2022, 286, 4, 50, "Section"],
+Cell[CellGroupData[{
+Cell[83222, 2030, 425, 5, 44, "Subsection"],
+Cell[83650, 2037, 805, 21, 20, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[84492, 2063, 438, 5, 44, "Subsection"],
+Cell[84933, 2070, 778, 21, 20, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[85748, 2096, 384, 5, 44, "Subsection"],
+Cell[86135, 2103, 779, 21, 20, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[86951, 2129, 503, 7, 44, "Subsection"],
+Cell[87457, 2138, 995, 25, 38, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[88489, 2168, 580, 7, 44, "Subsection"],
+Cell[89072, 2177, 944, 23, 20, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[90053, 2205, 533, 7, 44, "Subsection"],
+Cell[90589, 2214, 1007, 24, 20, "Input"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[91645, 2244, 331, 5, 50, "Section"],
+Cell[CellGroupData[{
+Cell[92001, 2253, 403, 5, 44, "Subsection"],
+Cell[92407, 2260, 764, 19, 20, "Input"],
+Cell[93174, 2281, 903, 22, 20, "Input"],
+Cell[94080, 2305, 649, 17, 20, "Input"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[94778, 2328, 382, 5, 50, "Section"],
+Cell[CellGroupData[{
+Cell[95185, 2337, 473, 6, 44, "Subsection"],
+Cell[95661, 2345, 789, 20, 20, "Input"],
+Cell[96453, 2367, 68, 1, 20, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[96558, 2373, 544, 8, 44, "Subsection"],
+Cell[97105, 2383, 808, 20, 20, "Input"],
+Cell[97916, 2405, 68, 1, 20, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[98021, 2411, 527, 7, 44, "Subsection"],
+Cell[98551, 2420, 862, 21, 20, "Input"],
+Cell[99416, 2443, 68, 1, 20, "Input"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[99533, 2450, 140, 2, 50, "Section"],
+Cell[99676, 2454, 66, 1, 20, "Input"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

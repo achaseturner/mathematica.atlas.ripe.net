@@ -1,0 +1,30 @@
+cached -> False
+data -> DATALIST
+"data_call_status" -> "supported"
+"messages" -> {}
+"process_time" -> 222454
+"query_id" -> "68787dce-de8c-11e3-931a-782bcb34677e"
+"see_also" -> {}
+"server_id" -> "stat-app1"
+"status" -> "ok"
+"status_code" -> 200
+"time" -> "2014-05-18T13:04:20.530216"
+"version" -> "1.0"
+==========================
+DATALIST
+"latest_time" -> "2014-05-18T12:57:43"
+"measurement_id" -> 1
+"measurements" -> MEASUREMENTS
+"probe_id" -> 1178
+"query_endtime" -> "2014-05-09T16:50:21"
+"query_starttime" -> "2012-02-24T08:19:23"
+"resolution" -> "1h"
+"step" -> 3600
+===========================
+MEASUREMENTS
+"received" -> 6
+"rtt_5pct" -> 10.088
+"rtt_95pct" -> 21.066, 
+"rtt_med" -> 14.8675, 
+"sent" -> 6, 
+"timestamp" -> 1330434000

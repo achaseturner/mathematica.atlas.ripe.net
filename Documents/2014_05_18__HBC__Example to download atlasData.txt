@@ -1,0 +1,1 @@
+https://stat.ripe.net/data/atlas-ping-measurements/data.json?probe_id=1178&measurement_id=1&starttime=2012-02-24T08:19:23&endtime=2014-05-09T16:50:21&resolution=1w&display_mode=condensed

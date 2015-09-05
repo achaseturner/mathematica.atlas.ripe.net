@@ -1,0 +1,1681 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     77191,       1672]
+NotebookOptionsPosition[     74328,       1576]
+NotebookOutlinePosition[     74814,       1595]
+CellTagsIndexPosition[     74771,       1592]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Broadband Network Congestion Measurement", "Title",
+ CellChangeTimes->{{3.609411288161269*^9, 3.609411289406501*^9}, {
+  3.6094113487181273`*^9, 3.609411385982676*^9}, {3.609587554423913*^9, 
+  3.60958758412189*^9}}],
+
+Cell["\<\
+How long as TWC been aware of network congestion in High Speed Internet \
+service to Hana, HI?\
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.6095876017618523`*^9, 3.609587606665586*^9}}],
+
+Cell["\<\
+by Chase.Turner@TFarms.com
+
+For discussion purposes only.  Use of this report requires specific \
+permission of the author.\
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.609411393208486*^9, 3.609411477269533*^9}, {
+  3.6094115301714067`*^9, 3.609411620103806*^9}, {3.609587624801108*^9, 
+  3.609587635344081*^9}, {3.609587748965797*^9, 3.609587755459175*^9}}],
+
+Cell["Terminology", "Section",
+ CellChangeTimes->{{3.609587675230597*^9, 3.609587689603732*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Implementation", "Section",
+ CellChangeTimes->{{3.609411393208486*^9, 3.609411426807868*^9}, {
+  3.609411492422267*^9, 3.609411499756665*^9}, {3.609414065506597*^9, 
+  3.60941407614053*^9}, {3.609587857466351*^9, 3.609587868878224*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Display and Legends ", "Subsection",
+ CellChangeTimes->{{3.610224752948854*^9, 3.610224794867385*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["City where probe is located", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+  3.609416925560754*^9, 3.609416926713764*^9}, {3.6095876986480637`*^9, 
+  3.6095877279163437`*^9}, {3.609587877711246*^9, 3.6095878929893847`*^9}, {
+  3.610027486825843*^9, 3.610027504392045*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "cityOfProbe", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Block", "[", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "1165", "]"}], "=", "\"\<Hana\>\""}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "1178", "]"}], "=", "\"\<Hana\>\""}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "16065", "]"}], "=", "\"\<Hana\>\""}], ";",
+       "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "15111", "]"}], "=", "\"\<Kahului\>\""}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "2289", "]"}], "=", "\"\<BI:Hawi\>\""}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "12735", "]"}], "=", 
+       "\"\<BI:Kailua-Kona\>\""}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "10546", "]"}], "=", "\"\<BI:Hilo\>\""}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cityOfProbe", "[", "14720", "]"}], "=", 
+       "\"\<Ohau:Kaneohe\>\""}], ";"}]}], "\[IndentingNewLine]", "]"}], ";"}],
+   "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"cityOfProbe", "/@", " ", "allProbes"}]}], "Input",
+ CellChangeTimes->{{3.6095878960450706`*^9, 3.609588023506249*^9}, {
+  3.609588054521934*^9, 3.6095880559259977`*^9}, {3.609589625879352*^9, 
+  3.609589645459016*^9}, {3.60958977148836*^9, 3.609589797678733*^9}, {
+  3.609589832478539*^9, 3.609589922410554*^9}, {3.609590011520235*^9, 
+  3.609590022917968*^9}, {3.609590181521654*^9, 3.6095902006545067`*^9}, {
+  3.609593033305694*^9, 3.60959317236436*^9}, {3.609825579534728*^9, 
+  3.609825595453724*^9}, {3.610027510131353*^9, 3.610027584268012*^9}, {
+  3.610192098581924*^9, 3.610192300306332*^9}, {3.610192384988669*^9, 
+  3.610192386566482*^9}, {3.610702878710774*^9, 3.610702892376225*^9}, {
+  3.610704172687916*^9, 3.610704174258247*^9}, {3.611592417186915*^9, 
+  3.611592423080729*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Color Scheme for probes", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+  3.609416925560754*^9, 3.609416926713764*^9}, {3.6095876986480637`*^9, 
+  3.6095877279163437`*^9}, {3.609587877711246*^9, 3.6095878929893847`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"allProbes", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "1178", ",", "1165", ",", "15111", ",", "2289", ",", "12735", ",", 
+     "10546", ",", "14720", ",", " ", "16065"}], "}"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.610192311346505*^9, 3.6101923496607847`*^9}, {
+  3.611504517864532*^9, 3.6115045208249702`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "colorCodeForProbe", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Block", "[", 
+   RowBox[{
+    RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "1165", "]"}], "=", "Blue"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "1178", "]"}], "=", "Red"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "16065", "]"}], "=", "Yellow"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "15111", "]"}], "=", "Purple"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "2289", "]"}], "=", "Gray"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "12735", "]"}], "=", "Orange"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "10546", "]"}], "=", "Pink"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorCodeForProbe", "[", "14720", "]"}], "=", "Black"}], 
+     ";"}]}], "\[IndentingNewLine]", "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.6095878960450706`*^9, 3.609588023506249*^9}, {
+   3.609588054521934*^9, 3.6095880559259977`*^9}, {3.609589625879352*^9, 
+   3.609589645459016*^9}, {3.60958977148836*^9, 3.609589797678733*^9}, {
+   3.609589832478539*^9, 3.609589922410554*^9}, {3.609590011520235*^9, 
+   3.609590022917968*^9}, {3.609590181521654*^9, 3.6095902006545067`*^9}, {
+   3.609593033305694*^9, 3.60959317236436*^9}, {3.609825579534728*^9, 
+   3.609825595453724*^9}, {3.610191997138557*^9, 3.610192082067629*^9}, {
+   3.610192357783834*^9, 3.610192360910739*^9}, {3.6101923991482563`*^9, 
+   3.610192400509234*^9}, {3.6101924392977743`*^9, 3.610192453902237*^9}, {
+   3.6101924885990047`*^9, 3.6101924891619873`*^9}, {3.610192545689827*^9, 
+   3.610192579232706*^9}, {3.610194538450824*^9, 3.610194538872404*^9}, 
+   3.610702812574707*^9, {3.611504501384203*^9, 3.6115045099926662`*^9}, {
+   3.6115910862079277`*^9, 3.6115911042898397`*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["PlotStyle for probe ", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+  3.609416925560754*^9, 3.609416926713764*^9}, {3.6095876986480637`*^9, 
+  3.6095877279163437`*^9}, {3.609587877711246*^9, 3.6095878929893847`*^9}, {
+  3.609593184466234*^9, 3.6095931996395903`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "plotStyleForProbe", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"plotStyleForProbe", "[", 
+     RowBox[{"aProbe_Integer", ",", " ", "pSize_", ",", " ", "pOpacity_"}], 
+     "]"}], ":=", 
+    RowBox[{"colorCodeForProbe", "[", "aProbe", "]"}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"plotStyleForProbe", "[", 
+    RowBox[{"#", ",", ".001", ",", "0.5"}], "]"}], "&"}], "/@", " ", 
+  "allProbes"}]}], "Input",
+ CellChangeTimes->{{3.609593204803199*^9, 3.609593230631404*^9}, {
+   3.609593288176484*^9, 3.609593289542234*^9}, 3.609596671834626*^9, {
+   3.609596786715539*^9, 3.609596804848908*^9}, 3.609825581414867*^9, {
+   3.610014355057551*^9, 3.6100143796182833`*^9}, {3.6100148459027157`*^9, 
+   3.610014892922126*^9}, {3.6100150290412607`*^9, 3.610015033440484*^9}, {
+   3.610192419061798*^9, 3.610192428291113*^9}, 3.610192496072343*^9}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Pretty Print for Probe", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+  3.609416925560754*^9, 3.609416926713764*^9}, {3.6095876986480637`*^9, 
+  3.6095877279163437`*^9}, {3.609587877711246*^9, 3.6095878929893847`*^9}, {
+  3.6095880746392593`*^9, 3.6095880793982*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "pprintProbe", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"pprintProbe", "[", "probe_Integer", "]"}], ":=", " ", 
+    RowBox[{"Style", "[", 
+     RowBox[{
+      RowBox[{"\"\< p\>\"", "<>", 
+       RowBox[{"ToString", "[", "probe", "]"}], " ", "<>", " ", "\"\<_\>\"", "<>", 
+       RowBox[{"cityOfProbe", "[", "probe", "]"}], "<>", "\"\< \>\""}], ",", 
+      RowBox[{"FontColor", "->", 
+       RowBox[{"colorCodeForProbe", "[", "probe", "]"}]}], ",", " ", "Plain", 
+      ",", "\"\<Text\>\""}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"pprintProbe", "[", "probes_List", "]"}], ":=", " ", 
+    RowBox[{"Row", "[", 
+     RowBox[{"pprintProbe", "/@", " ", "probes"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"pprintProbe", "/@", " ", "allProbes"}]}], "Input",
+ CellChangeTimes->{{3.6095878960450706`*^9, 3.609588023506249*^9}, {
+   3.609588054521934*^9, 3.609588203673903*^9}, {3.609588271226183*^9, 
+   3.609588356708252*^9}, {3.609588391971819*^9, 3.609588474552327*^9}, {
+   3.609588513009912*^9, 3.60958858335668*^9}, {3.609589065833316*^9, 
+   3.609589126991445*^9}, {3.609589161726678*^9, 3.609589219958922*^9}, 
+   3.609589285227072*^9, {3.60958931899531*^9, 3.609589605600635*^9}, {
+   3.60958994817761*^9, 3.609589990112047*^9}, {3.609590228545149*^9, 
+   3.609590230590086*^9}, {3.609594246568884*^9, 3.609594247134818*^9}, 
+   3.609825582333221*^9, {3.610016951142501*^9, 3.6100169518778067`*^9}, {
+   3.6100276019829683`*^9, 3.610027638315998*^9}, {3.6101925113114157`*^9, 
+   3.610192512826955*^9}, {3.610699709933305*^9, 3.610699785738306*^9}, {
+   3.610699826545787*^9, 3.610700020553586*^9}, 3.610702752725111*^9}],
+
+Cell[BoxData[
+ RowBox[{"pprintProbe", "[", " ", "allProbes", "]"}]], "Input",
+ CellChangeTimes->{{3.61069979456246*^9, 3.6106997982733097`*^9}}]
+}, Closed]]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["BuiltIn measurements for 1st and 2nd hop", "Section",
+ CellChangeTimes->{{3.609411393208486*^9, 3.609411426807868*^9}, {
+  3.609411492422267*^9, 3.609411499756665*^9}, {3.609414065506597*^9, 
+  3.60941407614053*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Conversion of Unix Machine Timestamp to ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " Time"
+}], "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+  3.609416925560754*^9, 3.609416926713764*^9}, {3.6095876986480637`*^9, 
+  3.6095877279163437`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", "unixTimeToHST", "]"}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Hawaiian", " ", "Timezone", " ", "is"}], " ", "-", 
+    RowBox[{"10", " ", "from", " ", "GMT"}]}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"unixTimeToHST", "[", "x_Integer", "]"}], ":=", 
+    RowBox[{"DateList", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"AbsoluteTime", "[", 
+        RowBox[{"{", 
+         RowBox[{"1970", ",", "1", ",", "1", ",", "2", ",", "0", ",", "0"}], 
+         "}"}], "]"}], "+", "x"}], ",", 
+      RowBox[{"TimeZone", "\[Rule]", 
+       RowBox[{"-", "11.0"}]}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"unixTimeToHST", "[", "1330434000", "]"}]}], "Input",
+ CellChangeTimes->{{3.609324729321457*^9, 3.6093248451536922`*^9}, {
+   3.609324932223752*^9, 3.6093249328778543`*^9}, 3.609416894065385*^9, {
+   3.6094169340026207`*^9, 3.609416936474205*^9}, 3.6098255831175947`*^9, 
+   3.609828203941568*^9, {3.609828427737917*^9, 3.609828472823297*^9}, 
+   3.6114340767861767`*^9}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Sources", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"urlForPingJSONData", " ", "-", " ", 
+    RowBox[{
+    "answer", " ", "with", " ", "the", " ", "JSON", " ", "URL", " ", "for", 
+     " ", "fetching", " ", "data"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ClearAll", "[", "urlForPingJSONData", "]"}], ";", 
+    RowBox[{
+     RowBox[{"urlForPingJSONData", "::", "usage"}], " ", "=", " ", 
+     "\"\<URL to get atlas.ripe.net ping data\>\""}], ";", 
+    RowBox[{
+     RowBox[{"urlForPingJSONData", "::", "unexpectedArg"}], "=", 
+     "\"\<`1`\>\""}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "IMPLEMENTATION", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"urlForPingJSONData", "[", 
+      RowBox[{"probeID_Integer", ",", "\[IndentingNewLine]", 
+       RowBox[{"resolution_String", " ", "/;", 
+        RowBox[{"StringMatchQ", "[", 
+         RowBox[{"resolution", ",", " ", 
+          RowBox[{
+          "\"\<1h\>\"", " ", "|", " ", "\"\<1d\>\"", " ", "|", " ", 
+           "\"\<1w\>\""}]}], "]"}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{"hopNumber_Integer", " ", "/;", " ", 
+        RowBox[{"MatchQ", "[", 
+         RowBox[{"hopNumber", " ", ",", " ", 
+          RowBox[{"1", "|", "2"}]}], "]"}]}], " ", ",", " ", 
+       "\[IndentingNewLine]", "startDate_String", ",", " ", 
+       "\[IndentingNewLine]", "endDate_String"}], "]"}], ":=", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Block", "[", 
+      RowBox[{
+       RowBox[{"{", "base", "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"URLBuild", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<https://stat.ripe.net\>\"", ",", "\"\<data\>\"", ",", 
+           "\"\<atlas-ping-measurements\>\"", ",", "\"\<data.json\>\""}], 
+          "}"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\"\<probe_id\>\"", "\[Rule]", 
+            RowBox[{"ToString", "[", "probeID", "]"}]}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"\"\<measurement_id\>\"", "->", " ", 
+            RowBox[{"ToString", "[", "hopNumber", "]"}]}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"\"\<starttime\>\"", "->", "startDate"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"\"\<endtime\>\"", "->", "endDate"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"\"\<resolution\>\"", "->", "resolution"}]}], "}"}]}], 
+        "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"UNEXPECTED", " ", "ARGUMENT"}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"urlForPingJSONData", "[", 
+      RowBox[{
+      "probeID_", ",", "resolution_", ",", "hopNumber_", ",", " ", 
+       "startDate_", ",", " ", "endDate_"}], "]"}], ":=", " ", 
+     RowBox[{"Message", "[", 
+      RowBox[{
+       RowBox[{"urlForPingJSONData", "::", "unexpectedArg"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "probeID", ",", " ", "resolution", ",", " ", "hopNumber", ",", " ", 
+         "startDate", ",", "endDate"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "TEST", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"Hyperlink", "[", 
+    RowBox[{"\"\<Click Me to Test\>\"", ",", 
+     RowBox[{"urlForPingJSONData", "[", 
+      RowBox[{
+      "1178", ",", "\"\<1w\>\"", ",", "1", ",", "\"\<2012-02-24T08:19:23\>\"",
+        ",", "\"\<2014-05-09T16:50:21\>\""}], "]"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.6094115097715073`*^9, 3.609411523388515*^9}, {
+   3.609411626352461*^9, 3.6094116464869747`*^9}, {3.609411726460371*^9, 
+   3.609412077776128*^9}, {3.609412109758697*^9, 3.609412428841082*^9}, {
+   3.609412481249681*^9, 3.609412600281231*^9}, {3.609412730977357*^9, 
+   3.60941288452738*^9}, {3.609412920911716*^9, 3.609412957462569*^9}, {
+   3.609413024429534*^9, 3.609413109936285*^9}, {3.609413207085894*^9, 
+   3.609413236794325*^9}, 3.609414001178795*^9, 3.609825584233529*^9, 
+   3.61468938746327*^9, {3.614999953182996*^9, 3.614999971748878*^9}, {
+   3.615000106549765*^9, 3.6150003130338707`*^9}, {3.6150004692948008`*^9, 
+   3.61500050895817*^9}, {3.6150005896372223`*^9, 3.615000612653864*^9}, {
+   3.615000949650557*^9, 3.615000964666222*^9}, {3.615001139478086*^9, 
+   3.615001157804245*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"fileForPingJSONData", " ", "-", " ", 
+    RowBox[{
+    "answer", " ", "with", " ", "the", " ", "JSON", " ", "URL", " ", "for", 
+     " ", "fetching", " ", "data"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ClearAll", "[", "fileForPingJSONData", "]"}], ";", 
+    RowBox[{
+     RowBox[{"fileForPingJSONData", "::", "usage"}], " ", "=", " ", 
+     "\"\<URL to get atlas.ripe.net ping data\>\""}], ";", 
+    RowBox[{
+     RowBox[{"fileForPingJSONData", "::", "unexpectedArg"}], "=", 
+     "\"\<`1`\>\""}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "IMPLEMENTATION", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"fileForPingJSONData", "[", 
+      RowBox[{"probeID_Integer", ",", "\[IndentingNewLine]", 
+       RowBox[{"resolution_String", " ", "/;", 
+        RowBox[{"StringMatchQ", "[", 
+         RowBox[{"resolution", ",", " ", 
+          RowBox[{"\"\<1h\>\"", " ", "|", " ", "\"\<1d\>\""}]}], "]"}]}], ",",
+        "\[IndentingNewLine]", 
+       RowBox[{"hopNumber_Integer", " ", "/;", " ", 
+        RowBox[{"MatchQ", "[", 
+         RowBox[{"hopNumber", " ", ",", " ", 
+          RowBox[{"1", "|", "2"}]}], "]"}]}], " ", ",", " ", 
+       "\[IndentingNewLine]", "startDate_String", ",", " ", 
+       "\[IndentingNewLine]", "endDate_String"}], "]"}], ":=", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"NotebookDirectory", "[", "]"}], ",", "\"\<data\>\"", ",", 
+        RowBox[{"\"\<atlas.ripe.net-builtIn-p\>\"", "<>", 
+         RowBox[{"ToString", "[", "probeID", "]"}], "<>", 
+         "\"\<-resolution_\>\"", "<>", "resolution", "<>", "\"\<-hop_\>\"", "<>",
+          " ", 
+         RowBox[{"ToString", "[", "hopNumber", "]"}], "<>", 
+         "\"\<.json\>\""}]}], "}"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"UNEXPECTED", " ", "ARGUMENT"}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"fileForPingJSONData", "[", 
+      RowBox[{
+      "probeID_", ",", "resolution_", ",", "hopNumber_", ",", " ", 
+       "startDate_", ",", " ", "endDate_"}], "]"}], ":=", " ", 
+     RowBox[{"Message", "[", 
+      RowBox[{
+       RowBox[{"fileForPingJSONData", "::", "unexpectedArg"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "probeID", ",", " ", "resolution", ",", " ", "hopNumber", ",", " ", 
+         "startDate", ",", "endDate"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "TEST", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"fileForPingJSONData", "[", 
+    RowBox[{
+    "1178", ",", "\"\<1h\>\"", ",", "1", ",", "\"\<2012-02-24T08:19:23\>\"", 
+     ",", "\"\<2015-03-16T00:00:00\>\""}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.609413257634655*^9, 3.6094132794975967`*^9}, {
+   3.609413331341248*^9, 3.609413541069919*^9}, {3.6094135968376503`*^9, 
+   3.609413611203681*^9}, 3.6094140023853493`*^9, {3.609414826898438*^9, 
+   3.6094148302563477`*^9}, 3.609415020448928*^9, {3.609428561023934*^9, 
+   3.609428576030781*^9}, 3.609825585016479*^9, 3.614689398023179*^9, {
+   3.61970713712967*^9, 3.6197071440074177`*^9}, {3.635535929964531*^9, 
+   3.635535980550552*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"pullAndCache", "[", 
+    RowBox[{
+    "probeID_Integer", ",", "resolution_String", ",", "hopNumber_Integer"}], 
+    "]"}], ":=", " ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "urlHopData", ",", " ", "cachingFile", ",", " ", "hardCodedStart", ",", 
+       " ", "hardCodedEnd"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"hardCodedStart", "=", "\"\<2012-02-24T08:19:23\>\""}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"FIX", " ", "ME", " ", "HERE"}], " ", "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"hardCodedEnd", "=", 
+       RowBox[{"DateString", "[", 
+        RowBox[{
+         RowBox[{"DateList", "[", "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<Year\>\"", ",", " ", "\"\<-\>\"", ",", "\"\<Month\>\"", ",", 
+           "\"\<-\>\"", ",", "\"\<Day\>\"", ",", "\"\<T\>\"", ",", 
+           "\"\<Hour24\>\"", ",", "\"\<:\>\"", ",", "\"\<Minute\>\"", ",", 
+           "\"\<:00\>\""}], "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"urlHopData", "=", 
+       RowBox[{"Import", "[", 
+        RowBox[{
+         RowBox[{"urlForPingJSONData", "[", 
+          RowBox[{
+          "probeID", ",", "resolution", ",", "hopNumber", ",", 
+           "hardCodedStart", ",", "hardCodedEnd"}], "]"}], ",", 
+         "\"\<JSON\>\""}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"cachingFile", "=", 
+       RowBox[{"fileForPingJSONData", "[", 
+        RowBox[{
+        "probeID", ",", "resolution", ",", "hopNumber", ",", "hardCodedStart",
+          ",", "hardCodedEnd"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Export", "[", 
+       RowBox[{"cachingFile", ",", "urlHopData", ",", "\"\<JSON\>\""}], "]"}],
+       ";", "\[IndentingNewLine]", "urlHopData"}]}], "]"}]}], ";"}]], "Input",\
+
+ CellChangeTimes->{{3.6094274899182577`*^9, 3.6094277274875803`*^9}, {
+   3.60942777090177*^9, 3.609427882890033*^9}, 3.6094285061860657`*^9, 
+   3.609830123934642*^9, {3.611446815585553*^9, 3.611446817697578*^9}, {
+   3.611446872640287*^9, 3.611446876888816*^9}, 3.611447282378269*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["JSON data file", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+  3.609414117187767*^9, 3.60941412349046*^9}, {3.609414995791791*^9, 
+  3.6094149962385674`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "jsonData", " ", "returns", " ", "data", " ", "portion", " ", "of", " ", 
+     "the", " ", "data", " ", "set", " ", "from", " ", "the", " ", "local", 
+     " ", "cached", " ", "file"}], ",", " ", 
+    RowBox[{
+    "or", " ", "a", " ", "new", " ", "data", " ", "set", " ", "is", " ", 
+     "pulled", " ", "from", " ", 
+     RowBox[{"atlas", ".", "ripe", ".", "net"}]}], ",", " ", "cached", ",", 
+    " ", 
+    RowBox[{"and", " ", "referenced"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ClearAll", "[", "jsonData", "]"}], ";"}], "\[IndentingNewLine]", 
+   
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonData", "::", "usage"}], "=", 
+     "\"\<fetch cached json data or pull from atlas\>\""}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonData", "::", "unexpectedArg"}], "=", "\"\<`1`\>\""}], ";"}],
+    "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonData", "::", "datasetMismatch"}], " ", "=", 
+     "\"\<Args `1` do not match data property in file `2`\>\""}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "IMPLEMENTATION", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonData", "[", 
+      RowBox[{
+      "probeID_Integer", ",", "resolution_String", ",", "hopNumber_Integer"}],
+       "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"startDate", "=", "\"\<2012-02-24T08:19:23\>\""}], ",", " ", 
+         
+         RowBox[{"endDate", "=", "\"\<2014-05-09T16:50:21\>\""}], ",", 
+         "jsonFile", ",", " ", "url", ",", "jsonImport", ",", "jsonData"}], 
+        "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"jsonFile", "=", 
+         RowBox[{"fileForPingJSONData", "[", 
+          RowBox[{
+          "probeID", ",", "resolution", ",", "hopNumber", ",", "startDate", 
+           ",", "endDate"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"url", "=", 
+         RowBox[{"urlForPingJSONData", "[", 
+          RowBox[{
+          "probeID", ",", "resolution", ",", "hopNumber", ",", "startDate", 
+           ",", "endDate"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"TODO", " ", "check", " ", "local"}], ";", " ", 
+           RowBox[{"if", " ", "nothing"}]}], ",", " ", 
+          RowBox[{"pull", " ", "from", " ", "atlas", " ", "and", " ", 
+           RowBox[{"store", ".", " ", "With"}], " ", "result"}], ",", " ", 
+          "verify"}], "  ", "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"jsonImport", "=", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"FileExistsQ", "[", "jsonFile", "]"}], ",", 
+           RowBox[{"Import", "[", 
+            RowBox[{"jsonFile", ",", "\"\<JSON\>\""}], "]"}], ",", 
+           RowBox[{"pullAndCache", "[", 
+            RowBox[{
+            "probeID", ",", " ", "resolution", ",", " ", "hopNumber"}], 
+            "]"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+          RowBox[{"Walk", " ", "JSON", " ", "data", " ", "structure"}], ",", 
+          " ", 
+          RowBox[{
+          "asserting", " ", "with", " ", "each", " ", "traversal", " ", "it", 
+           " ", "is", " ", "not", " ", "null"}]}], " ", "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{"Module", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+           "jsonDataProbeID", ",", " ", "jsonDataMeasurementID", ",", 
+            "jsonDataResolution"}], "}"}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"jsonData", "=", 
+            RowBox[{"\"\<data\>\"", "/.", " ", "jsonImport"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Assert", "[", 
+            RowBox[{"jsonData", "!=", 
+             RowBox[{"{", "}"}]}], "]"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"(*", " ", 
+            RowBox[{"Assert", " ", "-", " ", 
+             RowBox[{
+             "file", " ", "matches", " ", "the", " ", "requested", " ", 
+              "probe", " ", "data"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+           RowBox[{"jsonDataProbeID", "=", " ", 
+            RowBox[{"\"\<probe_id\>\"", "/.", "jsonData"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"jsonDataMeasurementID", "=", 
+            RowBox[{"\"\<measurement_id\>\"", " ", "/.", " ", "jsonData"}]}], 
+           ";", "\[IndentingNewLine]", 
+           RowBox[{"jsonDataResolution", " ", "=", 
+            RowBox[{"\"\<resolution\>\"", "/.", " ", "jsonData"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Assert", "[", 
+            RowBox[{
+             RowBox[{"ToString", "[", "probeID", "]"}], "==", 
+             "jsonDataProbeID"}], "]"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"Assert", "[", 
+            RowBox[{
+             RowBox[{"ToString", "[", "hopNumber", "]"}], "==", 
+             "jsonDataMeasurementID"}], "]"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"Assert", "[", 
+            RowBox[{"resolution", "==", "jsonDataResolution"}], "]"}], 
+           ";"}]}], "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+        
+        RowBox[{"(*", " ", 
+         RowBox[{
+         "CONFIRM", " ", "data", " ", "set", " ", "referened", " ", "matches",
+           " ", "argements"}], "  ", "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"(*", " ", 
+         RowBox[{"--", 
+          RowBox[{"\[Rule]", " ", "returning"}]}], " ", "*)"}], 
+        "\[IndentingNewLine]", "jsonData"}]}], "\[IndentingNewLine]", "]"}]}],
+     ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"UNEXPECTED", " ", "ARGUMENT"}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonData", "[", 
+      RowBox[{"probeID_", ",", " ", "resolution_"}], "]"}], ":=", 
+     RowBox[{"Message", "[", 
+      RowBox[{
+       RowBox[{"jsonData", "::", "unexpectedArg"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"probeID", ",", " ", "resolution"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "TEST", " ", "*)"}], "\[IndentingNewLine]"}]}]], "Input",\
+
+ CellChangeTimes->{{3.609414141978176*^9, 3.609414788250862*^9}, {
+   3.6094150323441668`*^9, 3.6094150825281982`*^9}, {3.609415134384252*^9, 
+   3.609415225065727*^9}, {3.6094152641526213`*^9, 3.60941531344515*^9}, {
+   3.609415363399082*^9, 3.609415412811928*^9}, {3.6094163247106133`*^9, 
+   3.609416329500194*^9}, {3.609417740659006*^9, 3.609417773018794*^9}, {
+   3.609417843013302*^9, 3.609417871297265*^9}, {3.609417940499412*^9, 
+   3.609418069542598*^9}, {3.6094181579160213`*^9, 3.609418185721694*^9}, {
+   3.6094182186988583`*^9, 3.609418315154312*^9}, {3.609418359546919*^9, 
+   3.6094186962203913`*^9}, {3.609418728174018*^9, 3.609418798577785*^9}, {
+   3.609418871695875*^9, 3.609418939580531*^9}, {3.60941900644816*^9, 
+   3.60941903720739*^9}, {3.609419070016646*^9, 3.609419120964375*^9}, {
+   3.609419187083349*^9, 3.6094191989292583`*^9}, {3.6094192401812143`*^9, 
+   3.609419320710651*^9}, {3.609419544699547*^9, 3.609419873127756*^9}, {
+   3.6094203463578043`*^9, 3.609420372003216*^9}, {3.609427074687092*^9, 
+   3.609427129859466*^9}, 3.609427161220461*^9, {3.609427197778067*^9, 
+   3.609427200290032*^9}, {3.609427249599897*^9, 3.609427282268978*^9}, {
+   3.6094282047517138`*^9, 3.609428223142867*^9}, 3.609428592048677*^9, 
+   3.60982558575107*^9, {3.609830124903973*^9, 3.6098301256038017`*^9}, {
+   3.615004295403264*^9, 3.615004579337677*^9}, 3.615004650793927*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["jsonDataMeasurementsToCDF", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+   3.609414117187767*^9, 3.60941412349046*^9}, {3.609414995791791*^9, 
+   3.6094149962385674`*^9}, {3.609416116291595*^9, 3.6094161173459463`*^9}, 
+   3.609417876876779*^9, {3.60941810508298*^9, 3.609418112520381*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "jsonDataMeasurementsToCDF", " ", "returns", " ", "CDF", " ", "version", 
+    " ", "of", " ", "measurementData"}], " ", "*)"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ClearAll", "[", "jsonDataMeasurementsToCDF", "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonDataMeasurementsToCDF", "::", "usage"}], "=", 
+     "\"\<convert JSON data to CDF\>\""}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonDataMeasurementsToCDF", "::", "unexpectedArg"}], "=", 
+     "\"\<`1`\>\""}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "IMPLEMENTATION", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"jsonDataMeasurementsToCDF", "[", 
+     RowBox[{
+     "probeID_Integer", ",", "resolution_String", ",", "hopNumber_Integer"}], 
+     "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"measurements", ",", " ", "converted"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "Traverse", " ", "JSON", " ", "graph", " ", "to", " ", "get", " ", 
+        "to", " ", "measurements"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"measurements", "=", 
+        RowBox[{"\"\<measurements\>\"", "/.", " ", 
+         RowBox[{"jsonData", "[", 
+          RowBox[{"probeID", ",", "resolution", ",", "hopNumber"}], "]"}]}]}],
+        ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "flatten", " ", "and", " ", "convert", " ", "values", " ", "where", 
+         " ", "necessary"}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"ASSERT", " ", ":", " ", 
+         RowBox[{
+         "format", " ", "is", " ", "rules", " ", "as", " ", "the", " ", 
+          "following", " ", "example", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"\"\<received\>\"", "\[Rule]", " ", "6"}], ",", " ", 
+            "\[IndentingNewLine]", 
+            RowBox[{"\"\<rtt_5pct\>\"", "\[Rule]", "10.088"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"\"\<rtt_95pct\>\"", "\[Rule]", "21.066"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"\"\<rtt_med\>\"", "\[Rule]", "14.8675"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"\"\<sent\>\"", "\[Rule]", "6"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"\"\<timestamp\>\"", "\[Rule]", "1330434000"}]}], 
+           "}"}]}]}], "\[IndentingNewLine]", " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"--", 
+         RowBox[{"\[Rule]", " ", "returning"}]}], " ", "*)"}], 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Association", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"\"\<probe_id\>\"", "\[Rule]", "probeID"}], ",", 
+             RowBox[{"\"\<measurement_id\>\"", "\[Rule]", "hopNumber"}], ",", 
+             
+             RowBox[{"\"\<resolution\>\"", "\[Rule]", "resolution"}]}], "}"}],
+            ",", "\[IndentingNewLine]", 
+           RowBox[{"#", "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ";;", "5"}], "]"}], "]"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"{", 
+            RowBox[{"\"\<timestamp\>\"", "\[Rule]", 
+             RowBox[{"(", 
+              RowBox[{"unixTimeToHST", "[", 
+               RowBox[{"\"\<timestamp\>\"", "/.", 
+                RowBox[{"#", "[", 
+                 RowBox[{"[", "6", "]"}], "]"}]}], "]"}], ")"}]}], "}"}]}], 
+          "]"}], "&"}], " ", "/@", "measurements"}]}]}], 
+     "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"UNEXPECTED", " ", "ARGUMENT"}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"jsonDataMeasurementsToCDF", "[", 
+      RowBox[{"probeID_", ",", " ", "resolution_"}], "]"}], ":=", 
+     RowBox[{"Message", "[", 
+      RowBox[{
+       RowBox[{"jsonDataMeasurementsToCDF", "::", "unexpectedArg"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"probeID", ",", " ", "resolution"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "TEST", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Block", "[", 
+     RowBox[{
+      RowBox[{"{", "testSet", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"testSet", "=", 
+        RowBox[{"jsonDataMeasurementsToCDF", "[", 
+         RowBox[{"1178", ",", "\"\<1h\>\"", ",", "1"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"testSet", "[", 
+        RowBox[{"[", 
+         RowBox[{"1", ";;", "2"}], "]"}], "]"}]}]}], "\[IndentingNewLine]", 
+     "]"}], "//", "TableForm"}], "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.609417271843588*^9, 3.6094173086675797`*^9}, {
+   3.609417577492588*^9, 3.609417647149866*^9}, {3.6094176869501953`*^9, 
+   3.609417736552124*^9}, {3.609417781368532*^9, 3.60941779740714*^9}, {
+   3.6094178848761463`*^9, 3.609417900354762*^9}, {3.609418129807993*^9, 
+   3.609418147905808*^9}, {3.609420757102153*^9, 3.609420824208371*^9}, {
+   3.609420907398369*^9, 3.609420919124446*^9}, {3.609421111920231*^9, 
+   3.609421503231862*^9}, {3.609421537797614*^9, 3.609421568864986*^9}, {
+   3.60942162523737*^9, 3.6094218678363123`*^9}, {3.6094219028761683`*^9, 
+   3.609421917963307*^9}, 3.609825586733892*^9, 3.609830126370943*^9, {
+   3.615004717333795*^9, 3.6150047220204477`*^9}, {3.615004774573146*^9, 
+   3.615004928999069*^9}, {3.6150049754215527`*^9, 3.615004981114107*^9}, 
+   3.6150051154163513`*^9, {3.615005365737913*^9, 3.61500537455177*^9}, {
+   3.6150058655748577`*^9, 3.615005925931554*^9}, {3.6150059825256233`*^9, 
+   3.615005984182015*^9}, {3.619708585081949*^9, 3.619708592018241*^9}, {
+   3.619708805238111*^9, 3.619708808441059*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Combine Measurements to tMeasurements", "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+   3.609414117187767*^9, 3.60941412349046*^9}, {3.609414995791791*^9, 
+   3.6094149962385674`*^9}, {3.609416116291595*^9, 3.6094161173459463`*^9}, 
+   3.609417876876779*^9, {3.60941810508298*^9, 3.609418112520381*^9}, {
+   3.60942211451232*^9, 3.609422154085846*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "tMeasurements", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"tMeasurements", "=", 
+   RowBox[{"Dataset", "[", "\[IndentingNewLine]", 
+    RowBox[{"Join", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"jsonDataMeasurementsToCDF", "[", 
+       RowBox[{"1165", ",", "\"\<1h\>\"", ",", "1"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"jsonDataMeasurementsToCDF", "[", 
+       RowBox[{"1165", ",", "\"\<1h\>\"", ",", "2"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"jsonDataMeasurementsToCDF", "[", 
+       RowBox[{"1178", ",", "\"\<1h\>\"", ",", "1"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"jsonDataMeasurementsToCDF", "[", 
+       RowBox[{"1178", ",", "\"\<1h\>\"", ",", "2"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"jsonDataMeasurementsToCDF", "[", 
+       RowBox[{"2289", ",", "\"\<1h\>\"", ",", "1"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"jsonDataMeasurementsToCDF", "[", 
+       RowBox[{"2289", ",", "\"\<1h\>\"", ",", "2"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"jsonDataMeasurementsToCDF", "[", 
+       RowBox[{"10546", ",", "\"\<1h\>\"", ",", "1"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"jsonDataMeasurementsToCDF", "[", 
+       RowBox[{"10546", ",", "\"\<1h\>\"", ",", "2"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"jsonDataMeasurementsToCDF", "[", 
+       RowBox[{"16065", ",", "\"\<1h\>\"", ",", "1"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"jsonDataMeasurementsToCDF", "[", 
+       RowBox[{"16065", ",", "\"\<1h\>\"", ",", "2"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"jsonDataMeasurementsToCDF", "[", 
+       RowBox[{"16090", ",", "\"\<1h\>\"", ",", "1"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"jsonDataMeasurementsToCDF", "[", 
+       RowBox[{"16090", ",", "\"\<1h\>\"", ",", "2"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"jsonDataMeasurementsToCDF", "[", 
+       RowBox[{"18657", ",", "\"\<1h\>\"", ",", "1"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"jsonDataMeasurementsToCDF", "[", 
+       RowBox[{"18657", ",", "\"\<1h\>\"", ",", "2"}], "]"}]}], 
+     "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.609428328190473*^9, 3.609428407786689*^9}, {
+   3.609429196682753*^9, 3.6094292168304358`*^9}, {3.6094306532156773`*^9, 
+   3.609430659909844*^9}, {3.609829697817556*^9, 3.609829709216075*^9}, 
+   3.6099497415670156`*^9, {3.61144789695249*^9, 3.611447902823265*^9}, {
+   3.611447938944854*^9, 3.61144794844617*^9}, 3.611449191404737*^9, 
+   3.6114492482758627`*^9, {3.61144929614207*^9, 3.6114493022848473`*^9}, {
+   3.61144954140893*^9, 3.6114495455907803`*^9}, {3.611624208594171*^9, 
+   3.6116242799868526`*^9}, {3.615005134506406*^9, 3.615005153604014*^9}, {
+   3.615005460162964*^9, 3.615005461080879*^9}, {3.6150055522769423`*^9, 
+   3.61500556127909*^9}, {3.615005636272732*^9, 3.6150056396444283`*^9}, {
+   3.615005669947117*^9, 3.61500567469921*^9}, 3.615005711444787*^9, {
+   3.615006127261744*^9, 3.615006129128635*^9}, {3.619708674926799*^9, 
+   3.619708691404434*^9}, {3.6197087550310297`*^9, 3.619708761771048*^9}, {
+   3.61971574258351*^9, 3.619715746279215*^9}, {3.623692944409893*^9, 
+   3.6236929584655733`*^9}, {3.63553606231938*^9, 3.635536174116868*^9}, {
+   3.635536287661064*^9, 3.635536297601324*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Length", "[", "tMeasurements", "]"}]], "Input"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Analysis of ", "Section"],
+ "tMeasurements"
+}], "Section",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+   3.609414117187767*^9, 3.60941412349046*^9}, {3.609414995791791*^9, 
+   3.6094149962385674`*^9}, {3.609416116291595*^9, 3.6094161173459463`*^9}, 
+   3.609417876876779*^9, {3.60941810508298*^9, 3.609418112520381*^9}, {
+   3.6094221020576468`*^9, 3.609422104255767*^9}, {3.6094221576410017`*^9, 
+   3.609422164197638*^9}, {3.6150026436853533`*^9, 3.615002644900231*^9}, 
+   3.6150063972462673`*^9}],
+
+Cell[BoxData[
+ RowBox[{"tt", "=", 
+  RowBox[{"tMeasurements", "[", 
+   RowBox[{
+    RowBox[{"1", ";;", "3"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\"\<timestamp\>\"", ",", "\"\<sent\>\""}], "}"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.615002352082101*^9, 3.615002380997786*^9}, {
+   3.615002582457703*^9, 3.615002590690338*^9}, {3.615003084769889*^9, 
+   3.615003144464554*^9}, {3.615003277348674*^9, 3.6150032836118803`*^9}, {
+   3.61500332243403*^9, 3.615003355580567*^9}, {3.6150034264307823`*^9, 
+   3.6150034526858177`*^9}, {3.6150035121633663`*^9, 3.615003537176429*^9}, {
+   3.6150035878683977`*^9, 3.61500359073682*^9}, {3.615003633905611*^9, 
+   3.615003685713666*^9}, 3.615006404264207*^9}],
+
+Cell[BoxData[
+ RowBox[{"tt", "[", 
+  RowBox[{"All", ",", 
+   RowBox[{
+    RowBox[{"\"\<timestamp\>\"", "\[Rule]", 
+     RowBox[{"#", "[", 
+      RowBox[{"[", "All", "]"}], "]"}]}], "&"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.615002595275546*^9, 3.61500259931592*^9}, {
+  3.615002748858103*^9, 3.61500290927798*^9}, {3.615003183721287*^9, 
+  3.615003186253599*^9}, {3.6150037124966803`*^9, 3.6150037801797533`*^9}, {
+  3.61500385954742*^9, 3.6150039128364973`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Profiles of various data values", "Section"]], \
+"Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+   3.609414117187767*^9, 3.60941412349046*^9}, {3.609414995791791*^9, 
+   3.6094149962385674`*^9}, {3.609416116291595*^9, 3.6094161173459463`*^9}, 
+   3.609417876876779*^9, {3.60941810508298*^9, 3.609418112520381*^9}, {
+   3.6094221020576468`*^9, 3.609422104255767*^9}, {3.6094221576410017`*^9, 
+   3.609422164197638*^9}, {3.609423990859503*^9, 3.609424022311846*^9}, {
+   3.6094260764417267`*^9, 3.609426117254465*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "Within", " ", "the", " ", "JASON", " ", "data", " ", "interval", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"e", ".", "g", "."}], ",", " ", 
+       RowBox[{"1", "h"}], ",", " ", 
+       RowBox[{"1", "d"}], ",", " ", 
+       RowBox[{"1", "w"}]}], ")"}]}], ",", " ", 
+    RowBox[{
+    "what", " ", "was", " ", "the", " ", "distribution", " ", "of", " ", 
+     "RTTs", " ", "sent", " ", "and", " ", 
+     RowBox[{"received", "?"}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"#", ",", 
+       RowBox[{"BinCounts", "[", 
+        RowBox[{
+         RowBox[{"#", "/.", "tMeasurements"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "100", ",", "10"}], "}"}]}], "]"}]}], "}"}], 
+     "&"}], "/@", 
+    RowBox[{"{", 
+     RowBox[{"\"\<sent\>\"", ",", "\"\<received\>\""}], "}"}]}], "//", 
+   "MatrixForm"}]}]], "Input",
+ CellChangeTimes->{{3.609425053149061*^9, 3.6094250538104877`*^9}, {
+  3.609426129281083*^9, 3.609426241101728*^9}, {3.615002468708926*^9, 
+  3.615002540287578*^9}}],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{
+   RowBox[{"For", " ", "first", " ", "Hop", " ", "Only"}], ",", " ", 
+   RowBox[{"please", " ", "plot", " ", "rtt_med"}]}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.609426287785692*^9, 3.6094262998238707`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"selectElements", "[", 
+   RowBox[{"list_", ",", "start_", ",", "end_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"s", "=", 
+       RowBox[{"AbsoluteTime", "@", "start"}]}], ",", 
+      RowBox[{"e", "=", 
+       RowBox[{"AbsoluteTime", "@", "end"}]}]}], "}"}], ",", 
+    RowBox[{"Select", "[", 
+     RowBox[{"list", ",", 
+      RowBox[{"Composition", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"s", "\[LessEqual]", "#", "\[LessEqual]", "e"}], "&"}], ",", 
+        "AbsoluteTime", ",", "First"}], "]"}]}], "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.609460966113646*^9, 3.609460966114954*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "rttMatch", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"rttMatch", "[", 
+    RowBox[{
+    "dataSet_List", ",", "returnMatchOnlyP_", ",", "requiredArgs_List"}], 
+    "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{"Block", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "probesV", ",", "hoursListV", ",", "intervalRttMedV", ",", "hopV", ",", 
+       "matches"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "probesV", ",", "hoursListV", ",", "intervalRttMedV", ",", "hopV"}], 
+        "}"}], "=", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<probes\>\"", ",", "\"\<List[hours]\>\"", ",", 
+          "\"\<Interval[rtt_med]\>\"", ",", "\"\<hop\>\""}], "}"}], "/.", " ",
+         "requiredArgs"}]}], ";", "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"matches", "=", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Cases", "[", 
+          RowBox[{"dataSet", ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"\"\<probe_id\>\"", "->", 
+               RowBox[{"probeID_", "/;", " ", 
+                RowBox[{"probeID", "\[Equal]", "#"}]}]}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"\"\<measurement_id\>\"", "->", 
+               RowBox[{"measurementID_", "/;", " ", 
+                RowBox[{"measurementID", "\[Equal]", "hopV"}]}]}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"\"\<resolution\>\"", "->", "resolution_"}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"\"\<received\>\"", "\[Rule]", "received_"}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"\"\<rtt_5pct\>\"", "\[Rule]", " ", "rtt5pct_"}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"\"\<rtt_95pct\>\"", "\[Rule]", "rtt95pct_"}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"\"\<rtt_med\>\"", "\[Rule]", "rttMed_"}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"\"\<sent\>\"", "\[Rule]", "sent_"}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"\"\<timestamp\>\"", "\[Rule]", "timestamp_"}]}], 
+             "\[IndentingNewLine]", "}"}], "\[RuleDelayed]", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"timestamp", ",", "rttMed"}], "}"}], "/;", " ", 
+             RowBox[{"If", "[", 
+              RowBox[{"returnMatchOnlyP", ",", "\[IndentingNewLine]", 
+               RowBox[{"And", "[", "\[IndentingNewLine]", 
+                RowBox[{
+                 RowBox[{"IntervalMemberQ", "[", 
+                  RowBox[{"intervalRttMedV", ",", "rttMed"}], "]"}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"MemberQ", "[", 
+                  RowBox[{"hoursListV", ",", 
+                   RowBox[{"timestamp", "[", 
+                    RowBox[{"[", "4", "]"}], "]"}]}], "]"}]}], 
+                "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+               "True"}], "]"}]}]}]}], "\[IndentingNewLine]", "]"}], "&"}], "/@",
+         "probesV"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"--", 
+        RowBox[{"\[Rule]", " ", "RETURNING"}]}], " ", "*)"}], 
+      "\[IndentingNewLine]", "matches"}]}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.609526953778842*^9, 3.6095270742684507`*^9}, 
+   3.609527170356042*^9, {3.609527257989908*^9, 3.6095272642927027`*^9}, {
+   3.609527311332204*^9, 3.609527325570648*^9}, {3.609527369555691*^9, 
+   3.609527456478512*^9}, {3.609527559864726*^9, 3.609527617053607*^9}, {
+   3.609527731876436*^9, 3.609527809767836*^9}, 3.609527844982215*^9, {
+   3.6095279058698883`*^9, 3.609527910236375*^9}, {3.6095279486574793`*^9, 
+   3.6095280270045958`*^9}, {3.6095293280030537`*^9, 3.609529369458351*^9}, {
+   3.609529456613145*^9, 3.609529496753304*^9}, {3.609529589336578*^9, 
+   3.60952960276763*^9}, 3.6095296456309433`*^9, {3.609529682949787*^9, 
+   3.609529696219561*^9}, {3.609529729810315*^9, 3.6095297887044153`*^9}, {
+   3.6095298244784184`*^9, 3.609529880331472*^9}, {3.609536918968761*^9, 
+   3.609537035903267*^9}, 3.609825587600285*^9, {3.6099437339047003`*^9, 
+   3.6099438760219*^9}, {3.609943986588851*^9, 3.609944011925824*^9}, {
+   3.6099441399397993`*^9, 3.609944194467435*^9}, 3.6099442257016973`*^9, {
+   3.6099442595369368`*^9, 3.6099444032067537`*^9}, {3.6099463470995626`*^9, 
+   3.609946490474798*^9}, {3.609946524150807*^9, 3.609946539605527*^9}, {
+   3.609946639402725*^9, 3.60994665103028*^9}, {3.609946697305307*^9, 
+   3.6099468540150642`*^9}, {3.6099469027010508`*^9, 
+   3.6099469154689293`*^9}, {3.6099484497335987`*^9, 3.609948556223057*^9}, {
+   3.609948603260309*^9, 3.609948657803565*^9}, {3.6099489184230947`*^9, 
+   3.609949343822526*^9}, 3.609949383849495*^9, {3.609949489766849*^9, 
+   3.609949559508778*^9}, {3.60994962319598*^9, 3.60994965039929*^9}, {
+   3.6099497976081057`*^9, 3.609949878671137*^9}, {3.609949931551182*^9, 
+   3.609950142013529*^9}, {3.609950174502418*^9, 3.609950187330233*^9}, {
+   3.6099509008073378`*^9, 3.609950901919734*^9}, {3.6099509323147793`*^9, 
+   3.6099509480192137`*^9}, {3.609951059762723*^9, 3.6099510781851063`*^9}, {
+   3.609951519962393*^9, 3.6099515644305773`*^9}, {3.609951595856491*^9, 
+   3.6099516074504642`*^9}, {3.609952104944619*^9, 3.609952109943735*^9}, {
+   3.609952144020793*^9, 3.609952191904505*^9}, {3.6099527294843884`*^9, 
+   3.6099527309149647`*^9}, {3.609959082055085*^9, 3.609959126316889*^9}, {
+   3.6099592391399612`*^9, 3.60995935936806*^9}, {3.609959393139022*^9, 
+   3.6099594008344097`*^9}, {3.609959434951789*^9, 3.609959549148754*^9}, {
+   3.609959581615493*^9, 3.609959605795527*^9}, {3.610009365149007*^9, 
+   3.610009387833591*^9}, {3.610009427728622*^9, 3.610009454802763*^9}, {
+   3.610009551270548*^9, 3.610009606186597*^9}, {3.6100096826722717`*^9, 
+   3.6100097660117483`*^9}, {3.610009812616881*^9, 3.610009848359972*^9}, {
+   3.610009892047673*^9, 3.6100099072582407`*^9}, {3.610009941848034*^9, 
+   3.610010115185856*^9}, {3.610010151151327*^9, 3.610010263011232*^9}, {
+   3.6100103275939817`*^9, 3.610010399277378*^9}, {3.610010472363991*^9, 
+   3.610010557288466*^9}, 3.6100106545897903`*^9, {3.6100115150030212`*^9, 
+   3.61001152773842*^9}, {3.610012893782228*^9, 3.610012920729312*^9}, {
+   3.610012961118458*^9, 3.610012968883198*^9}, {3.6100135186504374`*^9, 
+   3.610013547236493*^9}, {3.6100135788413267`*^9, 3.61001358182342*^9}, {
+   3.610013633742873*^9, 3.6100136403185387`*^9}, {3.6100137242866573`*^9, 
+   3.610013926349539*^9}, {3.610013957729171*^9, 3.610014053984519*^9}, 
+   3.6100142081486883`*^9, {3.610014311622682*^9, 3.610014329311563*^9}, {
+   3.6100143927456923`*^9, 3.610014452613865*^9}, {3.610014723852812*^9, 
+   3.610014750471199*^9}, {3.610014789780079*^9, 3.6100148310701523`*^9}, {
+   3.610014942802937*^9, 3.610014972013164*^9}, {3.610015005306509*^9, 
+   3.610015017794067*^9}, {3.6100150509115667`*^9, 3.610015071163773*^9}, {
+   3.610018753825844*^9, 3.6100187905087214`*^9}, {3.610018915877144*^9, 
+   3.610019214891819*^9}, {3.610019522518601*^9, 3.610019526028751*^9}, {
+   3.610019672321251*^9, 3.610019688221985*^9}, {3.610019940891259*^9, 
+   3.6100199985106497`*^9}, {3.610020034148499*^9, 3.610020132653688*^9}, {
+   3.610020197599388*^9, 3.610020335260394*^9}, {3.610020399219325*^9, 
+   3.610020411291336*^9}, {3.610020467459654*^9, 3.6100204785005407`*^9}, {
+   3.610020531146927*^9, 3.610020532592349*^9}, {3.6100206046405973`*^9, 
+   3.610020633909535*^9}, {3.6100206687466393`*^9, 3.6100207138273907`*^9}}]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Visualization", "Section",
+ CellChangeTimes->{{3.609526953778842*^9, 3.6095270742684507`*^9}, 
+   3.609527170356042*^9, {3.609527257989908*^9, 3.6095272642927027`*^9}, {
+   3.609527311332204*^9, 3.609527325570648*^9}, {3.609527369555691*^9, 
+   3.609527456478512*^9}, {3.609527559864726*^9, 3.609527617053607*^9}, {
+   3.609527731876436*^9, 3.609527809767836*^9}, 3.609527844982215*^9, {
+   3.6095279058698883`*^9, 3.609527910236375*^9}, {3.6095279486574793`*^9, 
+   3.6095280270045958`*^9}, {3.6095293280030537`*^9, 3.609529369458351*^9}, {
+   3.609529456613145*^9, 3.609529496753304*^9}, {3.609529589336578*^9, 
+   3.60952960276763*^9}, 3.6095296456309433`*^9, {3.609529682949787*^9, 
+   3.609529696219561*^9}, {3.609529729810315*^9, 3.6095297887044153`*^9}, {
+   3.6095298244784184`*^9, 3.609529880331472*^9}, {3.609536918968761*^9, 
+   3.609537035903267*^9}, 3.609825587600285*^9, {3.6099437339047003`*^9, 
+   3.6099438760219*^9}, {3.609943986588851*^9, 3.609944011925824*^9}, {
+   3.6099441399397993`*^9, 3.609944194467435*^9}, 3.6099442257016973`*^9, {
+   3.6099442595369368`*^9, 3.6099444032067537`*^9}, {3.6099463470995626`*^9, 
+   3.609946490474798*^9}, {3.609946524150807*^9, 3.609946539605527*^9}, {
+   3.609946639402725*^9, 3.60994665103028*^9}, {3.609946697305307*^9, 
+   3.6099468540150642`*^9}, {3.6099469027010508`*^9, 
+   3.6099469154689293`*^9}, {3.6099484497335987`*^9, 3.609948556223057*^9}, {
+   3.609948603260309*^9, 3.609948657803565*^9}, {3.6099489184230947`*^9, 
+   3.609949343822526*^9}, 3.609949383849495*^9, {3.609949489766849*^9, 
+   3.609949559508778*^9}, {3.60994962319598*^9, 3.60994965039929*^9}, {
+   3.6099497976081057`*^9, 3.609949878671137*^9}, {3.609949931551182*^9, 
+   3.609950142013529*^9}, {3.609950174502418*^9, 3.609950187330233*^9}, {
+   3.6099509008073378`*^9, 3.609950901919734*^9}, {3.6099509323147793`*^9, 
+   3.6099509480192137`*^9}, {3.609951059762723*^9, 3.6099510781851063`*^9}, {
+   3.609951519962393*^9, 3.6099515644305773`*^9}, {3.609951595856491*^9, 
+   3.6099516074504642`*^9}, {3.609952104944619*^9, 3.609952109943735*^9}, {
+   3.609952144020793*^9, 3.609952191904505*^9}, {3.6099527294843884`*^9, 
+   3.6099527309149647`*^9}, {3.609959082055085*^9, 3.609959126316889*^9}, {
+   3.6099592391399612`*^9, 3.60995935936806*^9}, {3.609959393139022*^9, 
+   3.6099594008344097`*^9}, {3.609959434951789*^9, 3.609959549148754*^9}, {
+   3.609959581615493*^9, 3.609959605795527*^9}, {3.610009365149007*^9, 
+   3.610009387833591*^9}, {3.610009427728622*^9, 3.610009454802763*^9}, {
+   3.610009551270548*^9, 3.610009606186597*^9}, {3.6100096826722717`*^9, 
+   3.6100097660117483`*^9}, {3.610009812616881*^9, 3.610009848359972*^9}, {
+   3.610009892047673*^9, 3.6100099072582407`*^9}, {3.610009941848034*^9, 
+   3.610010115185856*^9}, {3.610010151151327*^9, 3.610010263011232*^9}, {
+   3.6100103275939817`*^9, 3.610010399277378*^9}, {3.610010472363991*^9, 
+   3.610010557288466*^9}, 3.6100106545897903`*^9, {3.6100115150030212`*^9, 
+   3.61001152773842*^9}, {3.610012893782228*^9, 3.610012920729312*^9}, {
+   3.610012961118458*^9, 3.610012968883198*^9}, {3.6100135186504374`*^9, 
+   3.610013547236493*^9}, {3.6100135788413267`*^9, 3.61001358182342*^9}, {
+   3.610013633742873*^9, 3.6100136403185387`*^9}, {3.6100137242866573`*^9, 
+   3.610013926349539*^9}, {3.610013957729171*^9, 3.610014053984519*^9}, 
+   3.6100142081486883`*^9, {3.610014311622682*^9, 3.610014329311563*^9}, {
+   3.6100143927456923`*^9, 3.610014452613865*^9}, {3.610014723852812*^9, 
+   3.610014750471199*^9}, {3.610014789780079*^9, 3.6100148310701523`*^9}, {
+   3.610014942802937*^9, 3.610014972013164*^9}, {3.610015005306509*^9, 
+   3.610015017794067*^9}, {3.6100150509115667`*^9, 3.610015091632304*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", "rttMedVisualization", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"rttMedVisualization", "[", 
+     RowBox[{
+     "probes_", ",", "hop_", ",", "hourOfDay_List", ",", 
+      "rttInterval_Interval", ",", " ", "dateRange_"}], "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Block", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"pointSize", "=", "Tiny"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"pointOpacity", "=", "0.5"}], ",", "\[IndentingNewLine]", 
+        "\[IndentingNewLine]", "matchesIncludingNulls", ",", 
+        "\[IndentingNewLine]", "dataToVisualize"}], "\[IndentingNewLine]", 
+       "}"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"matchesIncludingNulls", "=", 
+        RowBox[{"rttMatch", "[", "\[IndentingNewLine]", 
+         RowBox[{
+         "tMeasurements", ",", "\[IndentingNewLine]", "True", ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"\"\<probes\>\"", "\[Rule]", "probes"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"\"\<hop\>\"", "\[Rule]", "hop"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"\"\<Interval[rtt_med]\>\"", "\[Rule]", "rttInterval"}], 
+            ",", "\[IndentingNewLine]", 
+            RowBox[{"\"\<List[hours]\>\"", "\[Rule]", " ", "hourOfDay"}]}], 
+           "\[IndentingNewLine]", "}"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"MAGIC", " ", "-", " ", 
+         RowBox[{
+         "Replace", " ", "null", " ", "values", " ", "with", " ", "one", " ", 
+          "negative", " ", "valued", " ", "data", " ", "point"}]}], " ", 
+        "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"dataToVisualize", " ", "=", " ", 
+        RowBox[{"matchesIncludingNulls", " ", "/.", " ", 
+         RowBox[{
+          RowBox[{"{", "}"}], "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"DateList", "[", "]"}], ",", 
+            RowBox[{"-", "1"}]}], "}"}]}]}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Labeled", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"DateListPlot", "[", "\[IndentingNewLine]", 
+          RowBox[{"dataToVisualize", ",", "\[IndentingNewLine]", 
+           RowBox[{"PlotStyle", "\[Rule]", 
+            RowBox[{"Flatten", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"colorCodeForProbe", "[", "#", "]"}], ",", " ", 
+                   RowBox[{"PointSize", "[", "pointSize", "]"}], ",", 
+                   RowBox[{"Opacity", "[", "pointOpacity", "]"}]}], "}"}], 
+                 "}"}], "&"}], "/@", "probes"}], ",", "1"}], "]"}]}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"PlotLegends", "\[Rule]", 
+            RowBox[{"Placed", "[", 
+             RowBox[{
+              RowBox[{"PointLegend", "[", 
+               RowBox[{"pprintProbe", "/@", "probes"}], "]"}], ",", "Right"}],
+              "]"}]}], ",", "\[IndentingNewLine]", 
+           RowBox[{"PlotRange", "\[Rule]", " ", 
+            RowBox[{"{", 
+             RowBox[{"dateRange", ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"Min", "[", "rttInterval", "]"}], ",", 
+                RowBox[{"Max", "[", "rttInterval", "]"}]}], "}"}]}], "}"}]}], 
+           ",", "\[IndentingNewLine]", 
+           RowBox[{"Joined", "\[Rule]", "True"}], ",", "\[IndentingNewLine]", 
+           
+           RowBox[{"ImageSize", "\[Rule]", "Large"}]}], "\[IndentingNewLine]",
+           "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\"\<ICMP traceroute HOP \>\"", "<>", " ", 
+            RowBox[{"ToString", "[", "hop", "]"}], " ", "<>", " ", 
+            "\"\< at \>\"", "<>", 
+            RowBox[{"DateString", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"2012", ",", "01", ",", "01", ",", 
+                RowBox[{"hourOfDay", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], ",", "0"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"\"\<Hour12\>\"", ",", " ", "\"\<AMPM\>\""}], "}"}]}], 
+             "]"}], "<>", "\"\< HST\>\""}], ",", "\"\<1h RTT avg (ms)\>\""}], 
+          "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"Bottom", ",", "Left"}], "}"}], ",", 
+         RowBox[{"RotateLabel", "\[Rule]", "True"}]}], "\[IndentingNewLine]", 
+        "]"}]}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ListAnimate", "[", 
+    RowBox[{
+     RowBox[{"Table", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"rttMedVisualization", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1165", ",", "1178"}], "}"}], ",", "hop", ",", 
+         RowBox[{"Range", "[", 
+          RowBox[{"hour", ",", "hour"}], "]"}], ",", 
+         RowBox[{"Interval", "[", 
+          RowBox[{"{", 
+           RowBox[{"0.0", ",", "100.5"}], "}"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"DateList", "[", 
+            RowBox[{"{", 
+             RowBox[{"2012", ",", "05", ",", "01"}], "}"}], "]"}], ",", 
+           RowBox[{"DateList", "[", "]"}]}], "}"}]}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"hour", ",", "0", ",", "23"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"hop", ",", "1", ",", "2"}], "}"}]}], "]"}], ",", 
+     RowBox[{"AnimationRate", "\[Rule]", "0.5"}]}], "]"}], "//", 
+   "TableForm"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.609526953778842*^9, 3.6095270742684507`*^9}, 
+   3.609527170356042*^9, {3.609527257989908*^9, 3.6095272642927027`*^9}, {
+   3.609527311332204*^9, 3.609527325570648*^9}, {3.609527369555691*^9, 
+   3.609527456478512*^9}, {3.609527559864726*^9, 3.609527617053607*^9}, {
+   3.609527731876436*^9, 3.609527809767836*^9}, 3.609527844982215*^9, {
+   3.6095279058698883`*^9, 3.609527910236375*^9}, {3.6095279486574793`*^9, 
+   3.6095280270045958`*^9}, {3.6095293280030537`*^9, 3.609529369458351*^9}, {
+   3.609529456613145*^9, 3.609529496753304*^9}, {3.609529589336578*^9, 
+   3.60952960276763*^9}, 3.6095296456309433`*^9, {3.609529682949787*^9, 
+   3.609529696219561*^9}, {3.609529729810315*^9, 3.6095297887044153`*^9}, {
+   3.6095298244784184`*^9, 3.609529880331472*^9}, {3.609536918968761*^9, 
+   3.609537035903267*^9}, 3.609825587600285*^9, {3.6099437339047003`*^9, 
+   3.6099438760219*^9}, {3.609943986588851*^9, 3.609944011925824*^9}, {
+   3.6099441399397993`*^9, 3.609944194467435*^9}, 3.6099442257016973`*^9, {
+   3.6099442595369368`*^9, 3.6099444032067537`*^9}, {3.6099463470995626`*^9, 
+   3.609946490474798*^9}, {3.609946524150807*^9, 3.609946539605527*^9}, {
+   3.609946639402725*^9, 3.60994665103028*^9}, {3.609946697305307*^9, 
+   3.6099468540150642`*^9}, {3.6099469027010508`*^9, 
+   3.6099469154689293`*^9}, {3.6099484497335987`*^9, 3.609948556223057*^9}, {
+   3.609948603260309*^9, 3.609948657803565*^9}, {3.6099489184230947`*^9, 
+   3.609949343822526*^9}, 3.609949383849495*^9, {3.609949489766849*^9, 
+   3.609949559508778*^9}, {3.60994962319598*^9, 3.60994965039929*^9}, {
+   3.6099497976081057`*^9, 3.609949878671137*^9}, {3.609949931551182*^9, 
+   3.609950142013529*^9}, {3.609950174502418*^9, 3.609950187330233*^9}, {
+   3.6099509008073378`*^9, 3.609950901919734*^9}, {3.6099509323147793`*^9, 
+   3.6099509480192137`*^9}, {3.609951059762723*^9, 3.6099510781851063`*^9}, {
+   3.609951519962393*^9, 3.6099515644305773`*^9}, {3.609951595856491*^9, 
+   3.6099516074504642`*^9}, {3.609952104944619*^9, 3.609952109943735*^9}, {
+   3.609952144020793*^9, 3.609952191904505*^9}, {3.6099527294843884`*^9, 
+   3.6099527309149647`*^9}, {3.609959082055085*^9, 3.609959126316889*^9}, {
+   3.6099592391399612`*^9, 3.60995935936806*^9}, {3.609959393139022*^9, 
+   3.6099594008344097`*^9}, {3.609959434951789*^9, 3.609959549148754*^9}, {
+   3.609959581615493*^9, 3.609959605795527*^9}, {3.610009365149007*^9, 
+   3.610009387833591*^9}, {3.610009427728622*^9, 3.610009454802763*^9}, {
+   3.610009551270548*^9, 3.610009606186597*^9}, {3.6100096826722717`*^9, 
+   3.6100097660117483`*^9}, {3.610009812616881*^9, 3.610009848359972*^9}, {
+   3.610009892047673*^9, 3.6100099072582407`*^9}, {3.610009941848034*^9, 
+   3.610010115185856*^9}, {3.610010151151327*^9, 3.610010263011232*^9}, {
+   3.6100103275939817`*^9, 3.610010399277378*^9}, {3.610010472363991*^9, 
+   3.610010557288466*^9}, 3.6100106545897903`*^9, {3.6100115150030212`*^9, 
+   3.61001152773842*^9}, {3.610012893782228*^9, 3.610012920729312*^9}, {
+   3.610012961118458*^9, 3.610012968883198*^9}, {3.6100135186504374`*^9, 
+   3.610013547236493*^9}, {3.6100135788413267`*^9, 3.61001358182342*^9}, {
+   3.610013633742873*^9, 3.6100136403185387`*^9}, {3.6100137242866573`*^9, 
+   3.610013926349539*^9}, {3.610013957729171*^9, 3.610014053984519*^9}, 
+   3.6100142081486883`*^9, {3.610014311622682*^9, 3.610014329311563*^9}, {
+   3.6100143927456923`*^9, 3.610014452613865*^9}, {3.610014723852812*^9, 
+   3.610014750471199*^9}, {3.610014789780079*^9, 3.6100148310701523`*^9}, {
+   3.610014942802937*^9, 3.610014972013164*^9}, {3.610015005306509*^9, 
+   3.610015017794067*^9}, {3.6100150509115667`*^9, 3.610015065487028*^9}, {
+   3.610015144334516*^9, 3.6100152259192533`*^9}, {3.6100154104264297`*^9, 
+   3.6100154355435877`*^9}, {3.610015471034831*^9, 3.610015528815569*^9}, {
+   3.610015580317896*^9, 3.6100157201042023`*^9}, {3.610015762068575*^9, 
+   3.610015763265183*^9}, {3.6100158055109653`*^9, 3.6100159281609297`*^9}, {
+   3.610015974407926*^9, 3.6100160175748253`*^9}, {3.6100160767088213`*^9, 
+   3.610016113141868*^9}, {3.610016150740309*^9, 3.6100162080102262`*^9}, 
+   3.6100163025806227`*^9, {3.6100163364019203`*^9, 3.61001635818506*^9}, {
+   3.610016493032199*^9, 3.61001651627402*^9}, {3.6100165715519257`*^9, 
+   3.6100166950838337`*^9}, {3.6100167498266773`*^9, 3.610016849566086*^9}, {
+   3.610016883000265*^9, 3.610016894836793*^9}, {3.6100170286432858`*^9, 
+   3.610017032253734*^9}, {3.6100170955922832`*^9, 3.610017129580014*^9}, {
+   3.610017166298587*^9, 3.610017169655285*^9}, {3.610017209979447*^9, 
+   3.610017214378908*^9}, {3.6100172522662477`*^9, 3.61001731878607*^9}, {
+   3.610017374822752*^9, 3.61001737595798*^9}, {3.61001741249864*^9, 
+   3.610017484517952*^9}, {3.610017590886437*^9, 3.610017621222728*^9}, {
+   3.610017691256054*^9, 3.6100176928471603`*^9}, {3.6100177508694763`*^9, 
+   3.610017751420439*^9}, {3.6100178350875607`*^9, 3.6100178723773317`*^9}, {
+   3.6100179302334957`*^9, 3.610017975967113*^9}, {3.6100180107140303`*^9, 
+   3.610018266757083*^9}, {3.6100183077160463`*^9, 3.6100183101073008`*^9}, {
+   3.610018344783547*^9, 3.610018428939423*^9}, {3.610018497952861*^9, 
+   3.610018717366777*^9}, {3.610019247286682*^9, 3.610019385805242*^9}, {
+   3.610019427971426*^9, 3.610019471913278*^9}, {3.610019611209098*^9, 
+   3.6100196555650883`*^9}, {3.610020441301852*^9, 3.610020448134918*^9}, {
+   3.610020974415401*^9, 3.61002104836742*^9}, {3.610021083989231*^9, 
+   3.610021182926633*^9}, {3.6100212136255627`*^9, 3.610021236075687*^9}, {
+   3.6100212678643093`*^9, 3.6100212712563*^9}, {3.610021319701394*^9, 
+   3.610021351928646*^9}, {3.610022622055786*^9, 3.6100227183371687`*^9}, {
+   3.610022755837842*^9, 3.61002278562442*^9}, {3.610022817819056*^9, 
+   3.610022871608983*^9}, {3.6100229747016478`*^9, 3.610023081870288*^9}, {
+   3.610023553457016*^9, 3.610024064824901*^9}, {3.610024143915764*^9, 
+   3.6100241496590643`*^9}, {3.610025453909173*^9, 3.610025485807817*^9}, {
+   3.610025622801244*^9, 3.610025632897172*^9}, {3.6100257138513937`*^9, 
+   3.6100257559823027`*^9}, {3.610026052043282*^9, 3.610026079960417*^9}, {
+   3.6100271893994493`*^9, 3.610027222817037*^9}, {3.61002772627309*^9, 
+   3.610027726830447*^9}, {3.610028799017742*^9, 3.610028851405943*^9}, {
+   3.610028894632923*^9, 3.610028930835814*^9}, {3.6100294253880587`*^9, 
+   3.610029519909102*^9}, {3.610029643180183*^9, 3.610029643818309*^9}, {
+   3.610373847501573*^9, 3.6103738565723867`*^9}, {3.611624331225037*^9, 
+   3.611624346452067*^9}, {3.6116245738165417`*^9, 3.61162457455049*^9}, {
+   3.611661320318116*^9, 3.611661407427595*^9}, 3.612295099934485*^9, {
+   3.6130420009589443`*^9, 3.613042020604425*^9}, 3.6130421955166492`*^9, {
+   3.613729382332535*^9, 3.613729383383203*^9}, {3.613729539730567*^9, 
+   3.613729543510582*^9}, {3.615001431272871*^9, 3.615001434007781*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ListAnimate", "[", 
+   RowBox[{
+    RowBox[{"Table", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"rttMedVisualization", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"1165", ",", "1178", ",", "2289", ",", "10546"}], "}"}], ",",
+         "hop", ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"hour", ",", "hour"}], "]"}], ",", 
+        RowBox[{"Interval", "[", 
+         RowBox[{"{", 
+          RowBox[{"0.0", ",", "40.5"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"DateList", "[", 
+           RowBox[{"{", 
+            RowBox[{"2012", ",", "05", ",", "01"}], "}"}], "]"}], ",", 
+          RowBox[{"DateList", "[", "]"}]}], "}"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"hour", ",", "0", ",", "23"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"hop", ",", "1", ",", "2"}], "}"}]}], "]"}], ",", 
+    RowBox[{"AnimationRate", "\[Rule]", "0.5"}]}], "]"}], "//", 
+  "TableForm"}]], "Input",
+ CellChangeTimes->{{3.6100243041997757`*^9, 3.610024343867045*^9}, {
+   3.610024429757327*^9, 3.610024503427659*^9}, {3.61002455611333*^9, 
+   3.610024559588032*^9}, {3.6100246925450077`*^9, 3.61002469359381*^9}, {
+   3.610025118904305*^9, 3.6100251207917433`*^9}, {3.610025166603459*^9, 
+   3.6100252170327797`*^9}, {3.610025310982342*^9, 3.610025321254252*^9}, {
+   3.610025387411358*^9, 3.6100253878909407`*^9}, {3.610025549717054*^9, 
+   3.610025552219573*^9}, 3.6100258261378107`*^9, {3.6100258568566837`*^9, 
+   3.610025913418165*^9}, {3.6100259765708027`*^9, 3.610026019726982*^9}, {
+   3.610026097320195*^9, 3.610026100155004*^9}, {3.610026306535441*^9, 
+   3.610026322646719*^9}, {3.6100278280908737`*^9, 3.610027829124915*^9}, {
+   3.610027874900733*^9, 3.610027875274458*^9}, {3.610029630214881*^9, 
+   3.610029632604742*^9}, {3.610030200931232*^9, 3.6100302057048683`*^9}, {
+   3.610037462730966*^9, 3.610037467309368*^9}, 3.610057298472629*^9, {
+   3.610057635870224*^9, 3.61005765968853*^9}, {3.610061741536137*^9, 
+   3.610061751949785*^9}, {3.610363222905402*^9, 3.6103632470564833`*^9}, {
+   3.610363300325306*^9, 3.6103633009000273`*^9}, {3.61036407225331*^9, 
+   3.610364072444151*^9}, {3.6103641577227087`*^9, 3.610364160490697*^9}, {
+   3.6103737130332813`*^9, 3.6103737243128347`*^9}, {3.610373902790604*^9, 
+   3.610373913165291*^9}, 3.6114459047005367`*^9, {3.611446132336494*^9, 
+   3.611446139920211*^9}, {3.6114480961424437`*^9, 3.611448104853921*^9}, {
+   3.6114496481971273`*^9, 3.6114496523644342`*^9}, {3.611624323769328*^9, 
+   3.611624357203274*^9}, 3.6116245819383993`*^9, {3.611634477833143*^9, 
+   3.6116344787309227`*^9}, {3.612295115280047*^9, 3.612295115720767*^9}, {
+   3.612556420211196*^9, 3.612556421156336*^9}, 3.613026987823915*^9, 
+   3.613042054689434*^9, 3.613729476694338*^9}],
+
+Cell[BoxData["\[NonBreakingSpace]"], "Input",
+ CellChangeTimes->{3.611446327335875*^9}],
+
+Cell[BoxData[
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\</tmp/traceroute.hops.mov\>\"", ",", "%"}], "]"}]], "Input",
+ CellChangeTimes->{{3.61002657808258*^9, 3.610026627006043*^9}, 
+   3.610026780025484*^9, {3.610026810907995*^9, 3.610026813049816*^9}, {
+   3.610029689768461*^9, 3.6100297475529413`*^9}, {3.610029833003441*^9, 
+   3.6100298546034517`*^9}, {3.6100299323178797`*^9, 3.61002993450035*^9}, {
+   3.61003003411438*^9, 3.610030038679072*^9}, {3.610030090627088*^9, 
+   3.610030092100891*^9}, 3.610030250590616*^9}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Scratch", "Section"]], "Subsubsection",
+ CellChangeTimes->{{3.609414015979292*^9, 3.609414061229292*^9}, {
+   3.609414117187767*^9, 3.60941412349046*^9}, {3.609414995791791*^9, 
+   3.6094149962385674`*^9}, {3.609416116291595*^9, 3.6094161173459463`*^9}, 
+   3.609417876876779*^9, {3.60941810508298*^9, 3.609418112520381*^9}, {
+   3.6094221020576468`*^9, 3.609422104255767*^9}, {3.6094221576410017`*^9, 
+   3.609422164197638*^9}, {3.609423990859503*^9, 3.609424022311846*^9}, {
+   3.6094260764417267`*^9, 3.609426117254465*^9}, {3.610013617347496*^9, 
+   3.610013618495346*^9}}],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", "SCRATCH", "*)"}]], "Input",
+ CellChangeTimes->{{3.610013602758569*^9, 3.610013605807228*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{3.6197070161648912`*^9, 3.6197077878087254`*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowToolbars->"EditBar",
+WindowSize->{1280, 1301},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification:>1.25 Inherited,
+FrontEndVersion->"10.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 6, \
+2015)",
+StyleDefinitions->FrontEnd`FileName[{"Report"}, "ConfidentialReport.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 222, 3, 101, "Title"],
+Cell[804, 27, 193, 4, 36, "Subsubtitle"],
+Cell[1000, 33, 366, 8, 87, "Subsubtitle"],
+Cell[1369, 43, 96, 1, 80, "Section"],
+Cell[CellGroupData[{
+Cell[1490, 48, 242, 3, 62, "Section"],
+Cell[CellGroupData[{
+Cell[1757, 55, 108, 1, 128, "Subsection"],
+Cell[CellGroupData[{
+Cell[1890, 60, 317, 4, 102, "Subsubsection"],
+Cell[2210, 66, 2175, 46, 676, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4422, 117, 264, 3, 102, "Subsubsection"],
+Cell[4689, 122, 348, 8, 90, "Input"],
+Cell[5040, 132, 2153, 45, 897, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[7230, 182, 312, 4, 81, "Subsubsection"],
+Cell[7545, 188, 1031, 23, 335, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[8613, 216, 312, 4, 81, "Subsubsection"],
+Cell[8928, 222, 1871, 36, 577, "Input"],
+Cell[10802, 260, 144, 2, 96, "Input"]
+}, Closed]]
+}, Closed]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[11007, 269, 222, 3, 62, "Section"],
+Cell[CellGroupData[{
+Cell[11254, 276, 307, 8, 43, "Subsubsection"],
+Cell[11564, 286, 1202, 29, 415, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[12803, 320, 98, 1, 34, "Subsubsection"],
+Cell[12904, 323, 4349, 93, 469, "Input"],
+Cell[17256, 418, 3258, 70, 385, "Input"],
+Cell[20517, 490, 2169, 49, 242, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22723, 544, 204, 3, 53, "Subsubsection"],
+Cell[22930, 549, 7691, 167, 898, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[30658, 721, 336, 4, 53, "Subsubsection"],
+Cell[30997, 727, 6028, 133, 925, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[37062, 865, 397, 5, 53, "Subsubsection"],
+Cell[37462, 872, 3544, 67, 531, "Input"],
+Cell[41009, 941, 71, 1, 32, "Input"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[41129, 948, 551, 10, 100, "Section"],
+Cell[41683, 960, 710, 14, 32, "Input"],
+Cell[42396, 976, 468, 10, 32, "Input"],
+Cell[CellGroupData[{
+Cell[42889, 990, 577, 8, 70, "Subsubsection"],
+Cell[43469, 1000, 1144, 32, 112, "Input"],
+Cell[44616, 1034, 260, 5, 62, "Input"],
+Cell[44879, 1041, 703, 19, 112, "Input"],
+Cell[45585, 1062, 7800, 137, 1446, "Input"]
+}, Closed]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[53434, 1205, 3725, 50, 100, "Section"],
+Cell[57162, 1257, 12819, 228, 1161, "Input"],
+Cell[69984, 1487, 2835, 52, 85, "Input"],
+Cell[72822, 1541, 87, 1, 58, "Input"],
+Cell[72912, 1544, 522, 8, 62, "Input"],
+Cell[CellGroupData[{
+Cell[73459, 1556, 601, 8, 135, "Subsubsection"],
+Cell[74063, 1566, 128, 2, 58, "Input"],
+Cell[74194, 1570, 94, 1, 58, "Input"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
