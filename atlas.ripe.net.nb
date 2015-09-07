@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     11393,        373]
-NotebookOptionsPosition[      9728,        311]
-NotebookOutlinePosition[     10182,        329]
-CellTagsIndexPosition[     10139,        326]
+NotebookDataLength[     31617,        988]
+NotebookOptionsPosition[     28026,        861]
+NotebookOutlinePosition[     28474,        879]
+CellTagsIndexPosition[     28431,        876]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -64,8 +64,74 @@ Cell[TextData[{
   ButtonData->{
     URL["https://atlas.ripe.net/docs"], None},
   ButtonNote->"https://atlas.ripe.net/docs"]
-}], "Text"]
-}, Open  ]],
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Conversion of Unix Machine Timestamp to ",
+ StyleBox["HST",
+  FontSlant->"Italic"]
+}], "Subsubsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", "unixTimeToHST", "]"}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Hawaiian", " ", "Timezone", " ", "is"}], " ", "-", 
+    RowBox[{"10", " ", "from", " ", "GMT"}]}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"unixTimeToHST", "[", "x_Integer", "]"}], ":=", 
+    RowBox[{"DateList", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"AbsoluteTime", "[", 
+        RowBox[{"{", 
+         RowBox[{"1970", ",", "1", ",", "1", ",", "2", ",", "0", ",", "0"}], 
+         "}"}], "]"}], "+", "x"}], ",", 
+      RowBox[{"TimeZone", "\[Rule]", 
+       RowBox[{"-", "10.0"}]}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"unixTimeToHST", "[", "1330434000", "]"}]}], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Extract Hour from Date", "Subsubsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", "hh", "]"}], ";", 
+  RowBox[{
+   RowBox[{"hh", "::", "useage"}], "=", 
+   "\"\<Extract the hour from either a {timestamp}, or {{timestamp}, \
+datavalue} dataum\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"hh", "[", "aDate_List", "]"}], ":=", " ", 
+   RowBox[{"aDate", "[", 
+    RowBox[{"[", "4", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"hh", "[", 
+     RowBox[{"{", 
+      RowBox[{"aTimestamp_List", ",", "dataValue_"}], "}"}], "]"}], ":=", " ", 
+    RowBox[{"hh", "[", "aTimestamp", "]"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"hh", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"unixTimeToHST", "[", "1330434000", "]"}], ",", "\"\<TEST\>\""}], 
+   "}"}], "]"}]}], "Input"]
+}, Closed]]
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -73,7 +139,7 @@ Cell["atlas.ripe.net - BuiltIn measurements ", "Section"],
 
 Cell[CellGroupData[{
 
-Cell["Utilities to get BuiltIn measurements", "Subsection"],
+Cell["Where to find local data", "Subsection"],
 
 Cell[BoxData[
  RowBox[{
@@ -82,12 +148,17 @@ Cell[BoxData[
     RowBox[{"{", 
      RowBox[{
       RowBox[{"NotebookDirectory", "[", "]"}], ",", "\"\<Data\>\"", ",", 
-      "\"\<builtIn\>\""}], "}"}], "]"}]}], ";"}]], "Input"],
+      "\"\<builtIn\>\""}], "}"}], "]"}]}], ";"}]], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Utilities to fetch BuiltIn measurements", "Subsection"],
 
 Cell[CellGroupData[{
 
 Cell["\<\
-builtInQuery - convienience function to pull built in measurements\
+builtInQuery - convienience function to construct the URL to pull data\
 \>", "Subsubsection"],
 
 Cell[BoxData[
@@ -149,10 +220,12 @@ Cell[BoxData[{
    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
   RowBox[{"(*", " ", 
    RowBox[{
-    RowBox[{"Pull", " ", "all", " ", "the", " ", "data"}], ",", " ", 
+    RowBox[{"FIXME", " ", "-", " ", 
+     RowBox[{"currently", " ", "defaulting", " ", "to", " ", "1", "h"}]}], 
+    ";", " ", 
     RowBox[{
-    "rather", " ", "than", " ", "1", " ", "hour", " ", "summaries"}]}], " ", 
-   "*)"}]}], "\[IndentingNewLine]", 
+    "replace", " ", "with", " ", "0", " ", "to", " ", "get", " ", "it", " ", 
+     RowBox[{"all", "?"}]}]}], " ", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"builtInQuery", "[", 
@@ -160,7 +233,7 @@ Cell[BoxData[{
    RowBox[{"builtInQuery", "[", 
     RowBox[{"probeID", ",", "measurementID", ",", "\"\<1h\>\""}], "]"}]}], 
   ";"}]}], "Input"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -204,13 +277,13 @@ Cell[BoxData[
       "\"\<filename\>\"", "\[Rule]", " ", 
        "\"\<RIPE-Atlas-measurement-1-probe-1178.json\>\""}]}], "}"}]}], "]"}],
    ";"}]], "Input"]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
 Cell["\<\
-builtInFilename - convienience function to follow the ATLAS naming convention\
-\
+builtInFilename - convienience function to follow the ATLAS naming convention \
+for measurements\
 \>", "Subsubsection"],
 
 Cell[BoxData[{
@@ -229,89 +302,566 @@ Cell[BoxData[{
 Cell[CellGroupData[{
 
 Cell["\<\
-fetchBuiltin - convienience function to fetch and store ATLAS datums\
+fetchBuiltin - convienience function to fetch and store ATLAS datums.  \
+Returns the file path to the cached data file\
 \>", "Subsubsection"],
 
 Cell[BoxData[
  RowBox[{
   RowBox[{"Clear", "[", "builtInFilePath", "]"}], ";"}]], "Input"],
 
-Cell[BoxData[
+Cell[BoxData[{
  RowBox[{
   RowBox[{
-   RowBox[{"builtInFilePath", "[", 
-    RowBox[{"probeID_", ",", "measurementID_"}], "]"}], ":=", 
-   "\[IndentingNewLine]", 
-   RowBox[{"Block", "[", "\[IndentingNewLine]", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{
-       RowBox[{"fileName", " ", "=", " ", 
-        RowBox[{"builtInFilename", "[", 
-         RowBox[{"probeID", ",", "measurementID"}], "]"}]}], ",", 
-       "\[IndentingNewLine]", "filePath"}], "}"}], ",", "\[IndentingNewLine]",
-      "\[IndentingNewLine]", 
-     RowBox[{"(*", " ", 
-      RowBox[{
-      "Path", " ", "to", " ", "find", " ", "or", " ", "place", " ", "the", 
-       " ", "data", " ", "pulled"}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"builtInFilePath", "[", 
+     RowBox[{"probeID_", ",", "measurementID_"}], "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Block", "[", "\[IndentingNewLine]", 
      RowBox[{
-      RowBox[{"filePath", "=", 
-       RowBox[{"FileNameJoin", "[", 
-        RowBox[{"{", 
-         RowBox[{"builtInPathRoot", ",", " ", "fileName"}], "}"}], "]"}]}], 
-      ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"fileName", " ", "=", " ", 
+         RowBox[{"builtInFilename", "[", 
+          RowBox[{"probeID", ",", "measurementID"}], "]"}]}], ",", 
+        "\[IndentingNewLine]", "filePath"}], "}"}], ",", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
       RowBox[{"(*", " ", 
        RowBox[{
-       "Return", " ", "local", " ", "file", " ", "or", " ", "pull", " ", 
-        "and", " ", "return"}], " ", "*)"}], "\[IndentingNewLine]", 
-      RowBox[{"If", "[", 
-       RowBox[{
-        RowBox[{"FileExistsQ", "[", "filePath", "]"}], ",", 
-        "\[IndentingNewLine]", "filePath", ",", "\[IndentingNewLine]", 
+       "Path", " ", "to", " ", "find", " ", "or", " ", "place", " ", "the", 
+        " ", "data", " ", "pulled"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"filePath", "=", 
+        RowBox[{"FileNameJoin", "[", 
+         RowBox[{"{", 
+          RowBox[{"builtInPathRoot", ",", " ", "fileName"}], "}"}], "]"}]}], 
+       ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
         RowBox[{
-         RowBox[{"Export", "[", 
-          RowBox[{"filePath", ",", 
-           RowBox[{"Import", "[", 
-            RowBox[{
-             RowBox[{"builtInQuery", "[", 
-              RowBox[{"probeID", ",", "measurementID"}], "]"}], ",", 
-             "\"\<JSON\>\""}], "]"}], ",", "\"\<JSON\>\""}], "]"}], ";", 
-         "filePath"}]}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], 
-  ";"}]], "Input"]
-}, Open  ]]
-}, Closed]],
+        "Return", " ", "local", " ", "file", " ", "or", " ", "pull", " ", 
+         "and", " ", "return"}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"FileExistsQ", "[", "filePath", "]"}], ",", 
+         "\[IndentingNewLine]", "filePath", ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Export", "[", 
+           RowBox[{"filePath", ",", 
+            RowBox[{"Import", "[", 
+             RowBox[{
+              RowBox[{"builtInQuery", "[", 
+               RowBox[{"probeID", ",", "measurementID"}], "]"}], ",", 
+              "\"\<JSON\>\""}], "]"}], ",", "\"\<JSON\>\""}], "]"}], ";", 
+          "filePath"}]}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"builtInFilePath", "[", "probeID_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"builtInFilePath", "[", 
+     RowBox[{"probeID", ",", "#"}], "]"}], "&"}], "/@", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2"}], "}"}]}]}]}], "Input"]
+}, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Load BuiltIn measurements", "Subsection"],
+Cell["\<\
+rttDatum - convienience function to fetch a slice of rttDatum of interest\
+\>", "Subsubsection"],
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"Parallelize", "[", 
-   RowBox[{
+  RowBox[{"Clear", "[", "rttDatum", "]"}], ";"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"rttDatum", "[", 
+    RowBox[{"probeID_", ",", "hop_", ",", "rttMeasurementType_String"}], 
+    "]"}], ":=", 
+   RowBox[{"Block", "[", "\[IndentingNewLine]", 
     RowBox[{
-     RowBox[{"builtInFilePath", "[", 
-      RowBox[{"#", ",", "2"}], "]"}], " ", "&"}], "/@", 
-    RowBox[{"{", 
+     RowBox[{"{", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"rttMeasurements", " ", "=", 
+        RowBox[{"(", " ", 
+         RowBox[{"\"\<measurements\>\"", "/.", 
+          RowBox[{"(", " ", 
+           RowBox[{"\"\<data\>\"", "/.", 
+            RowBox[{"Import", "[", 
+             RowBox[{"builtInFilePath", "[", 
+              RowBox[{"probeID", ",", "hop"}], "]"}], "]"}]}], " ", ")"}]}], 
+         ")"}]}], ",", "\[IndentingNewLine]", "rttSlice"}], 
+      "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{"FIXME", " ", ":", " ", 
+       RowBox[{
+       "figure", " ", "out", " ", "how", " ", "to", " ", "cache", " ", "the", 
+        " ", "rttMeasurements", " ", "above", " ", "so", " ", "it", " ", "is",
+         " ", "not", " ", "always", " ", "loading", " ", "from", " ", 
+        "filesystem"}]}], " ", "*)"}], " ", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+      "Traverse", " ", "the", " ", "JASON", " ", "structure", " ", "to", " ", 
+       "reach", " ", "the", " ", "slices", " ", "of", " ", "interest"}], " ", 
+      "*)"}], "\[IndentingNewLine]", 
      RowBox[{
-     "1165", ",", "1178", ",", "15111", ",", "16065", ",", "16090", ",", 
-      "22773"}], "}"}]}], "]"}], ";"}]], "Input"]
-}, Open  ]]
+      RowBox[{"rttSlice", "=", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"unixTimeToHST", "[", "\"\<timestamp\>\"", "]"}], ",", 
+          "rttMeasurementType"}], "}"}], "/.", "rttMeasurements"}]}], ";", 
+      "\[IndentingNewLine]", "rttSlice"}]}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}]], "Input"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["SCRATCH", "Title"],
+Cell["Hawaii Based Probes", "Section"],
 
-Cell[BoxData[""], "Input"]
+Cell[CellGroupData[{
+
+Cell["Probes Of Interest", "Subsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", "probes", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"probes", "::", "usage"}], "=", 
+    "\"\<List of probes in Hawaii\>\""}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Pull", " ", "1", "st", " ", "and", " ", "2", "nd", " ", "hop", " ", 
+    "builtIn", " ", "metrics"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"probes", "=", 
+    RowBox[{"{", 
+     RowBox[{
+     "1178", ",", "1165", ",", "16065", ",", "15111", ",", "22773", ",", 
+      "14720", ",", "02289", ",", "12735", ",", "10546", ",", "18657"}], 
+     "}"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"FIXME", " ", "-", " ", 
+    RowBox[{"why", " ", "is", " ", 
+     RowBox[{"Mike", "'"}], "s", " ", "HawaiiTel", " ", "16090", " ", 
+     "returning", " ", "odd", " ", 
+     RowBox[{"errors", "?"}]}]}], " ", "*)"}], " "}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"If", "[", 
+    RowBox[{"False", ",", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{
+       RowBox[{"{", "16090", "}"}], ",", "probes"}], "]"}], ",", " ", 
+     "probes"}], "]"}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Set", " ", "to", " ", "true", " ", "to", " ", "add", " ", "in", " ", 
+    "probes", " ", "from", " ", "mainland"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"If", "[", 
+    RowBox[{"False", ",", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{
+       RowBox[{"{", "14606", "}"}], ",", "probes"}], "]"}], ",", " ", 
+     "probes"}], "]"}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Pull", " ", "in", " ", "BuiltIn", " ", "measurements"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Parallelize", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"builtInFilePath", "[", "#", "]"}], "&"}], " ", "/@", "probes"}],
+    "]"}], ";"}]}], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Display and Legends ", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell["City where probe is located", "Subsubsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "cProbe", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Block", "[", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"cProbe", "::", "usage"}], "=", "\"\<City of the probe\>\""}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cProbe", "[", "01165", "]"}], "=", "\"\<Maui:Hana\>\""}], ";",
+       "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cProbe", "[", "01178", "]"}], "=", "\"\<Maui:Hana\>\""}], ";",
+       "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cProbe", "[", "16065", "]"}], "=", "\"\<Maui:Hana\>\""}], ";",
+       "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cProbe", "[", "15111", "]"}], "=", "\"\<Maui:Kahului\>\""}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cProbe", "[", "16090", "]"}], "=", "\"\<Maui:Wailuku\>\""}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cProbe", "[", "02289", "]"}], "=", "\"\<BI:Hawi\>\""}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cProbe", "[", "12735", "]"}], "=", "\"\<BI:Kailua-Kona\>\""}],
+       ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cProbe", "[", "10546", "]"}], "=", "\"\<BI:Hilo\>\""}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cProbe", "[", "14720", "]"}], "=", "\"\<Ohau:Kaneohe\>\""}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cProbe", "[", "18657", "]"}], "=", "\"\<Kauai:Kapaa\>\""}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cProbe", "[", "22773", "]"}], "=", "\"\<Maui:Kahua\>\""}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"cProbe", "[", "probeID_", "]"}], ":=", 
+       RowBox[{"MessageDialog", "[", 
+        RowBox[{
+        "\"\<FIXME - please cProbe name for probe \>\"", " ", "<>", " ", 
+         RowBox[{"ToString", "[", "probeID", "]"}]}], "]"}]}]}]}], 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", "]"}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"cProbe", "/@", " ", "probes"}]}], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Whose Probe", "Subsubsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "wProbe", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Block", "[", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"wProbe", "::", "usage"}], "=", "\"\<City of the probe\>\""}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"wProbe", "[", "01165", "]"}], "=", "\"\<Gaylord\>\""}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"wProbe", "[", "01178", "]"}], "=", "\"\<Chase\>\""}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"wProbe", "[", "16065", "]"}], "=", "\"\<BillS\>\""}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"wProbe", "[", "15111", "]"}], "=", "\"\<Harry\>\""}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"wProbe", "[", "16090", "]"}], "=", 
+       "\"\<MikeS-HawaiiTel\>\""}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"wProbe", "[", "22773", "]"}], "=", "\"\<MikeS\>\""}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"wProbe", "[", "probeID_", "]"}], ":=", " ", 
+       RowBox[{"cProbe", "[", "probeID", "]"}]}], ";"}]}], 
+    "\[IndentingNewLine]", "]"}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"wProbe", "/@", " ", "probes"}]}], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Color Scheme for probes", "Subsubsection"],
+
+Cell[BoxData[""], "Input"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "colorOf", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Block", "[", 
+   RowBox[{
+    RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"colorOf", "[", "1165", "]"}], "=", "Blue"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorOf", "[", "1178", "]"}], "=", "Red"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorOf", "[", "16065", "]"}], "=", "Yellow"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorOf", "[", "16090", "]"}], "=", "Purple"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorOf", "[", "15111", "]"}], "=", "LightPurple"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorOf", "[", "2289", "]"}], "=", "Gray"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorOf", "[", "12735", "]"}], "=", "Orange"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorOf", "[", "10546", "]"}], "=", "Pink"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorOf", "[", "14720", "]"}], "=", "LightBrown"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorOf", "[", "18657", "]"}], "=", "Brown"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorOf", "[", "22773", "]"}], "=", "LightBrown"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"colorOf", "[", "probeID_", "]"}], " ", ":=", " ", 
+      RowBox[{"MessageDialog", "[", 
+       RowBox[{
+       "\"\<FIXME - please specify color of probe \>\"", " ", "<>", " ", 
+        RowBox[{"ToString", "[", "probeID", "]"}]}], "]"}]}], ";"}]}], 
+   "\[IndentingNewLine]", "]"}], ";"}]}], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["PlotStyle for probe ", "Subsubsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "plotStyleOf", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"plotStyleOf", "[", 
+     RowBox[{"aProbe_Integer", ",", " ", "pSize_", ",", " ", "pOpacity_"}], 
+     "]"}], ":=", 
+    RowBox[{"colorOf", "[", "aProbe", "]"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"plotStyleOf", "[", 
+    RowBox[{"#", ",", ".001", ",", "0.5"}], "]"}], "&"}], "/@", " ", 
+  "probes"}]}], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Pretty Print for Probe", "Subsubsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "pPrint", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"pPrint", "[", "probe_Integer", "]"}], ":=", " ", 
+    RowBox[{"Style", "[", 
+     RowBox[{
+      RowBox[{"\"\< p\>\"", "<>", 
+       RowBox[{"ToString", "[", "probe", "]"}], " ", "<>", " ", "\"\<_\>\"", "<>", 
+       RowBox[{"cProbe", "[", "probe", "]"}], "<>", "\"\< \>\""}], ",", 
+      RowBox[{"FontColor", "->", 
+       RowBox[{"colorOf", "[", "probe", "]"}]}], ",", " ", "Plain", ",", 
+      "\"\<Text\>\""}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"pPrint", "[", "probes_List", "]"}], ":=", " ", 
+    RowBox[{"Row", "[", 
+     RowBox[{"pPrint", "/@", " ", "probes"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"pPrint", "/@", " ", "probes"}]}], "Input"]
+}, Closed]]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Visualization of Round Trip Time (RTT) of the \[OpenCurlyDoubleQuote]Second \
+outbound Hop\[CloseCurlyDoubleQuote] to OTWC equipment on Oahu\
+\>", "Section"],
+
+Cell["\<\
+The \[OpenCurlyDoubleQuote]Second outbound Hop\[CloseCurlyDoubleQuote] is a \
+measurement of OTWC network infrastructure response times on Oahu.
+
+Each measurement is an average of 3 tests.   In one year, an atlas.ripe.net \
+probe collects 630,720 measurements 
+
+In one year, an atlas.ripe.net probe cOne year of measurments is \
+approximately 210,240 me\
+\>", "Text"],
+
+Cell[BoxData[
+ RowBox[{"365", " ", "24", " ", "24", " ", "3"}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell["Visualization Function", "Subsection"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Clear", "[", "visualizeRTT", "]"}], ";"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"visualizeRTT", "[", 
+    RowBox[{
+    "probeList_", ",", "rttMeasures_List", ",", "hop_Integer", ",", 
+     "dateRange_"}], "]"}], ":=", 
+   RowBox[{"Parallelize", "[", "\[IndentingNewLine]", 
+    RowBox[{"Table", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+      "DateListPlot", "\[IndentingNewLine]", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"rttDatum", "[", 
+            RowBox[{"probeID", ",", "hop", ",", "#"}], "]"}], "&"}], "/@", 
+          "rttMeasures"}], "}"}], " ", ",", " ", "\[IndentingNewLine]", 
+        RowBox[{"Joined", "\[Rule]", "False"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"ImageSize", " ", "\[Rule]", " ", "Medium"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"dateRange", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "5"}], ",", "60"}], "}"}]}], "}"}]}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"FrameLabel", "\[Rule]", 
+         RowBox[{"{", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"ToString", "[", "probeID", "]"}], " ", "<>", " ", 
+              "\"\< Hop \>\"", "<>", 
+              RowBox[{"ToString", "[", "hop", "]"}], "<>", "\"\< out \>\""}], 
+             ",", " ", "\"\<\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+           RowBox[{"{", 
+            RowBox[{"\"\<\>\"", ",", 
+             RowBox[{"wProbe", "[", "probeID", "]"}]}], "}"}]}], 
+          "\[IndentingNewLine]", "}"}]}]}], "\[IndentingNewLine]", "]"}], ",",
+       "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{"probeID", " ", ",", "probeList"}], "}"}]}], "]"}], "]"}]}], 
+  ";"}]], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["rtt_5pct", "Subsection"],
+
+Cell[BoxData[
+ RowBox[{"visualizeRTT", "[", 
+  RowBox[{"probes", ",", 
+   RowBox[{"{", "\"\<rtt_5pct\>\"", "}"}], ",", "2", ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"2011", ",", "9", ",", "1", ",", "11", ",", "0", ",", "0"}], 
+      "}"}], ",", 
+     RowBox[{"DateList", "[", "]"}]}], "}"}]}], "]"}]], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["rtt_5pct + rtt_med", "Subsection"],
+
+Cell[BoxData[
+ RowBox[{"visualizeRTT", "[", 
+  RowBox[{"probes", ",", 
+   RowBox[{"{", 
+    RowBox[{"\"\<rtt_5pct\>\"", ",", " ", "\"\<rtt_med\>\""}], "}"}], ",", 
+   "2", ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "2014", " ", ",", "9", ",", "1", ",", "1", ",", "00", ",", "0"}], "}"}],
+      ",", 
+     RowBox[{"DateList", "[", "]"}]}], "}"}]}], "]"}]], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["rtt_5pct + rtt_med + rtt_95pct", "Subsection"],
+
+Cell[BoxData[
+ RowBox[{"visualizeRTT", "[", 
+  RowBox[{"probes", ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<rtt_5pct\>\"", ",", " ", "\"\<rtt_med\>\"", ",", 
+     "\"\<rtt_95pct\>\""}], "}"}], ",", "2", ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "2014", " ", ",", "9", ",", "1", ",", "1", ",", "00", ",", "0"}], "}"}],
+      ",", 
+     RowBox[{"DateList", "[", "]"}]}], "}"}]}], "]"}]], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["rtt_5pct + rtt_med + rtt_95pct since 2012", "Subsection"],
+
+Cell[BoxData[
+ RowBox[{"visualizeRTT", "[", 
+  RowBox[{"probes", ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<rtt_5pct\>\"", ",", " ", "\"\<rtt_med\>\"", ",", 
+     "\"\<rtt_95pct\>\""}], "}"}], ",", "2", ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "2012", " ", ",", "4", ",", "1", ",", "1", ",", "00", ",", "0"}], "}"}],
+      ",", 
+     RowBox[{"DateList", "[", "]"}]}], "}"}]}], "]"}]], "Input"]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
 }, Open  ]]
 },
-WindowToolbars->"EditBar",
-WindowSize->{600, 774},
-WindowMargins->{{Automatic, 51}, {Automatic, 1}},
+WindowToolbars->{},
+WindowSize->{2054, 1037},
+WindowMargins->{{3, Automatic}, {Automatic, 0}},
 FrontEndVersion->"10.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 6, \
 2015)",
 StyleDefinitions->FrontEnd`FileName[{"Report"}, "ConfidentialReport.nb", 
@@ -329,51 +879,116 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[580, 22, 44, 0, 138, "Title"],
-Cell[627, 24, 69, 0, 61, "Subtitle"],
+Cell[580, 22, 44, 0, 82, "Title"],
+Cell[627, 24, 69, 0, 31, "Subtitle"],
 Cell[699, 26, 215, 7, 40, "Author"],
 Cell[CellGroupData[{
-Cell[939, 37, 301, 8, 49, "Subsubtitle"],
+Cell[939, 37, 301, 8, 29, "Subsubtitle"],
 Cell[1243, 47, 30, 0, 64, "Section"],
 Cell[CellGroupData[{
 Cell[1298, 51, 49, 0, 50, "Section"],
-Cell[1350, 53, 468, 13, 49, "Text"]
-}, Open  ]],
+Cell[1350, 53, 468, 13, 49, "Text"],
 Cell[CellGroupData[{
-Cell[1855, 71, 57, 0, 64, "Section"],
-Cell[CellGroupData[{
-Cell[1937, 75, 59, 0, 44, "Subsection"],
-Cell[1999, 77, 257, 7, 38, "Input"],
-Cell[CellGroupData[{
-Cell[2281, 88, 99, 2, 35, "Subsubsection"],
-Cell[2383, 92, 87, 2, 20, "Input"],
-Cell[2473, 96, 2608, 65, 361, "Input"]
+Cell[1843, 70, 121, 4, 35, "Subsubsection"],
+Cell[1967, 76, 884, 24, 106, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[5118, 166, 67, 0, 29, "Subsubsection"],
-Cell[5188, 168, 449, 9, 163, "Text"],
-Cell[5640, 179, 964, 26, 157, "Input"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[6641, 210, 112, 3, 59, "Subsubsection"],
-Cell[6756, 215, 444, 10, 72, "Input"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[7237, 230, 101, 2, 59, "Subsubsection"],
-Cell[7341, 234, 90, 2, 20, "Input"],
-Cell[7434, 238, 1723, 42, 259, "Input"]
-}, Open  ]]
+Cell[2888, 105, 47, 0, 29, "Subsubsection"],
+Cell[2938, 107, 875, 24, 123, "Input"]
+}, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[9206, 286, 47, 0, 36, "Subsection"],
-Cell[9256, 288, 330, 10, 38, "Input"]
-}, Open  ]]
+Cell[3862, 137, 57, 0, 50, "Section"],
+Cell[CellGroupData[{
+Cell[3944, 141, 46, 0, 44, "Subsection"],
+Cell[3993, 143, 257, 7, 20, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4287, 155, 61, 0, 44, "Subsection"],
+Cell[CellGroupData[{
+Cell[4373, 159, 103, 2, 35, "Subsubsection"],
+Cell[4479, 163, 87, 2, 20, "Input"],
+Cell[4569, 167, 2699, 67, 242, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7305, 239, 67, 0, 35, "Subsubsection"],
+Cell[7375, 241, 449, 9, 163, "Text"],
+Cell[7827, 252, 964, 26, 157, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[8828, 283, 129, 3, 29, "Subsubsection"],
+Cell[8960, 288, 444, 10, 38, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9441, 303, 151, 3, 35, "Subsubsection"],
+Cell[9595, 308, 90, 2, 20, "Input"],
+Cell[9688, 312, 2069, 51, 259, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11794, 368, 106, 2, 35, "Subsubsection"],
+Cell[11903, 372, 83, 2, 20, "Input"],
+Cell[11989, 376, 1713, 40, 174, "Input"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[9659, 306, 24, 0, 82, "Title"],
-Cell[9686, 308, 26, 0, 20, "Input"]
+Cell[13763, 423, 38, 0, 64, "Section"],
+Cell[CellGroupData[{
+Cell[13826, 427, 40, 0, 44, "Subsection"],
+Cell[13869, 429, 1969, 55, 174, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15875, 489, 42, 0, 44, "Subsection"],
+Cell[CellGroupData[{
+Cell[15942, 493, 52, 0, 35, "Subsubsection"],
+Cell[15997, 495, 2224, 54, 327, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18258, 554, 36, 0, 35, "Subsubsection"],
+Cell[18297, 556, 1417, 35, 225, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19751, 596, 48, 0, 35, "Subsubsection"],
+Cell[19802, 598, 26, 0, 20, "Input"],
+Cell[19831, 600, 1775, 47, 259, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21643, 652, 45, 0, 35, "Subsubsection"],
+Cell[21691, 654, 560, 15, 72, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22288, 674, 47, 0, 35, "Subsubsection"],
+Cell[22338, 676, 957, 24, 106, "Input"]
+}, Closed]]
+}, Closed]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23356, 707, 167, 3, 64, "Section"],
+Cell[23526, 712, 377, 9, 106, "Text"],
+Cell[23906, 723, 73, 1, 20, "Input"],
+Cell[CellGroupData[{
+Cell[24004, 728, 44, 0, 44, "Subsection"],
+Cell[24051, 730, 87, 2, 20, "Input"],
+Cell[24141, 734, 1873, 46, 242, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[26051, 785, 30, 0, 36, "Subsection"],
+Cell[26084, 787, 343, 9, 20, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[26464, 801, 40, 0, 36, "Subsection"],
+Cell[26507, 803, 402, 12, 20, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[26946, 820, 52, 0, 36, "Subsection"],
+Cell[27001, 822, 435, 13, 20, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[27473, 840, 63, 0, 36, "Subsection"],
+Cell[27539, 842, 435, 13, 20, "Input"]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
 }, Open  ]]
 }
 ]
