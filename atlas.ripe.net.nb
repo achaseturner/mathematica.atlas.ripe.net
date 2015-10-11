@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     57734,       1707]
-NotebookOptionsPosition[     52155,       1518]
-NotebookOutlinePosition[     52671,       1538]
-CellTagsIndexPosition[     52628,       1535]
+NotebookDataLength[     58694,       1730]
+NotebookOptionsPosition[     53016,       1537]
+NotebookOutlinePosition[     53553,       1558]
+CellTagsIndexPosition[     53510,       1555]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -191,7 +191,7 @@ Cell[BoxData[
        RowBox[{"ToString", "[", "testDateHST", "]"}]}]}]}], 
     "\[IndentingNewLine]", "]"}]}]}]], "Input"]
 }, Closed]]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -208,7 +208,7 @@ Cell[BoxData[
     RowBox[{
      RowBox[{"NotebookDirectory", "[", "]"}], ",", "\"\<Data\>\"", ",", 
      "\"\<builtIn\>\""}], "}"}], "]"}]}]], "Input"]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -270,7 +270,7 @@ Cell[BoxData[{
    RowBox[{"{", 
     RowBox[{"2012", ",", "1", ",", "1"}], "}"}], ",", 
    RowBox[{"DateList", "[", "]"}]}], "]"}], "\[IndentingNewLine]"}], "Input"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -372,7 +372,7 @@ Cell[BoxData[{
    RowBox[{"{", 
     RowBox[{"2012", ",", "1", ",", "1"}], "}"}], ",", 
    RowBox[{"DateList", "[", "]"}]}], "]"}]}], "Input"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -487,19 +487,11 @@ Cell[BoxData[{
          "reach", " ", "the", " ", "slices", " ", "of", " ", "interest"}], 
        " ", "*)"}], "\[IndentingNewLine]", 
       RowBox[{"rttSlice", "=", 
-       RowBox[{"DeleteCases", "[", 
-        RowBox[{
+       RowBox[{
+        RowBox[{"{", 
          RowBox[{
-          RowBox[{"{", 
-           RowBox[{
-            RowBox[{"unixTimeGMTtoHST", "[", "\"\<timestamp\>\"", "]"}], ",", 
-            "rttMeasurementType"}], "}"}], "/.", "rttMeasurements"}], ",", 
-         RowBox[{"{", 
-          RowBox[{
-           RowBox[{"{", "}"}], ",", 
-           RowBox[{"{", "}"}]}], "}"}]}], "]"}]}]}], "\[IndentingNewLine]", 
-     RowBox[{"(*", " ", 
-      RowBox[{"Remove", " ", "empty", " ", "entries"}], " ", "*)"}], 
+          RowBox[{"unixTimeGMTtoHST", "[", "\"\<timestamp\>\"", "]"}], ",", 
+          "rttMeasurementType"}], "}"}], "/.", "rttMeasurements"}]}]}], 
      "\[IndentingNewLine]", "]"}]}]}], ";"}]}], "Input"]
 }, Closed]],
 
@@ -563,22 +555,16 @@ Cell[BoxData[
           RowBox[{"Alternatives", "[", "hours", "]"}]}], "]"}]}], ";", 
        "\[IndentingNewLine]", "\[IndentingNewLine]", 
        RowBox[{"(*", " ", "RETURNING", " ", "*)"}], "\[IndentingNewLine]", 
-       RowBox[{"DeleteCases", "[", 
-        RowBox[{
-         RowBox[{"Cases", "[", 
-          RowBox[{"rttDatums", ",", 
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{"{", 
-              RowBox[{
-              "yy_", ",", "mm_", ",", "dd_", ",", "hhPattern", ",", "min_", 
-               ",", "sec_"}], "}"}], ",", "__"}], "}"}]}], "]"}], ",", 
+       RowBox[{"Cases", "[", 
+        RowBox[{"rttDatums", ",", 
          RowBox[{"{", 
           RowBox[{
-           RowBox[{"{", "}"}], ",", 
-           RowBox[{"{", "}"}]}], "}"}]}], "]"}]}]}], "\[IndentingNewLine]", 
-     "]"}]}]}], ";"}]], "Input"]
-}, Closed]],
+           RowBox[{"{", 
+            RowBox[{
+            "yy_", ",", "mm_", ",", "dd_", ",", "hhPattern", ",", "min_", ",",
+              "sec_"}], "}"}], ",", "__"}], "}"}]}], "]"}]}]}], 
+     "\[IndentingNewLine]", "]"}]}]}], ";"}]], "Input"]
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -797,7 +783,7 @@ Cell[BoxData[{
   RowBox[{"(*", " ", 
    RowBox[{"Pull", " ", "in", " ", "BuiltIn", " ", "measurements"}], " ", 
    "*)"}]}]}], "Input"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -866,7 +852,7 @@ Cell[BoxData[{
   "\[IndentingNewLine]", 
   RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{"cProbe", "/@", " ", "probes"}]}], "Input"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -909,7 +895,7 @@ Cell[BoxData[{
     "\[IndentingNewLine]", "]"}], ";"}], "\[IndentingNewLine]", 
   RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{"wProbe", "/@", " ", "probes"}]}], "Input"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -967,7 +953,7 @@ Cell[BoxData[{
          "\"\<FIXME - please specify color of probe \>\"", " ", "<>", " ", 
           RowBox[{"ToString", "[", "probeID", "]"}]}], "]"}], ",", "Blue"}], 
        "]"}]}], ";"}]}], "\[IndentingNewLine]", "]"}], ";"}]}], "Input"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -989,7 +975,7 @@ Cell[BoxData[{
    RowBox[{"plotStyleOf", "[", 
     RowBox[{"#", ",", ".001", ",", "0.5"}], "]"}], "&"}], "/@", " ", 
   "probes"}]}], "Input"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -1020,8 +1006,8 @@ Cell[BoxData[{
   "\[IndentingNewLine]", 
   RowBox[{"(*", " ", "TEST", " ", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{"pPrint", "/@", " ", "probes"}]}], "Input"]
-}, Closed]]
-}, Closed]]
+}, Open  ]]
+}, Open  ]]
 }, Closed]],
 
 Cell[CellGroupData[{
@@ -1054,12 +1040,12 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"gStartDate", "=", 
    RowBox[{"{", 
-    RowBox[{"2014", ",", "10", ",", "1"}], "}"}]}], 
+    RowBox[{"2015", ",", "5", ",", "1"}], "}"}]}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"gEndDate", "=", 
    RowBox[{"{", 
-    RowBox[{"2015", ",", "9", ",", "22"}], "}"}]}], 
+    RowBox[{"2015", ",", "10", ",", "10"}], "}"}]}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"gResolution", "=", "\"\<1h\>\""}], " ", 
@@ -1093,37 +1079,33 @@ Cell[BoxData[
           "gEndDate"}], "]"}], "&"}], " ", "/@", "probes"}], "]"}], ";", 
      "\"\<Prefetch completed\>\""}], ",", " ", "\[IndentingNewLine]", 
     "\"\<Prefetch of data not exeucted\>\""}], "]"}]}]], "Input"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
 Cell["Grouping for probes", "Subsubsection"],
 
-Cell[BoxData[{
- RowBox[{
-  RowBox[{"gProbeGroupings", "=", 
-   RowBox[{"{", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"1178", ",", "1165", ",", "16065"}], "}"}], ",", 
-     RowBox[{"{", 
-      RowBox[{"15111", ",", "22773"}], "}"}], ",", " ", 
-     RowBox[{"{", "14720", "}"}], ",", 
-     RowBox[{"{", 
-      RowBox[{"2289", ",", "12735", ",", "10546", ",", "18657"}], "}"}]}], 
-    "}"}]}], ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"(*", " ", "OVERRIDE", " ", "*)"}]}]}], "Input"],
-
 Cell[BoxData[
  RowBox[{
   RowBox[{"gProbeGroupings", "=", 
-   RowBox[{"{", 
-    RowBox[{
+   RowBox[{"If", "[", 
+    RowBox[{"True", ",", "\[IndentingNewLine]", 
      RowBox[{"{", 
-      RowBox[{"1178", ",", "1165", ",", "16065"}], "}"}], ",", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"1178", ",", "1165", ",", "16065"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"15111", ",", "22773"}], "}"}], ",", " ", 
+       RowBox[{"{", "14720", "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"2289", ",", "12735", ",", "10546", ",", "18657"}], "}"}]}], 
+      "}"}], ",", "\[IndentingNewLine]", 
      RowBox[{"{", 
-      RowBox[{"2289", ",", "12735"}], "}"}]}], "}"}]}], ";"}]], "Input"]
+      RowBox[{"{", 
+       RowBox[{"1178", ",", "1165", ",", "2289", ",", "12735"}], "}"}], 
+      "}"}]}], "]"}]}], ";"}]], "Input"],
+
+Cell[BoxData[""], "Input"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1217,20 +1199,24 @@ Cell["1 hour averaged values (typically 43 RTT tests per hour)", \
 "Subsubsection"],
 
 Cell[BoxData[
- RowBox[{
-  RowBox[{"(", 
+ RowBox[{"If", "[", 
+  RowBox[{"False", ",", "\[IndentingNewLine]", 
    RowBox[{
-    RowBox[{
-     RowBox[{"visualizeRTT", "[", 
+    RowBox[{"(", 
+     RowBox[{
       RowBox[{
-      "#", ",", "gHop", ",", " ", "gResolution", ",", "gStartDate", ",", 
-       "gEndDate", ",", 
-       RowBox[{"{", 
+       RowBox[{"visualizeRTT", "[", 
         RowBox[{
-        "\"\<rtt_5pct\>\"", ",", " ", "\"\<rtt_med\>\"", ",", " ", 
-         "\"\<rtt_95pct\>\""}], "}"}]}], "]"}], "&"}], "/@", " ", 
-    "gProbeGroupings"}], ")"}], "//", "TableForm"}]], "Input"]
-}, Open  ]],
+        "#", ",", "gHop", ",", " ", "gResolution", ",", "gStartDate", ",", 
+         "gEndDate", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<rtt_5pct\>\"", ",", " ", "\"\<rtt_med\>\"", ",", " ", 
+           "\"\<rtt_95pct\>\""}], "}"}]}], "]"}], "&"}], "/@", " ", 
+      "gProbeGroupings"}], ")"}], "//", "TableForm"}], ",", 
+   "\[IndentingNewLine]", "\"\<Skipped 1 hour static view\>\""}], 
+  "]"}]], "Input"]
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -1238,20 +1224,24 @@ Cell["1 day averaged values (typically 1023 RTT tests per day)", \
 "Subsubsection"],
 
 Cell[BoxData[
- RowBox[{
-  RowBox[{"(", 
+ RowBox[{"If", "[", 
+  RowBox[{"False", ",", "\[IndentingNewLine]", 
    RowBox[{
-    RowBox[{
-     RowBox[{"visualizeRTT", "[", 
+    RowBox[{"(", 
+     RowBox[{
       RowBox[{
-      "#", ",", "gHop", ",", " ", "\"\<1d\>\"", ",", "gStartDate", ",", 
-       "gEndDate", ",", 
-       RowBox[{"{", 
+       RowBox[{"visualizeRTT", "[", 
         RowBox[{
-        "\"\<rtt_5pct\>\"", ",", " ", "\"\<rtt_med\>\"", ",", " ", 
-         "\"\<rtt_95pct\>\""}], "}"}]}], "]"}], "&"}], "/@", " ", 
-    "gProbeGroupings"}], ")"}], "//", "TableForm"}]], "Input"]
-}, Open  ]],
+        "#", ",", "gHop", ",", " ", "\"\<1d\>\"", ",", "gStartDate", ",", 
+         "gEndDate", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<rtt_5pct\>\"", ",", " ", "\"\<rtt_med\>\"", ",", " ", 
+           "\"\<rtt_95pct\>\""}], "}"}]}], "]"}], "&"}], "/@", " ", 
+      "gProbeGroupings"}], ")"}], "//", "TableForm"}], ",", 
+   "\[IndentingNewLine]", "\"\<Skipped 1 day averaged values\>\""}], 
+  "]"}]], "Input"]
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -1259,20 +1249,24 @@ Cell["1 week averaged values (typically 7161 RTT tests per week)", \
 "Subsubsection"],
 
 Cell[BoxData[
- RowBox[{
-  RowBox[{"(", 
+ RowBox[{"If", "[", 
+  RowBox[{"False", ",", "\[IndentingNewLine]", 
    RowBox[{
-    RowBox[{
-     RowBox[{"visualizeRTT", "[", 
+    RowBox[{"(", 
+     RowBox[{
       RowBox[{
-      "#", ",", "gHop", ",", " ", "\"\<1w\>\"", ",", "gStartDate", ",", 
-       "gEndDate", ",", 
-       RowBox[{"{", 
+       RowBox[{"visualizeRTT", "[", 
         RowBox[{
-        "\"\<rtt_5pct\>\"", ",", " ", "\"\<rtt_med\>\"", ",", " ", 
-         "\"\<rtt_95pct\>\""}], "}"}]}], "]"}], "&"}], "/@", " ", 
-    "gProbeGroupings"}], ")"}], "//", "TableForm"}]], "Input"]
-}, Open  ]]
+        "#", ",", "gHop", ",", " ", "\"\<1w\>\"", ",", "gStartDate", ",", 
+         "gEndDate", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<rtt_5pct\>\"", ",", " ", "\"\<rtt_med\>\"", ",", " ", 
+           "\"\<rtt_95pct\>\""}], "}"}]}], "]"}], "&"}], "/@", " ", 
+      "gProbeGroupings"}], ")"}], "//", "TableForm"}], ",", 
+   "\[IndentingNewLine]", "\"\<Skipped 1 week averaged values\>\""}], 
+  "]"}]], "Input"]
+}, Closed]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1370,11 +1364,11 @@ Cell[BoxData[
       "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
      RowBox[{"DefaultDuration", "\[Rule]", "24"}]}], "\[IndentingNewLine]", 
     "]"}]}], ";"}]], "Input"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["RTT packet delay by the hour", "Subsubsection"],
+Cell["RTT packet delay by the hour average", "Subsubsection"],
 
 Cell[BoxData[
  RowBox[{"If", "[", 
@@ -1392,8 +1386,32 @@ Cell[BoxData[
           "\"\<rtt_5pct\>\"", ",", " ", "\"\<rtt_med\>\"", ",", 
            "\"\<rtt_95pct\>\""}], "}"}]}], "]"}], " ", "&"}], "/@", " ", 
       "gProbeGroupings"}], ")"}], "//", "TableForm"}], ",", 
-   "\[IndentingNewLine]", "\"\<Skipped Animated Visualization\>\""}], 
-  "]"}]], "Input"]
+   "\[IndentingNewLine]", 
+   "\"\<Skipped RTT packet delay by the hour average\>\""}], "]"}]], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["RTT packet delay by the hour detailed", "Subsubsection"],
+
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{"False", ",", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"visualizeRTTbyTheHour", "[", 
+        RowBox[{
+        "#", ",", " ", "gHop", ",", " ", "0", ",", " ", "gStartDate", ",", 
+         "gEndDate", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<rtt_5pct\>\"", ",", " ", "\"\<rtt_med\>\"", ",", 
+           "\"\<rtt_95pct\>\""}], "}"}]}], "]"}], " ", "&"}], "/@", " ", 
+      "gProbeGroupings"}], ")"}], "//", "TableForm"}], ",", 
+   "\[IndentingNewLine]", 
+   "\"\<Skipped RTT packet delay by the hour detailed\>\""}], "]"}]], "Input"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1408,8 +1426,8 @@ Cell[BoxData[
  RowBox[{
   RowBox[{"visualizeReceivedPackets", "[", 
    RowBox[{
-   "listOfProbes_", ",", " ", "hop_", ",", " ", "resolution_", ",", " ", 
-    "startDate_", ",", "endDate_"}], "]"}], ":=", 
+   "listOfProbes_", ",", " ", "hop_", ",", " ", "\[IndentingNewLine]", "_", 
+    ",", " ", "startDate_", ",", "endDate_"}], "]"}], ":=", 
   RowBox[{"ListAnimate", "[", "\[IndentingNewLine]", 
    RowBox[{"Table", "[", "\[IndentingNewLine]", 
     RowBox[{
@@ -1467,15 +1485,18 @@ Cell[CellGroupData[{
 Cell["Visualization", "Subsubsection"],
 
 Cell[BoxData[
- RowBox[{
-  RowBox[{
+ RowBox[{"If", "[", 
+  RowBox[{"True", ",", 
    RowBox[{
-    RowBox[{"(", 
-     RowBox[{"visualizeReceivedPackets", "[", 
-      RowBox[{
-      "#", ",", " ", "gHop", ",", " ", "gResolution", ",", " ", "gStartDate", 
-       ",", "gEndDate"}], "]"}], " ", ")"}], "&"}], "/@", "gProbeGroupings"}],
-   "//", "TableForm"}]], "Input"]
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"visualizeReceivedPackets", "[", 
+        RowBox[{
+        "#", ",", " ", "gHop", ",", " ", "gResolution", ",", " ", 
+         "gStartDate", ",", "gEndDate"}], "]"}], " ", ")"}], "&"}], "/@", 
+     "gProbeGroupings"}], "//", "TableForm"}], ",", "\[IndentingNewLine]", 
+   "\"\<Skipped recevied RTT count\>\""}], "]"}]], "Input"]
 }, Open  ]]
 }, Open  ]],
 
@@ -1498,8 +1519,6 @@ Cell[CellGroupData[{
 
 Cell["data sources", "Subsubsection"],
 
-Cell[BoxData[""], "Input"],
-
 Cell[BoxData[
  RowBox[{
   RowBox[{
@@ -1517,8 +1536,9 @@ Cell[BoxData[
 }, Open  ]]
 },
 WindowToolbars->"EditBar",
-WindowSize->{1335, 702},
-WindowMargins->{{Automatic, 51}, {Automatic, 33}},
+WindowSize->{1279, 755},
+WindowMargins->{{Automatic, 315}, {62, Automatic}},
+ShowCellTags->True,
 TrackCellChangeTimes->False,
 Magnification:>0.75 Inherited,
 FrontEndVersion->"10.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 6, \
@@ -1546,164 +1566,167 @@ Cell[997, 40, 301, 8, 22, "Subsubtitle"],
 Cell[1301, 50, 30, 0, 48, "Section"],
 Cell[CellGroupData[{
 Cell[1356, 54, 49, 0, 38, "Section"],
-Cell[1408, 56, 468, 13, 15, "Text"],
+Cell[1408, 56, 468, 13, 39, "Text"],
 Cell[CellGroupData[{
-Cell[1901, 73, 121, 4, 10, "Subsubsection"],
+Cell[1901, 73, 121, 4, 26, "Subsubsection"],
 Cell[2025, 79, 94, 2, 3, "Input"],
 Cell[2122, 83, 4377, 108, 62, "Input"]
 }, Closed]]
-}, Closed]],
-Cell[CellGroupData[{
-Cell[6548, 197, 57, 0, 38, "Section"],
-Cell[CellGroupData[{
-Cell[6630, 201, 46, 0, 33, "Subsection"],
-Cell[6679, 203, 234, 6, 17, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[6950, 214, 61, 0, 33, "Subsection"],
+Cell[6548, 197, 57, 0, 48, "Section"],
 Cell[CellGroupData[{
-Cell[7036, 218, 103, 2, 26, "Subsubsection"],
-Cell[7142, 222, 87, 2, 0, "Input"],
-Cell[7232, 226, 1967, 45, 6, "Input"]
+Cell[6630, 201, 46, 0, 33, "Subsection"],
+Cell[6679, 203, 234, 6, 3, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[9236, 276, 67, 0, 22, "Subsubsection"],
-Cell[9306, 278, 449, 9, 0, "Text"],
-Cell[9758, 289, 964, 26, 0, "Input"]
+Cell[6950, 214, 61, 0, 28, "Subsection"],
+Cell[CellGroupData[{
+Cell[7036, 218, 103, 2, 26, "Subsubsection"],
+Cell[7142, 222, 87, 2, 17, "Input"],
+Cell[7232, 226, 1967, 45, 147, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9236, 276, 67, 0, 26, "Subsubsection"],
+Cell[9306, 278, 449, 9, 12, "Text"],
+Cell[9758, 289, 964, 26, 21, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
 Cell[10759, 320, 129, 3, 22, "Subsubsection"],
-Cell[10891, 325, 89, 2, 2, "Input"],
-Cell[10983, 329, 519, 14, 6, "Input"],
-Cell[11505, 345, 90, 2, 2, "Input"],
-Cell[11598, 349, 1037, 24, 9, "Input"]
-}, Closed]],
+Cell[10891, 325, 89, 2, 17, "Input"],
+Cell[10983, 329, 519, 14, 43, "Input"],
+Cell[11505, 345, 90, 2, 17, "Input"],
+Cell[11598, 349, 1037, 24, 69, "Input"]
+}, Open  ]],
 Cell[CellGroupData[{
-Cell[12672, 378, 151, 3, 22, "Subsubsection"],
-Cell[12826, 383, 90, 2, 0, "Input"],
-Cell[12919, 387, 1937, 45, 0, "Input"]
+Cell[12672, 378, 151, 3, 26, "Subsubsection"],
+Cell[12826, 383, 90, 2, 3, "Input"],
+Cell[12919, 387, 1937, 45, 40, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
 Cell[14893, 437, 109, 2, 22, "Subsubsection"],
-Cell[15005, 441, 201, 4, 39, "Text"],
-Cell[15209, 447, 2250, 55, 147, "Input"]
+Cell[15005, 441, 201, 4, 8, "Text"],
+Cell[15209, 447, 1935, 47, 31, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[17496, 507, 128, 3, 22, "Subsubsection"],
-Cell[17627, 512, 217, 4, 39, "Text"],
-Cell[17847, 518, 91, 2, 17, "Input"],
-Cell[17941, 522, 2315, 57, 173, "Input"]
+Cell[17181, 499, 128, 3, 22, "Subsubsection"],
+Cell[17312, 504, 217, 4, 39, "Text"],
+Cell[17532, 510, 91, 2, 17, "Input"],
+Cell[17626, 514, 2112, 51, 173, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19775, 570, 114, 3, 26, "Subsubsection"],
+Cell[19892, 575, 207, 4, 8, "Text"],
+Cell[20102, 581, 1945, 47, 33, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[20293, 584, 114, 3, 22, "Subsubsection"],
-Cell[20410, 589, 207, 4, 39, "Text"],
-Cell[20620, 595, 1945, 47, 147, "Input"]
-}, Closed]],
-Cell[CellGroupData[{
-Cell[22602, 647, 129, 3, 22, "Subsubsection"],
-Cell[22734, 652, 217, 4, 39, "Text"],
-Cell[22954, 658, 2203, 54, 212, "Input"]
+Cell[22084, 633, 129, 3, 22, "Subsubsection"],
+Cell[22216, 638, 217, 4, 8, "Text"],
+Cell[22436, 644, 2203, 54, 49, "Input"]
 }, Closed]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[25218, 719, 38, 0, 48, "Section"],
+Cell[24700, 705, 38, 0, 48, "Section"],
 Cell[CellGroupData[{
-Cell[25281, 723, 40, 0, 13, "Subsection"],
-Cell[25324, 725, 2608, 73, 72, "Input"]
+Cell[24763, 709, 40, 0, 6, "Subsection"],
+Cell[24806, 711, 2608, 73, 40, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27451, 789, 42, 0, 6, "Subsection"],
+Cell[CellGroupData[{
+Cell[27518, 793, 52, 0, 5, "Subsubsection"],
+Cell[27573, 795, 2456, 58, 58, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[30066, 858, 36, 0, 5, "Subsubsection"],
+Cell[30105, 860, 1522, 36, 40, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31664, 901, 48, 0, 5, "Subsubsection"],
+Cell[31715, 903, 26, 0, 3, "Input"],
+Cell[31744, 905, 1865, 49, 46, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[33646, 959, 45, 0, 5, "Subsubsection"],
+Cell[33694, 961, 560, 15, 12, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[34291, 981, 47, 0, 5, "Subsubsection"],
+Cell[34341, 983, 957, 24, 18, "Input"]
+}, Open  ]]
+}, Open  ]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[27969, 803, 42, 0, 11, "Subsection"],
+Cell[35359, 1014, 167, 3, 38, "Section"],
+Cell[35529, 1019, 353, 6, 23, "Text"],
 Cell[CellGroupData[{
-Cell[28036, 807, 52, 0, 10, "Subsubsection"],
-Cell[28091, 809, 2456, 58, 105, "Input"]
+Cell[35907, 1029, 43, 0, 26, "Subsubsection"],
+Cell[35953, 1031, 176, 5, 17, "Input"],
+Cell[36132, 1038, 764, 24, 69, "Input"],
+Cell[36899, 1064, 621, 16, 56, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[37557, 1085, 44, 0, 26, "Subsubsection"],
+Cell[37604, 1087, 667, 18, 43, "Input"],
+Cell[38274, 1107, 26, 0, 17, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[38337, 1112, 46, 0, 33, "Subsection"],
+Cell[CellGroupData[{
+Cell[38408, 1116, 86, 1, 26, "Subsubsection"],
+Cell[38497, 1119, 87, 2, 6, "Input"],
+Cell[38587, 1123, 2838, 67, 94, "Input"],
+Cell[41428, 1192, 26, 0, 6, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[30584, 872, 36, 0, 9, "Subsubsection"],
-Cell[30623, 874, 1522, 36, 72, "Input"]
+Cell[41491, 1197, 83, 1, 22, "Subsubsection"],
+Cell[41577, 1200, 626, 17, 18, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[32182, 915, 48, 0, 9, "Subsubsection"],
-Cell[32233, 917, 26, 0, 6, "Input"],
-Cell[32262, 919, 1865, 49, 83, "Input"]
+Cell[42240, 1222, 83, 1, 22, "Subsubsection"],
+Cell[42326, 1225, 628, 17, 18, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[34164, 973, 45, 0, 9, "Subsubsection"],
-Cell[34212, 975, 560, 15, 0, "Input"]
-}, Closed]],
-Cell[CellGroupData[{
-Cell[34809, 995, 47, 0, 9, "Subsubsection"],
-Cell[34859, 997, 957, 24, 0, "Input"]
+Cell[42991, 1247, 85, 1, 22, "Subsubsection"],
+Cell[43079, 1250, 629, 17, 18, "Input"]
 }, Closed]]
-}, Closed]]
-}, Closed]],
-Cell[CellGroupData[{
-Cell[35877, 1028, 167, 3, 38, "Section"],
-Cell[36047, 1033, 353, 6, 23, "Text"],
-Cell[CellGroupData[{
-Cell[36425, 1043, 43, 0, 26, "Subsubsection"],
-Cell[36471, 1045, 176, 5, 12, "Input"],
-Cell[36650, 1052, 764, 24, 51, "Input"],
-Cell[37417, 1078, 621, 16, 42, "Input"]
-}, Closed]],
-Cell[CellGroupData[{
-Cell[38075, 1099, 44, 0, 22, "Subsubsection"],
-Cell[38122, 1101, 496, 14, 30, "Input"],
-Cell[38621, 1117, 263, 8, 17, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[38921, 1130, 46, 0, 33, "Subsection"],
+Cell[43757, 1273, 42, 0, 33, "Subsection"],
 Cell[CellGroupData[{
-Cell[38992, 1134, 86, 1, 26, "Subsubsection"],
-Cell[39081, 1137, 87, 2, 12, "Input"],
-Cell[39171, 1141, 2838, 67, 168, "Input"],
-Cell[42012, 1210, 26, 0, 12, "Input"]
+Cell[43824, 1277, 123, 3, 26, "Subsubsection"],
+Cell[43950, 1282, 96, 2, 17, "Input"],
+Cell[44049, 1286, 3598, 79, 290, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[47684, 1370, 61, 0, 26, "Subsubsection"],
+Cell[47748, 1372, 663, 17, 43, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[48448, 1394, 62, 0, 26, "Subsubsection"],
+Cell[48513, 1396, 655, 17, 43, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[49205, 1418, 43, 0, 26, "Subsubsection"],
+Cell[49251, 1420, 102, 2, 6, "Input"],
+Cell[49356, 1424, 2369, 55, 83, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[42075, 1215, 83, 1, 22, "Subsubsection"],
-Cell[42161, 1218, 449, 13, 17, "Input"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[42647, 1236, 83, 1, 26, "Subsubsection"],
-Cell[42733, 1239, 448, 13, 17, "Input"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[43218, 1257, 85, 1, 26, "Subsubsection"],
-Cell[43306, 1260, 448, 13, 17, "Input"]
+Cell[51762, 1484, 38, 0, 22, "Subsubsection"],
+Cell[51803, 1486, 461, 12, 30, "Input"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[43803, 1279, 42, 0, 33, "Subsection"],
+Cell[52313, 1504, 60, 0, 40, "Subsection"],
 Cell[CellGroupData[{
-Cell[43870, 1283, 123, 3, 26, "Subsubsection"],
-Cell[43996, 1288, 96, 2, 17, "Input"],
-Cell[44095, 1292, 3598, 79, 290, "Input"]
-}, Closed]],
-Cell[CellGroupData[{
-Cell[47730, 1376, 53, 0, 22, "Subsubsection"],
-Cell[47786, 1378, 648, 17, 43, "Input"]
+Cell[52398, 1508, 43, 0, 26, "Subsubsection"],
+Cell[52444, 1510, 90, 2, 17, "Input"],
+Cell[52537, 1514, 41, 0, 17, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[48471, 1400, 43, 0, 26, "Subsubsection"],
-Cell[48517, 1402, 102, 2, 17, "Input"],
-Cell[48622, 1406, 2356, 55, 173, "Input"]
-}, Closed]],
-Cell[CellGroupData[{
-Cell[51015, 1466, 38, 0, 22, "Subsubsection"],
-Cell[51056, 1468, 318, 9, 17, "Input"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[51423, 1483, 60, 0, 40, "Subsection"],
-Cell[CellGroupData[{
-Cell[51508, 1487, 43, 0, 26, "Subsubsection"],
-Cell[51554, 1489, 90, 2, 17, "Input"],
-Cell[51647, 1493, 41, 0, 17, "Input"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[51725, 1498, 37, 0, 26, "Subsubsection"],
-Cell[51765, 1500, 26, 0, 17, "Input"],
-Cell[51794, 1502, 297, 9, 17, "Input"]
+Cell[52615, 1519, 37, 0, 26, "Subsubsection"],
+Cell[52655, 1521, 297, 9, 17, "Input"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
